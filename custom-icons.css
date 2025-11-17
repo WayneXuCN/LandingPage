@@ -1,6 +1,4 @@
-/* Custom CSS for social media icons */
-
-/* Ensure consistent sizing for both icon images and font icons */
+/* 社交图标通用样式 */
 .social-icon {
     width: 20px;
     height: 20px;
@@ -9,12 +7,12 @@
     justify-content: center;
 }
 
-/* Hover effects for weibo icon */
+/* 微博专属悬停色 */
 a:hover .fa-weibo {
     color: #e6162d !important;
 }
 
-/* Ensure image icons inherit hover colors */
+/* 统一图片悬停反馈 */
 a:hover img {
     opacity: 0.8;
     filter: brightness(1.1);

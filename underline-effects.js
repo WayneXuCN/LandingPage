@@ -1,4 +1,4 @@
-// 定义一组美观的强调色
+// 随机强调色池
 const accentColors = [
     '#10b981', // 绿色
     '#3b82f6', // 蓝色
@@ -10,56 +10,51 @@ const accentColors = [
     '#ef4444'  // 红色
 ];
 
-// 生成随机颜色的函数
-function getRandomColor() {
-    return accentColors[Math.floor(Math.random() * accentColors.length)];
-}
+const DEFAULT_HOVER_COLOR = 'transparent';
 
-// 为所有下划线元素添加事件监听器
-function setupRandomUnderlineColors() {
-    const underlineElements = document.querySelectorAll('.underline');
+const getRandomColor = () => accentColors[Math.floor(Math.random() * accentColors.length)];
 
-    underlineElements.forEach(element => {
-        // 鼠标悬停事件
-        element.addEventListener('mouseover', function () {
-            const randomColor = getRandomColor();
-            // 创建一个临时样式规则来修改伪元素
-            const styleId = 'temp-underline-color-' + Date.now();
-            let styleElement = document.getElementById(styleId);
+// 将 CSS 变量应用到目标元素，避免频繁插入 <style>
+const setUnderlineHoverColor = (element, color) => {
+    element.style.setProperty('--underline-hover-color', color);
+};
 
-            if (!styleElement) {
-                styleElement = document.createElement('style');
-                styleElement.id = styleId;
-                document.head.appendChild(styleElement);
-            }
+const bindUnderlineEffect = (element) => {
+    if (!element || element.dataset.underlineBound === 'true') {
+        return;
+    }
 
-            // 为当前元素创建特定的选择器，使用唯一标识
-            const uniqueSelector = `#${this.id || this.className.split(' ').join('.')}`;
-            const selector = `p span.underline:hover::after, [dangerouslySetInnerHTML] span.underline:hover::after, .underline:hover::after`;
+    element.dataset.underlineBound = 'true';
 
-            styleElement.textContent = `${selector} { background-color: ${randomColor} !important; }`;
-
-            // 存储样式元素引用，以便稍后移除
-            this._tempStyleElement = styleElement;
-        });
-
-        // 鼠标离开事件
-        element.addEventListener('mouseout', function () {
-            // 移除临时样式
-            if (this._tempStyleElement && this._tempStyleElement.parentNode) {
-                this._tempStyleElement.parentNode.removeChild(this._tempStyleElement);
-                this._tempStyleElement = null;
-            }
-        });
+    element.addEventListener('mouseenter', () => {
+        setUnderlineHoverColor(element, getRandomColor());
     });
-}
 
-// 在页面加载完成后执行
+    element.addEventListener('mouseleave', () => {
+        setUnderlineHoverColor(element, DEFAULT_HOVER_COLOR);
+    });
+};
+
+const setupRandomUnderlineColors = () => {
+    document.querySelectorAll('.underline').forEach(bindUnderlineEffect);
+};
+
+// 初始绑定
 document.addEventListener('DOMContentLoaded', setupRandomUnderlineColors);
 
-// 当React内容更新后重新设置（因为内容是动态加载的）
-const observer = new MutationObserver(() => {
-    setupRandomUnderlineColors();
+// 监听 React 动态渲染，按需为新增节点绑定
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.nodeType !== Node.ELEMENT_NODE) return;
+
+            if (node.matches?.('.underline')) {
+                bindUnderlineEffect(node);
+            }
+
+            node.querySelectorAll?.('.underline').forEach(bindUnderlineEffect);
+        });
+    });
 });
 
 observer.observe(document.body, {
