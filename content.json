@@ -16,29 +16,40 @@
         "title": "保持好奇 也保持自在",
         "description": "Collaborating with diverse people is something I truly enjoy.<br />If you want to <a href=\"mailto:wenjie.xu.cn@outlook.com\" class=\"underline\">contact me</a>, I'll be happy to connect!"
     },
-    "portfolio": {
-        "title": "Portfolio",
+    "websites": {
+        "title": "Websites",
         "items": [
+            {
+                "id": "personal",
+                "title": "个人主页",
+                "subtitle": "我的个人介绍网站",
+                "image": "https://picsum.photos/seed/personal/600/350.jpg",
+                "url": "https://waynexucn.github.io/",
+                "description": "关于我的更多信息"
+            },
             {
                 "id": "mdfriday",
                 "title": "MDFriday",
+                "subtitle": "Markdown编辑器",
                 "image": "https://picsum.photos/seed/mdfriday/600/350.jpg",
                 "url": "#",
-                "type": "image"
+                "description": "轻量级的Markdown编辑工具"
             },
             {
-                "id": "book",
-                "title": "Book",
-                "image": null,
+                "id": "blog",
+                "title": "技术博客",
+                "subtitle": "我的技术分享",
+                "image": "https://picsum.photos/seed/blog/600/350.jpg",
                 "url": "#",
-                "type": "colorful",
-                "colors": [
-                    "bg-purple-800",
-                    "bg-black",
-                    "bg-green-700",
-                    "bg-red-800",
-                    "bg-orange-500"
-                ]
+                "description": "分享前端开发和其他技术内容"
+            },
+            {
+                "id": "projects",
+                "title": "项目集合",
+                "subtitle": "作品集",
+                "image": "https://picsum.photos/seed/projects/600/350.jpg",
+                "url": "#",
+                "description": "查看我的所有项目"
             }
         ]
     },

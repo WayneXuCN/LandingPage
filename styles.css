@@ -71,14 +71,29 @@ body {
     background-color: var(--underline-hover-color) !important;
 }
 
-/* 作品集卡片动画 */
-.portfolio-item {
+/* 网站导航卡片样式 - 与原Portfolio样式保持一致 */
+.website-item {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 240px;
 }
 
-.portfolio-item:hover {
+.website-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.website-item:hover .card-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* 悬停时显示描述信息 */
+.website-item:hover .website-description {
+    transform: translateY(0);
+}
+
+.website-item:hover .website-description-text {
+    opacity: 1;
+    transition-delay: 0.1s;
 }
 
 /* 精选文章卡片动画 */

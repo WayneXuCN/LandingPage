@@ -22,8 +22,8 @@ const DEFAULT_CONTENT = {
         description: "Join us and witness every step as a one-person company grows from chaos to clarity — with <span class=\"underline\">MDFriday</span> as the engine behind it.",
 
     },
-    portfolio: {
-        title: "Portfolio",
+    websites: {
+        title: "Websites",
         items: []
     },
     featuredPosts: {
@@ -55,7 +55,7 @@ const mergeContent = (data = {}) => {
     const site = mergeSection(data.site, DEFAULT_CONTENT.site);
     const header = mergeSection(data.header, DEFAULT_CONTENT.header);
     const hero = mergeSection(data.hero, DEFAULT_CONTENT.hero);
-    const portfolio = mergeListSection(data.portfolio, DEFAULT_CONTENT.portfolio);
+    const websites = mergeListSection(data.websites, DEFAULT_CONTENT.websites);
     const featuredPosts = {
         ...mergeListSection(data.featuredPosts, DEFAULT_CONTENT.featuredPosts),
         seeAllText: data.featuredPosts?.seeAllText ?? DEFAULT_CONTENT.featuredPosts.seeAllText,
@@ -68,7 +68,7 @@ const mergeContent = (data = {}) => {
             : DEFAULT_CONTENT.footer.socialLinks
     };
 
-    return { site, header, hero, portfolio, featuredPosts, footer };
+    return { site, header, hero, websites, featuredPosts, footer };
 };
 
 // 更新 favicon，确保移动端与桌面端一致
@@ -117,30 +117,17 @@ const openInNewTab = (url) => {
     window.open(url, '_blank', 'noopener,noreferrer');
 };
 
-const PortfolioItem = ({ item }) => {
+const WebsiteItem = ({ item }) => {
     const handleClick = () => openInNewTab(item.url);
 
-    if (item.type === 'colorful') {
-        const colors = Array.isArray(item.colors) ? item.colors : [];
-        return (
-            <div className="relative overflow-hidden rounded-lg shadow-md card-hover portfolio-item" onClick={handleClick}>
-                <div className="w-full h-64 bg-purple-900 flex flex-col">
-                    {colors.map((color, index) => (
-                        <div key={`${item.id}-${index}`} className={`h-1/6 ${color}`}></div>
-                    ))}
-                </div>
-                <div className="absolute inset-0 flex items-start p-6">
-                    <h3 className="text-white text-2xl font-bold">{item.title}</h3>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className="relative overflow-hidden rounded-lg shadow-md card-hover portfolio-item" onClick={handleClick}>
+        <div className="relative overflow-hidden rounded-lg shadow-md card-hover portfolio-item website-item" onClick={handleClick}>
             <img src={item.image} alt={item.title} className="w-full h-64 object-cover" loading="lazy" />
-            <div className="absolute inset-0 bg-black bg-opacity-40 card-overlay flex items-end p-6">
+            <div className="absolute inset-0 bg-black bg-opacity-40 card-overlay transition-all duration-300 flex flex-col justify-between p-6">
                 <h3 className="text-white text-2xl font-bold">{item.title}</h3>
+                <div className="transform translate-y-full transition-transform duration-300 website-description">
+                    <p className="text-white text-sm mb-2 opacity-0 transition-opacity duration-300 website-description-text">{item.description}</p>
+                </div>
             </div>
         </div>
     );
@@ -197,7 +184,7 @@ const App = () => {
         return <div className="flex justify-center items-center h-screen text-gray-600">内容加载中...</div>;
     }
 
-    const { header, hero, portfolio, featuredPosts, footer } = content;
+    const { header, hero, websites, featuredPosts, footer } = content;
 
     return (
         <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
@@ -221,12 +208,12 @@ const App = () => {
 
             </section>
 
-            {/* Portfolio 区块 */}
+            {/* Websites 区块 */}
             <section className="mb-12 sm:mb-16 md:mb-20">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 display-font">{portfolio.title}</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 display-font">{websites.title}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                    {portfolio.items.map((item) => (
-                        <PortfolioItem key={item.id || item.title} item={item} />
+                    {websites.items.map((item) => (
+                        <WebsiteItem key={item.id || item.title} item={item} />
                     ))}
                 </div>
             </section>
