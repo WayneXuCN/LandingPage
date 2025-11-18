@@ -40,6 +40,12 @@ const DEFAULT_CONTENT = {
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
+const NAV_LINKS = [
+    { label: '首页', href: 'index.html' },
+    { label: '关于', href: 'about.html' },
+    { label: '联系', href: 'contact.html' }
+];
+
 // 深度合并：保证缺省字段有值
 const mergeContent = (data = {}) => {
     const mergeSection = (section = {}, fallback = {}) => ({
@@ -116,6 +122,44 @@ const openInNewTab = (url) => {
     if (!url) return;
     window.open(url, '_blank', 'noopener,noreferrer');
 };
+
+const PrimaryNav = () => {
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+
+    const isActive = (href) => {
+        if (!currentPath) return false;
+        if (href === 'index.html') {
+            return currentPath === '/' || currentPath.endsWith('/index.html');
+        }
+        return currentPath.endsWith(`/${href}`);
+    };
+
+    return (
+        <nav className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-600">
+            {NAV_LINKS.map((link, index) => (
+                <React.Fragment key={link.href}>
+                    {index > 0 && <span className="text-gray-300">/</span>}
+                    <a
+                        href={link.href}
+                        className={`transition-colors ${isActive(link.href) ? 'text-gray-900' : 'hover:text-gray-900'}`}
+                    >
+                        {link.label}
+                    </a>
+                </React.Fragment>
+            ))}
+        </nav>
+    );
+};
+
+const HeaderBar = ({ header }) => (
+    <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12 sm:mb-16 md:mb-20">
+        <div className="flex items-center">
+            <img src={header.avatar} alt={header.name} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4" loading="lazy" />
+            <span className="font-medium text-gray-800 text-lg">{header.name}</span>
+        </div>
+        <PrimaryNav />
+    </header>
+);
 
 const WebsiteItem = ({ item }) => {
     const handleClick = () => openInNewTab(item.url);
@@ -196,12 +240,7 @@ const App = () => {
     return (
         <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
             {/* 头部信息 */}
-            <header className="flex justify-between items-center mb-12 sm:mb-16 md:mb-20">
-                <div className="flex items-center">
-                    <img src={header.avatar} alt={header.name} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4" loading="lazy" />
-                    <span className="font-medium text-gray-800 text-lg">{header.name}</span>
-                </div>
-            </header>
+            <HeaderBar header={header} />
 
             {/* Hero 区块 */}
             <section className="mb-12 sm:mb-16 md:mb-20">
