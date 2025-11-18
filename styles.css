@@ -87,20 +87,23 @@ body {
 }
 
 /* 悬停时显示描述信息 */
-.website-item:hover .website-description {
-    transform: translateY(0);
-}
-
 .website-item:hover .website-description-text {
     opacity: 1;
+    transform: translateY(0);
     transition-delay: 0.1s;
 }
 
-/* 精选文章卡片动画 */
+/* 精选文章卡片动画 - 与网站卡片保持一致 */
 .featured-post-item {
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 240px;
 }
 
 .featured-post-item:hover {
-    transform: translateX(5px);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.featured-post-item:hover .card-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
 }
