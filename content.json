@@ -4,7 +4,7 @@
         "author": "徐文杰",
         "favicon": {
             "ico": "https://xwj770427414.oss-cn-beijing.aliyuncs.com/img/favicon.ico",
-            "appleTouchIcon": "https://xwj770427414.oss-cn-beijing.aliyuncs.com/img/apple-touch-icon.png"
+            "appleTouchIcon": "https://xwj770427414.oss-cn-beijing.aliyuncs.com/img/prof_pic.jpg"
         }
     },
     "header": {
@@ -134,7 +134,7 @@
         "hero": {
             "subtitle": "STORY",
             "title": "以个人品牌为实验室，串联内容、工具与产品",
-            "description": "十年+产品与内容经验，始终在探索：如何用 <span class=\"underline\">清晰的结构</span> 讲述复杂的主题？如何让工具真正帮助创作者？"description": "这份作品集是我持续「打磨感知」和「构建作品」的公共记录。""
+            "description": "十年+产品与内容经验，始终在探索：如何用 <span class=\"underline\">清晰的结构</span> 讲述复杂的主题？如何让工具真正帮助创作者？"
         },
         "timeline": {
             "subtitle": "TIMELINE",

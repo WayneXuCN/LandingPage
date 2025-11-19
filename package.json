@@ -10,7 +10,9 @@
     "watch:js": "node build.js --watch",
     "build": "npm-run-all build:css build:js",
     "dev": "npm-run-all --parallel watch:css watch:js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,jsx,json,css,html}'",
+    "format:check": "prettier --check '**/*.{js,jsx,json,css,html}'"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
     "esbuild": "^0.27.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^3.4.18"

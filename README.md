@@ -38,6 +38,7 @@ npm run build     # 生产构建（assets/css + assets/js）
 - **React 模块化**：`src/components` / `src/lib` 中维护逻辑与组件，构建后输出到 `assets/js/app.bundle.js`。
 - **统一样式管线**：所有 Tailwind 与自定义样式写在 `src/styles/main.css`，构建后得到 `assets/css/main.css`。
 - **静态页复用**：`about.html`、`contact.html`、`404.html` 等直接引用同一份 CSS/JS，保持体验一致。
+- **代码格式化**：使用 Prettier 保持代码风格一致性，提交代码前请运行 `npm run format`。
 - **CI & 部署**：GitHub Actions 会执行 `npm ci` + `npm run build`，服务器只需拉取仓库即可使用最新资源。
 
 ## 常用脚本
@@ -46,8 +47,8 @@ npm run build     # 生产构建（assets/css + assets/js）
 - `npm run build:js`：单独构建 React 代码（esbuild）。
 - `npm run build:css`：单独构建 Tailwind（含 PostCSS/Autoprefixer）。
 - `npm run watch:*`：分别监听 JS/CSS。
-
-欢迎基于目前的结构继续扩展更多作品或功能。
+- `npm run format`：使用 Prettier 格式化项目中所有的 JavaScript、JSX、JSON、CSS 和 HTML 文件。
+- `npm run format:check`：检查代码是否符合 Prettier 格式化要求，但不实际修改文件。
 
 ## 邮件发送功能
 
