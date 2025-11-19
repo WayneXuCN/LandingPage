@@ -136,7 +136,9 @@ const Contact = ({ content }) => {
                       ></i>
                     </div>
                     <div>
-                      <h4 className="font-medium text-gray-900">{item.label}</h4>
+                      <h4 className="font-medium text-gray-900">
+                        {item.label}
+                      </h4>
                       {item.handle && (
                         <p className="text-xs text-gray-500">{item.handle}</p>
                       )}

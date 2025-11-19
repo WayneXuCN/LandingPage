@@ -3,7 +3,7 @@ import React from 'react';
 const Hero = ({ subtitle, title, description }) => {
   return (
     <section className="mb-12 sm:mb-16 md:mb-20">
-      <h1 className="text-red-500 text-sm font-bold mb-4 sm:mb-6 tracking-widest">
+      <h1 className="text-red-500 text-sm font-bold mb-4 sm:mb-6 tracking-[0.2em] uppercase">
         {subtitle}
       </h1>
       <h2

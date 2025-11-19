@@ -23,7 +23,7 @@ export const DEFAULT_CONTENT = {
     subtitle: 'WENJIE XU',
     title: '保持好奇 也保持自在',
     description:
-      "Collaborating with diverse people is something I truly enjoy.<br />If you want to <a href=\"mailto:wenjie.xu.cn@outlook.com\" class=\"underline\">contact me</a>, I'll be happy to connect!",
+      'Collaborating with diverse people is something I truly enjoy.<br />If you want to <a href="mailto:wenjie.xu.cn@outlook.com" class="underline">contact me</a>, I\'ll be happy to connect!',
   },
   websites: {
     title: 'Websites',

@@ -24,7 +24,7 @@
         "title": "个人网站",
         "subtitle": "我的详细个人介绍网站",
         "image": "https://picsum.photos/seed/personal/600/350.jpg",
-        "url": "https://waynexucu.github.io/",
+        "url": "#",
         "description": "关于我的更多信息"
       },
       {
@@ -180,7 +180,7 @@
         "title": "为什么要做一款新的 Markdown 编辑器？",
         "description": "它是创作者的「第二大脑控台」。我想把语法提示、结构指引、资产管理整合在一个清爽的界面里，让创作像调色一样自由。",
         "linkText": "查看最新版本",
-        "linkUrl": "https://waynexucn.github.io/"
+        "linkUrl": "contact.html"
       }
     },
     "philosophy": {
