@@ -5,7 +5,6 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  console.log('ThemeProvider rendering');
   const [theme, setTheme] = useState('light');
 
   useEffect(() => {
@@ -27,7 +26,6 @@ export const ThemeProvider = ({ children }) => {
         document.documentElement.classList.remove('dark');
       }
     } catch (e) {
-      console.warn('Failed to access localStorage or matchMedia:', e);
       // Fallback to light mode or default
       setTheme('light');
       document.documentElement.classList.remove('dark');
@@ -40,7 +38,7 @@ export const ThemeProvider = ({ children }) => {
     try {
       localStorage.setItem('theme', newTheme);
     } catch (e) {
-      console.warn('Failed to save theme to localStorage:', e);
+      // Ignore localStorage errors
     }
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -55,7 +53,6 @@ export const ThemeProvider = ({ children }) => {
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
-    console.error('useTheme must be used within a ThemeProvider');
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;

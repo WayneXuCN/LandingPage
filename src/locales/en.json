@@ -31,7 +31,7 @@
     },
     "hero": {
         "subtitle": "WENJIE XU",
-        "title": "Stay Curious<br class=\"sm:hidden\"> Stay Authentic",
+        "title": "<span class=\"inline-block\">Stay Curious</span> <span class=\"inline-block\">Stay Authentic</span>",
         "description": "Collaborating with diverse people is something I truly enjoy.<br>If you want to <a href=\"mailto:wenjie.xu.cn@outlook.com\" class=\"underline\">contact me</a>, I'll be happy to connect!"
     },
     "websites": {

@@ -218,7 +218,7 @@ const Contact = ({ content }) => {
             >
               <option value='consulting'>{formOptions?.consulting || '产品 / 体验咨询'}</option>
               <option value='content'>{formOptions?.content || '内容共创'}</option>
-              <option value='friend'>{formOptions?.friend || '生活交友'}</option>
+              <option value='share'>{formOptions?.share || '生活交友'}</option>
               <option value='other'>{formOptions?.other || '其他想法'}</option>
             </select>
           </div>

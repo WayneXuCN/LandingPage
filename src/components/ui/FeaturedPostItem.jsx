@@ -1,20 +1,22 @@
 import React from 'react';
-import { openInNewTab } from '../../lib/navigation.jsx';
+import Image from 'next/image';
 
 const FeaturedPostItem = ({ item }) => (
-  <div
-    className='relative overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item'
-    onClick={() => openInNewTab(item.url)}
-    role='button'
-    tabIndex={0}
-    onKeyDown={event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openInNewTab(item.url);
-      }
-    }}
+  <a
+    href={item.url}
+    target='_blank'
+    rel='noopener noreferrer'
+    className='relative block overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item'
   >
-    <img src={item.image} alt={item.title} className='w-full h-64 object-cover' loading='lazy' />
+    <div className='relative w-full h-64'>
+      <Image
+        src={item.image}
+        alt={item.title}
+        fill
+        className='object-cover'
+        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
+      />
+    </div>
     <div
       className={`absolute inset-0 ${item.overlayColor} ${item.overlayOpacity} card-overlay transition-all duration-300 flex flex-col p-6`}
     >
@@ -25,7 +27,7 @@ const FeaturedPostItem = ({ item }) => (
         </p>
       </div>
     </div>
-  </div>
+  </a>
 );
 
 export default FeaturedPostItem;

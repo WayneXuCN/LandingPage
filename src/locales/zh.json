@@ -31,7 +31,7 @@
     },
     "hero": {
         "subtitle": "WENJIE XU",
-        "title": "保持好奇<br class=\"sm:hidden\"> 保持自在",
+        "title": "<span class=\"inline-block\">保持好奇</span> <span class=\"inline-block\">保持自在</span>",
         "description": "Collaborating with diverse people is something I truly enjoy.<br>If you want to <a href=\"mailto:wenjie.xu.cn@outlook.com\" class=\"underline\">contact me</a>, I'll be happy to connect!"
     },
     "websites": {
@@ -217,7 +217,7 @@
     "contact": {
         "hero": {
             "subtitle": "LET'S CONNECT",
-            "title": "保持对话<br class=\"sm:hidden\"> 思想碰撞",
+            "title": "<span class=\"inline-block\">保持对话</span> <span class=\"inline-block\">思想碰撞</span>",
             "description": "<span class=\"underline\">学术探讨、课题合作或数据分享</span>，都可以在这里发起"
         },
         "cards": {
@@ -263,42 +263,42 @@
         "formLabels": {
             "name": "称呼",
             "email": "邮箱",
-            "topic": "项目类型",
+            "topic": "交流类型",
             "message": "简要说明"
         },
         "formPlaceholders": {
-            "name": "例如：李雷 / 小团队 / 品牌方",
+            "name": "例如：徐同学 / 徐教授 / 课题组",
             "email": "you@example.com",
-            "message": "目标、时间、你期待的成果..."
+            "message": "关于论文探讨、合作意向或会议邀请..."
         },
         "formOptions": {
-            "consulting": "产品 / 体验咨询",
-            "content": "内容共创",
-            "friend": "生活交友",
+            "consulting": "学术交流",
+            "content": "课题合作",
+            "share": "资源分享",
             "other": "其他想法"
         },
         "formSubmit": {
-            "default": "发送给 Wenjie",
+            "default": "发送给 Wenjie Xu",
             "sending": "发送中...",
-            "success": "发送成功！我会尽快回复",
+            "success": "发送成功！我会尽快查收",
             "error": "发送失败，请稍后重试"
         },
         "services": {
             "items": [
                 {
-                    "subtitle": "CONSULTING",
-                    "title": "产品诊断",
-                    "description": "快速梳理产品结构、体验断点与迭代优先级。"
+                    "subtitle": "Research",
+                    "title": "风险建模",
+                    "description": "复杂系统的风险评估与仿真"
                 },
                 {
-                    "subtitle": "CONTENT",
-                    "title": "联合创作",
-                    "description": "共建课程、白皮书或品牌叙事，确保有温度也有事实。"
+                    "subtitle": "Analysis",
+                    "title": "决策支持",
+                    "description": "基于运筹优化的资源配置策略"
                 },
                 {
-                    "subtitle": "TOOLS",
-                    "title": "MyWork",
-                    "description": "如果你想为创作工具提供建议，我会第一时间优先处理。"
+                    "subtitle": "Data",
+                    "title": "数据洞察",
+                    "description": "多源异构数据的挖掘与可视化"
                 }
             ]
         }
