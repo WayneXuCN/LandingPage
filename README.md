@@ -77,6 +77,8 @@ The static files will be generated in the `out/` directory.
     - `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
     - `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
     - `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+  - Optional for Google Analytics:
+    - `NEXT_PUBLIC_GA_ID` (e.g., `G-XXXXXXXXXX`)
 
 ## 📄 License
 

@@ -77,6 +77,8 @@ npm run build
     - `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
     - `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
     - `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+  - Google Analytics (可选):
+    - `NEXT_PUBLIC_GA_ID` (例如: `G-XXXXXXXXXX`)
 
 ## 📄 许可证
 

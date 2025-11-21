@@ -1,5 +1,6 @@
 import React from 'react';
 import { Noto_Sans } from 'next/font/google';
+import Script from 'next/script';
 import { LanguageProvider } from '../lib/LanguageContext';
 import { ThemeProvider } from '../lib/ThemeContext';
 import UnderlineEffects from '../components/ui/UnderlineEffects';
@@ -58,6 +59,24 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className='bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 font-sans'>
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy='afterInteractive'
+            />
+            <Script id='google-analytics' strategy='afterInteractive'>
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
         <LanguageProvider>
           <ThemeProvider>
             {children}

@@ -17,7 +17,7 @@
         {
             "label": "关于",
             "href": "about.html",
-            "hidden": false
+            "hidden": true
         },
         {
             "label": "联系",
