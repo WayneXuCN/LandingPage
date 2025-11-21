@@ -1,12 +1,26 @@
 import React from 'react';
 import { LanguageProvider } from '../lib/LanguageContext';
 import { ThemeProvider } from '../lib/ThemeContext';
+import contentData from '../../content.json';
 import './globals.css';
 
-export const metadata = {
-  title: 'Wenjie Xu - Portfolio',
-  description: 'Wenjie Xu 的个人作品集，展示精选作品与项目实践。',
+// 获取默认语言的元数据
+const getDefaultMetadata = () => {
+  const defaultLang = 'zh';
+  const siteData = contentData[defaultLang]?.site || contentData.en?.site || {};
+  const favicon = siteData.favicon || {};
+  
+  return {
+    title: siteData.title || 'Portfolio',
+    description: siteData.description || 'Personal Portfolio Website',
+    icons: {
+      icon: favicon.ico || '/favicon.ico',
+      apple: favicon.appleTouchIcon || '/apple-touch-icon.png',
+    },
+  };
 };
+
+export const metadata = getDefaultMetadata();
 
 export default function RootLayout({ children }) {
   return (
