@@ -1,6 +1,7 @@
 import React from 'react';
 import { LanguageProvider } from '../lib/LanguageContext';
 import { ThemeProvider } from '../lib/ThemeContext';
+import UnderlineEffects from '../components/ui/UnderlineEffects';
 import contentData from '../../content.json';
 import './globals.css';
 
@@ -61,9 +62,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
         <LanguageProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <UnderlineEffects />
+          </ThemeProvider>
         </LanguageProvider>
-        <script src="/assets/js/underline-effects.js" defer></script>
       </body>
     </html>
   );
