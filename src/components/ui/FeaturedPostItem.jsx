@@ -3,6 +3,12 @@ import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { resolveContentHref } from '../../lib/urlUtils.js';
 
+// 定义特定卡片的样式映射
+const POST_STYLES = {
+  'about-MyWork': 'bg-yellow-500 bg-opacity-80',
+  'markdown-syntax': 'bg-blue-900 bg-opacity-80',
+};
+
 /**
  * FeaturedPostItem
  * - 默认显示：标题 + 第一分类（category）
@@ -13,6 +19,10 @@ const FeaturedPostItem = ({ item, language = 'zh' }) => {
   const categories = item.categories || (item.category ? [item.category] : []);
   const pubDate = item.pubDate || item.updated || item.published || null;
   const isRSS = item.isRSS || false;
+
+  // 获取特定样式，如果没有则为 null（使用默认黑色渐变）
+  const customOverlayClass = POST_STYLES[item.id] || null;
+  const isBlackOverlay = !customOverlayClass;
 
   // 格式化日期，使用传入的语言环境，避免 hydration mismatch
   const formattedDate = React.useMemo(() => {
@@ -48,10 +58,16 @@ const FeaturedPostItem = ({ item, language = 'zh' }) => {
       </div>
 
       <div
-        className={`absolute inset-0 ${item.overlayColor} ${item.overlayOpacity} card-overlay transition-all duration-300 flex flex-col justify-between p-6`}
+        className={`absolute inset-0 ${
+          isBlackOverlay
+            ? 'bg-gradient-to-b from-black/80 via-black/20 to-black/90 dark:via-black/40'
+            : customOverlayClass
+        } card-overlay transition-all duration-300 flex flex-col justify-between p-6`}
       >
         <div>
-          <h3 className='text-white text-xl font-bold mb-2 line-clamp-2'>{item.title}</h3>
+          <h3 className='text-white text-xl font-bold mb-2 line-clamp-2 drop-shadow-md'>
+            {item.title}
+          </h3>
         </div>
 
         <div className='mt-auto'>
@@ -94,8 +110,6 @@ FeaturedPostItem.propTypes = {
     categories: PropTypes.array,
     category: PropTypes.string,
     pubDate: PropTypes.string,
-    overlayColor: PropTypes.string,
-    overlayOpacity: PropTypes.string,
     isRSS: PropTypes.bool,
   }).isRequired,
   language: PropTypes.string,

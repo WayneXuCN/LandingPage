@@ -81,53 +81,22 @@
                     "parser": "jekyllFeed"
                 }
             ],
-            "limit": 4
+            "limit": 6
         },
         "items": [
-            {
-                "id": "how-MyWork-works",
-                "title": "How MyWork Works?",
-                "image": "https://picsum.photos/seed/chart123/600/350.jpg",
-                "url": "#",
-                "description": "深入了解MyWork的工作原理和设计理念",
-                "overlayColor": "bg-black",
-                "overlayOpacity": "bg-opacity-70"
-            },
-            {
-                "id": "about-MyWork",
-                "title": "About MyWork",
-                "image": "https://picsum.photos/seed/about456/600/350.jpg",
-                "url": "#",
-                "description": "MyWork的故事和使命",
-                "overlayColor": "bg-yellow-500",
-                "overlayOpacity": "bg-opacity-80"
-            },
-            {
-                "id": "markdown-syntax",
-                "title": "Markdown Syntax Guide",
-                "image": "https://picsum.photos/seed/markdown789/600/350.jpg",
-                "url": "#",
-                "description": "完整的Markdown语法参考指南",
-                "overlayColor": "bg-blue-900",
-                "overlayOpacity": "bg-opacity-80"
-            },
             {
                 "id": "math-typesetting",
                 "title": "Math Typesetting - use Mathematical notation in blog posts",
                 "image": "https://picsum.photos/seed/math101/600/350.jpg",
                 "url": "#",
-                "description": "在博客中使用数学公式和符号",
-                "overlayColor": "bg-black",
-                "overlayOpacity": "bg-opacity-80"
+                "description": "在博客中使用数学公式和符号"
             },
             {
                 "id": "rich-content",
                 "title": "Rich Content",
                 "image": "https://picsum.photos/seed/richcontent202/600/350.jpg",
                 "url": "#",
-                "description": "创建丰富多样的博客内容",
-                "overlayColor": "bg-black",
-                "overlayOpacity": "bg-opacity-80"
+                "description": "创建丰富多样的博客内容"
             }
         ],
         "seeAllText": "See All Posts",

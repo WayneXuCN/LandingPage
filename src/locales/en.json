@@ -81,53 +81,29 @@
                     "parser": "jekyllFeed"
                 }
             ],
-            "limit": 4
+            "limit": 6
         },
         "items": [
-            {
-                "id": "how-MyWork-works",
-                "title": "How MyWork Works?",
-                "image": "https://picsum.photos/seed/chart123/600/350.jpg",
-                "url": "#",
-                "description": "Deep dive into MyWork's principles and design philosophy",
-                "overlayColor": "bg-black",
-                "overlayOpacity": "bg-opacity-70"
-            },
-            {
-                "id": "about-MyWork",
-                "title": "About MyWork",
-                "image": "https://picsum.photos/seed/about456/600/350.jpg",
-                "url": "#",
-                "description": "The story and mission behind MyWork",
-                "overlayColor": "bg-yellow-500",
-                "overlayOpacity": "bg-opacity-80"
-            },
             {
                 "id": "markdown-syntax",
                 "title": "Markdown Syntax Guide",
                 "image": "https://picsum.photos/seed/markdown789/600/350.jpg",
                 "url": "#",
-                "description": "Complete Markdown syntax reference guide",
-                "overlayColor": "bg-blue-900",
-                "overlayOpacity": "bg-opacity-80"
+                "description": "Complete Markdown syntax reference guide"
             },
             {
                 "id": "math-typesetting",
                 "title": "Math Typesetting - use Mathematical notation in blog posts",
                 "image": "https://picsum.photos/seed/math101/600/350.jpg",
                 "url": "#",
-                "description": "Using mathematical formulas and symbols in blog posts",
-                "overlayColor": "bg-black",
-                "overlayOpacity": "bg-opacity-80"
+                "description": "Using mathematical formulas and symbols in blog posts"
             },
             {
                 "id": "rich-content",
                 "title": "Rich Content",
                 "image": "https://picsum.photos/seed/richcontent202/600/350.jpg",
                 "url": "#",
-                "description": "Creating rich and diverse blog content",
-                "overlayColor": "bg-black",
-                "overlayOpacity": "bg-opacity-80"
+                "description": "Creating rich and diverse blog content"
             }
         ],
         "seeAllText": "See All Posts",

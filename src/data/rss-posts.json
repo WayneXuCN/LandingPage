@@ -47,6 +47,30 @@
             "overlayColor": "bg-black",
             "overlayOpacity": "bg-opacity-70",
             "isRSS": true
+        },
+        {
+            "id": "rss-zh-4-c2f2a071",
+            "title": "2024 年工作总结",
+            "description": "2024 年...",
+            "url": "https://waynexucn.github.io//blog/2024/2024%E5%B9%B4%E7%A7%91%E7%A0%94%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/",
+            "image": "https://picsum.photos/seed/7b308d4b/600/350",
+            "pubDate": "2024-12-15T22:30:35.000Z",
+            "categories": ["Life", "Blogging"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-zh-5-553ab684",
+            "title": "「转载」中文的常态与变态",
+            "description": "转载自余光中先生的文章「中文的常态与变态」，并不代表完全认同其所有观点...",
+            "url": "https://waynexucn.github.io//blog/2024/%E8%BD%AC%E8%BD%BD%E4%B8%AD%E6%96%87%E7%9A%84%E5%B8%B8%E6%80%81%E4%B8%8E%E5%8F%98%E6%80%81/",
+            "image": "https://picsum.photos/seed/596ea502/600/350",
+            "pubDate": "2024-12-02T15:13:29.000Z",
+            "categories": ["Writing", "Chinese", "Expression", "Article"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
         }
     ],
     "en": [
@@ -94,6 +118,30 @@
             "image": "https://picsum.photos/seed/013046cc/600/350",
             "pubDate": "2025-01-01T18:00:00.000Z",
             "categories": ["Life", "Thoughts", "Discussion"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en-4-49360153",
+            "title": "2024 Work Summary",
+            "description": "2024...",
+            "url": "https://waynexucn.github.io//en_US/blog/2024/2024%E5%B9%B4%E7%A7%91%E7%A0%94%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/",
+            "image": "https://picsum.photos/seed/215fc77a/600/350",
+            "pubDate": "2024-12-15T22:30:35.000Z",
+            "categories": ["Life", "Blogging"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en-5-86c98a8c",
+            "title": "Repost: The Normality and Abnormality of Chinese",
+            "description": "A reprint of Mr. Yu Kwang-chung's article \"The Normality and Abnormality of Chinese,\" which does not mean I fully agree with all his views....",
+            "url": "https://waynexucn.github.io//en_US/blog/2024/%E8%BD%AC%E8%BD%BD%E4%B8%AD%E6%96%87%E7%9A%84%E5%B8%B8%E6%80%81%E4%B8%8E%E5%8F%98%E6%80%81/",
+            "image": "https://picsum.photos/seed/a4c117e0/600/350",
+            "pubDate": "2024-12-02T15:13:29.000Z",
+            "categories": ["Writing", "Chinese", "Expression", "Article"],
             "overlayColor": "bg-black",
             "overlayOpacity": "bg-opacity-70",
             "isRSS": true

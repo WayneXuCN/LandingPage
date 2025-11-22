@@ -21,9 +21,9 @@ const WebsiteItem = ({ item, priority = false }) => (
         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
       />
     </div>
-    <div className='absolute inset-0 bg-black bg-opacity-40 card-overlay transition-all duration-300 flex flex-col p-6'>
+    <div className='absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/60 dark:via-black/40 card-overlay transition-all duration-300 flex flex-col p-6'>
       <div>
-        <h3 className='text-white text-2xl font-bold mb-2'>{item.title}</h3>
+        <h3 className='text-white text-2xl font-bold mb-2 drop-shadow-md'>{item.title}</h3>
         <p className='text-white text-sm opacity-0 transition-opacity duration-300 website-description-text transform translate-y-2 transition-transform duration-300'>
           {item.description}
         </p>
