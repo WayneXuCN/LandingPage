@@ -6,7 +6,7 @@ import FeaturedPostItem from './FeaturedPostItem';
 import Footer from './Footer';
 
 /**
- * Home.jsx (Astro React Island 版本)
+ * Home.jsx
  * 首页组件，包含 Hero、Websites、Featured Posts 和 Footer
  */
 const Home = ({ translations, language = 'zh', rssPosts = [] }) => {
@@ -37,9 +37,14 @@ const Home = ({ translations, language = 'zh', rssPosts = [] }) => {
     return combined.slice(0, Math.max(rssLimit, totalLimit));
   }, [featuredPosts, rssPosts]);
 
-  // 判断是否显示 See All 链接（URL 不为空且不是 #）
-  const showSeeAll =
-    featuredPosts?.seeAllUrl && featuredPosts.seeAllUrl !== '#' && featuredPosts?.seeAllText;
+  // 判断是否显示 See All 链接，需要同时满足以下条件：
+  // 1. 存在 seeAllUrl 且不是 '#'
+  // 2. 存在 seeAllText 且不为空
+  const showSeeAll = !!(
+    featuredPosts?.seeAllUrl &&
+    featuredPosts.seeAllUrl !== '#' &&
+    featuredPosts?.seeAllText
+  );
 
   return (
     <>
@@ -52,7 +57,7 @@ const Home = ({ translations, language = 'zh', rssPosts = [] }) => {
           <h2 className='text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 display-font'>
             {websites.title || 'Websites'}
           </h2>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'>
             {websites.items.map((item, index) => (
               <WebsiteItem key={item.id || index} item={item} priority={index < 2} />
             ))}
@@ -76,13 +81,15 @@ const Home = ({ translations, language = 'zh', rssPosts = [] }) => {
             ))}
           </div>
           {showSeeAll && (
-            <div className='mt-8 text-center'>
+            <div className='mt-8 flex justify-end'>
               <a
                 href={featuredPosts.seeAllUrl}
-                className='inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium'
+                className='group inline-flex items-center text-xl font-bold uppercase tracking-wider text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors duration-300'
               >
                 {featuredPosts.seeAllText}
-                <i className='fas fa-arrow-right ml-2 text-sm'></i>
+                <span className='ml-2 transform group-hover:translate-x-1 transition-transform duration-300'>
+                  &rarr;
+                </span>
               </a>
             </div>
           )}

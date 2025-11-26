@@ -23,7 +23,6 @@ const socialLinkSchema = z.object({
 const websiteItemSchema = z.object({
   id: z.string(),
   title: z.string(),
-  subtitle: z.string(),
   image: z.string(),
   url: z.string(),
   description: z.string(),

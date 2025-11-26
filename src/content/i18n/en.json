@@ -40,39 +40,34 @@
             {
                 "id": "Dashboard",
                 "title": "App Overview",
-                "subtitle": "Work Dashboard",
                 "image": "https://picsum.photos/seed/personal/600/350.jpg",
                 "url": "https://dashboard.wenjiexu.site",
-                "description": "My self-hosted work dashboard that aggregates information and common tools"
+                "description": "My self-hosted Glance work dashboard that aggregates information and common tools"
             },
             {
                 "id": "gitea",
-                "title": "Code Hosting",
-                "subtitle": "Gitea Service",
+                "title": "My Gitea",
                 "image": "https://picsum.photos/seed/gitea/600/350.jpg",
                 "url": "https://gitea.wenjiexu.site",
-                "description": "My private code hosting platform for managing personal projects and version control"
+                "description": "Self-hosted Gitea DevSecOps platform for managing personal projects and version control"
             },
             {
                 "id": "overleaf",
-                "title": "Paper Writing",
-                "subtitle": "Overleaf Service",
+                "title": "My Overleaf",
                 "image": "https://picsum.photos/seed/overleaf/600/350.jpg",
                 "url": "https://overleaf.wenjiexu.site",
-                "description": "Self-hosted online LaTeX editor for academic paper writing and typesetting"
+                "description": "Self-hosted LaTeX online editor for academic paper writing and typesetting"
             },
             {
                 "id": "blinko",
                 "title": "Flash Notes",
-                "subtitle": "Blinko Service",
                 "image": "https://picsum.photos/seed/blinko/600/350.jpg",
                 "url": "https://blinko.wenjiexu.site",
-                "description": "Lightweight personal note-taking tool for capturing ideas and thoughts instantly"
+                "description": "Self-hosted Blinko flash notes for capturing ideas and thoughts instantly"
             },
             {
                 "id": "blog",
                 "title": "Personal Blog",
-                "subtitle": "Sharing Personal Articles",
                 "image": "https://picsum.photos/seed/blog/600/350.jpg",
                 "url": "https://blog.wenjiexu.site",
                 "description": "Sharing personal articles, including tech insights, research experiences and life reflections"
@@ -80,7 +75,6 @@
             {
                 "id": "projects",
                 "title": "Personal Projects",
-                "subtitle": "Academic Research & Open Source Projects",
                 "image": "https://picsum.photos/seed/projects/600/350.jpg",
                 "url": "https://lab.wenjiexu.site/projects",
                 "description": "Explore my academic research projects and open-source works"
@@ -88,7 +82,6 @@
             {
                 "id": "personal",
                 "title": "Academic Homepage",
-                "subtitle": "Academic Homepage",
                 "image": "https://picsum.photos/seed/personal/600/350.jpg",
                 "url": "https://lab.wenjiexu.site",
                 "description": "My academic homepage, including personal introduction, academic activities and published papers"
@@ -134,7 +127,7 @@
             }
         ],
         "seeAllText": "See All Posts",
-        "seeAllUrl": "#"
+        "seeAllUrl": "https://blog.wenjiexu.site"
     },
     "footer": {
         "copyright": "© {startYear}-{currentYear} Wenjie Xu. All Rights Reserved.",
