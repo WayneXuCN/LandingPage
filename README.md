@@ -2,18 +2,19 @@
 
 [English](README.md) | [中文](README_zh.md)
 
-A minimalist personal landing page and digital business card built with **Next.js 16** and **Tailwind CSS**.
+A minimalist personal landing page and digital business card built with **Astro 5**, **React 19** and **Tailwind CSS**.
 
 ## ✨ Features
 
-- 🌍 **Internationalization**: Chinese/English language support with React Context
+- 🌍 **Internationalization**: Chinese/English language support with per-locale static pages
 - 🌙 **Dark Mode**: Theme switching with system preference detection and localStorage persistence
 - 📱 **Responsive Design**: Mobile-first design with Tailwind CSS
-- 📡 **RSS Aggregation**: Configurable RSS/Atom feed parser with multiple engine support
+- 📡 **RSS Aggregation**: Configurable RSS/Atom feed parser with Bun runtime support
 - 📧 **Contact Form**: Functional contact form using EmailJS
 - 📊 **Analytics**: Google Analytics integration (optional)
 - 🚀 **Performance Optimized**: Static site generation with Lighthouse-optimized scores
 - 🎨 **Modern UI**: Clean, professional design with smooth animations and transitions
+- ⚡ **React Islands**: Interactive components powered by Astro's islands architecture
 
 ## Preview
 
@@ -37,38 +38,48 @@ Run the test yourself: [Google Lighthouse PageSpeed Insights](https://pagespeed.
 
 ```text
 src/
-├── app/                 # Next.js App Router
-│   ├── (main)/          # Main route group with Header/Footer
-│   │   ├── about/       # About page
-│   │   ├── contact/     # Contact page
-│   │   └── page.jsx     # Home page
-│   ├── globals.css      # Global styles
-│   ├── layout.jsx       # Root layout (Providers, fonts, analytics)
-│   └── not-found.jsx    # 404 page with isolated layout
 ├── components/
-│   ├── layout/          # Layout components
-│   ├── pages/           # Page-specific components (Home, About, Contact)
-│   └── ui/              # Reusable UI components
-├── data/                # Dynamic data (RSS posts)
+│   └── astro/           # React island components
+│       ├── About.jsx    # About page component
+│       ├── Contact.jsx  # Contact page component
+│       ├── Footer.jsx   # Footer component
+│       ├── HeaderBar.jsx # Header with navigation
+│       ├── Home.jsx     # Home page component
+│       ├── Hero.jsx     # Hero section
+│       ├── ThemeToggle.jsx # Theme switcher
+│       ├── LanguageSwitcher.jsx # Language switcher
+│       └── ...          # Other UI components
+├── data/
 │   └── rss-posts.json   # Generated RSS feed data
-├── lib/                 # Context providers and utilities
-│   ├── LanguageContext.jsx    # Language state management
-│   └── ThemeContext.jsx       # Theme state management
+├── layouts/
+│   └── BaseLayout.astro # Global layout with meta, fonts, GA
 ├── locales/             # Internationalization files
 │   ├── config.js        # Locale configuration
 │   ├── en.json          # English content
 │   └── zh.json          # Chinese content
-├── scripts/             # Build scripts
-│   └── fetch-rss.js     # RSS aggregation script
-└── styles/              # Additional styles
+├── pages/
+│   ├── index.astro      # Root redirect to default locale
+│   ├── 404.astro        # Custom 404 page
+│   ├── en/              # English pages
+│   │   ├── index.astro
+│   │   ├── about.astro
+│   │   └── contact.astro
+│   └── zh/              # Chinese pages
+│       ├── index.astro
+│       ├── about.astro
+│       └── contact.astro
+├── styles/
+│   └── global.css       # Global styles
+└── scripts/
+    └── fetch-rss.bun.js # RSS aggregation script (Bun)
 ```
 
 ## Development
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- [Bun](https://bun.sh/) 1.0+ (recommended)
+- Or Node.js 18+
 
 ### Setup
 
@@ -77,7 +88,7 @@ src/
    ```bash
    git clone https://github.com/WayneXuCN/homepage.git
    cd homepage
-   npm install
+   bun install
    ```
 
 2. **Configure environment variables**:
@@ -92,21 +103,21 @@ src/
 
    ```env
    # EmailJS (required for contact form)
-   NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id_here
-   NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id_here
-   NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key_here
+   PUBLIC_EMAILJS_SERVICE_ID=your_service_id_here
+   PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id_here
+   PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key_here
 
    # Google Analytics (optional)
-   NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+   PUBLIC_GA_ID=G-XXXXXXXXXX
    ```
 
 3. **Run development server**:
 
    ```bash
-   npm run dev
+   bun run dev
    ```
 
-   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   Open [http://localhost:4321](http://localhost:4321) to view it in the browser.
 
 ## Build & Deploy
 
@@ -115,27 +126,27 @@ src/
 The project is configured for static site generation:
 
 ```bash
-npm run build
+bun run build
 ```
 
-The static files will be generated in the `out/` directory and can be deployed to any static hosting service (GitHub Pages, Vercel, Netlify, etc.).
+The static files will be generated in the `dist/` directory and can be deployed to any static hosting service (GitHub Pages, Vercel, Netlify, Cloudflare Pages, etc.).
 
 ### Build Process
 
 The build includes an automatic RSS aggregation step:
 
-1. **Pre-build**: `npm run prebuild` executes `node scripts/fetch-rss.js`
+1. **Pre-build**: `bun run prebuild` executes `bun run scripts/fetch-rss.bun.js`
 2. **RSS Fetching**: Fetches configured RSS/Atom feeds and generates `src/data/rss-posts.json`
-3. **Static Generation**: Next.js builds the static site with RSS data included
+3. **Static Generation**: Astro builds the static site with RSS data included
 
 ## Configuration
 
 ### Content Management
 
-All website content is managed through JSON files in `src/locales/`, supporting multiple languages, for example:
+All website content is managed through JSON files in `src/locales/`:
 
-- `src/locales/example.zh.json` - Chinese content
-- `src/locales/example.en.json` - English content
+- `src/locales/zh.json` - Chinese content
+- `src/locales/en.json` - English content
 
 Edit these files to update:
 
@@ -144,6 +155,28 @@ Edit these files to update:
 - Project items
 - Social links
 - SEO metadata
+
+### Adding a New Language
+
+1. Add language config to `src/locales/config.js`:
+
+   ```js
+   export const localeConfig = {
+     // ... existing languages
+     ja: {
+       label: '日本語',
+       name: 'Japanese',
+       hrefLang: 'ja',
+     },
+   };
+   ```
+
+2. Create `src/locales/ja.json` with translated content
+
+3. Create pages in `src/pages/ja/` directory:
+   - `index.astro`
+   - `about.astro`
+   - `contact.astro`
 
 ### RSS Configuration
 
@@ -160,7 +193,7 @@ RSS feeds are configured in the locale files under `featuredPosts.rss`:
           "parser": "jekyllFeed"
         }
       ],
-      "limit": 4
+      "limit": 6
     }
   }
 }
@@ -170,15 +203,6 @@ RSS feeds are configured in the locale files under `featuredPosts.rss`:
 
 - `default`: Standard RSS/Atom parser
 - `jekyllFeed`: Enhanced parser for Jekyll-generated feeds
-
-### RSS Script Options
-
-The RSS aggregation script (`scripts/fetch-rss.js`) supports:
-
-- Multiple feeds aggregation
-- Multiple parser engines with fallback
-- Automatic duplicate removal
-- Category/tag extraction
 
 ### EmailJS Setup
 
@@ -191,25 +215,40 @@ For the contact form to work:
 
 ### Theme Customization
 
-- **Colors**: Modify Tailwind configuration in `tailwind.config.js`
-- **Fonts**: Update font paths and weights in the same config
+- **Colors**: Modify Tailwind configuration in `tailwind.config.mjs`
+- **Fonts**: Update font settings in `src/layouts/BaseLayout.astro`
 - **Dark Mode**: Automatically supported via `dark:` variants
 
 ## Available Scripts
 
 ```bash
 # Development
-npm run dev              # Start development server
-npm run build            # Build for production (includes RSS fetching)
+bun run dev              # Start development server (port 4321)
+bun run build            # Build for production (includes RSS fetching)
+bun run preview          # Preview production build
 
 # RSS Management
-npm run fetch:rss        # Manually fetch RSS feeds
-npm run prebuild         # RSS fetching (runs automatically before build)
+bun run fetch:rss        # Manually fetch RSS feeds
+
+# Testing
+bun run test             # Run Playwright tests
+bun run test:e2e         # Run E2E tests (Chromium only)
+bun run test:headed      # Run tests in headed mode
+bun run test:ui          # Run tests with UI
 
 # Code Quality
-npm run format           # Format code with Prettier
-npm run format:check     # Check code formatting
+bun run format           # Format code with Prettier
+bun run format:check     # Check code formatting
 ```
+
+## Technology Stack
+
+- **Framework**: [Astro](https://astro.build/) 5.x
+- **UI Library**: [React](https://react.dev/) 19.x (Islands)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) 3.x
+- **Runtime**: [Bun](https://bun.sh/) 1.x
+- **Testing**: [Playwright](https://playwright.dev/)
+- **Email**: [EmailJS](https://www.emailjs.com/)
 
 ## Contributing
 

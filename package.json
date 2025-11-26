@@ -9,13 +9,13 @@
         "preview": "astro preview",
         "astro": "astro",
         "fetch:rss": "bun run scripts/fetch-rss.bun.js",
-        "fetch:rss:node": "node scripts/fetch-rss.js",
         "prebuild": "bun run scripts/fetch-rss.bun.js || true",
+        "test": "playwright test",
+        "test:e2e": "playwright test --project=chromium",
+        "test:headed": "playwright test --headed",
+        "test:ui": "playwright test --ui",
         "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,html,astro}'",
-        "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,html,astro}'",
-        "next:dev": "next dev",
-        "next:build": "next build",
-        "next:start": "next start"
+        "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,html,astro}'"
     },
     "repository": {
         "type": "git",
@@ -28,7 +28,7 @@
         "tailwindcss",
         "react"
     ],
-    "author": "",
+    "author": "Wenjie Xu",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/WayneXuCN/homepage/issues"
@@ -37,11 +37,10 @@
     "devDependencies": {
         "@astrojs/react": "^4.4.2",
         "@astrojs/tailwind": "^6.0.2",
+        "@playwright/test": "^1.57.0",
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.4.22",
-        "cross-env": "^10.1.0",
-        "npm-run-all": "^4.1.5",
         "postcss": "^8.5.6",
         "prettier": "^3.6.2",
         "prettier-plugin-astro": "^0.14.1",
@@ -51,7 +50,6 @@
     "dependencies": {
         "@emailjs/browser": "^4.4.1",
         "astro": "^5.16.0",
-        "next": "^16.0.3",
         "prop-types": "^15.8.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0"

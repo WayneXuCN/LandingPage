@@ -4,15 +4,23 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeaderBar from '../../components/astro/HeaderBar.jsx';
-import Hero from '../../components/astro/Hero.jsx';
+import Home from '../../components/astro/Home.jsx';
+import UnderlineEffects from '../../components/astro/UnderlineEffects.jsx';
+import { getLocaleDataSync } from '../../locales/config.js';
+import rssData from '../../data/rss-posts.json';
 
-// 导入中文 locale 数据
-import zh from '../../locales/zh.json';
+// 当前语言
+const lang = 'zh';
 
-const { site, nav, header, hero } = zh;
+// 从统一配置获取 locale 数据
+const translations = getLocaleDataSync(lang);
+const { site, nav, header } = translations;
 
 // 当前路径用于导航高亮
 const currentPath = Astro.url.pathname;
+
+// 获取对应语言的 RSS 帖子
+const rssPosts = rssData[lang] || [];
 ---
 
 <BaseLayout
@@ -20,7 +28,7 @@ const currentPath = Astro.url.pathname;
   description={site.description}
   author={site.author}
   keywords={site.keywords}
-  lang="zh"
+  lang={lang}
 >
   <!-- HeaderBar 作为 React island，立即加载 -->
   <HeaderBar 
@@ -28,25 +36,17 @@ const currentPath = Astro.url.pathname;
     header={header} 
     nav={nav} 
     currentPath={currentPath}
-    lang="zh"
+    lang={lang}
   />
   
-  <!-- Hero 区块 - 静态渲染（无交互） -->
-  <Hero 
-    subtitle={hero.subtitle}
-    title={hero.title}
-    description={hero.description}
+  <!-- Home 组件包含 Hero、Websites、Featured Posts 和 Footer -->
+  <Home 
+    client:load
+    translations={translations}
+    language={lang}
+    rssPosts={rssPosts}
   />
   
-  <!-- 
-    后续 PR 将添加：
-    - WebsiteItem 组件
-    - FeaturedPostItem 组件
-    - Footer 组件
-  -->
-  <section class="mt-16 text-center text-gray-500 dark:text-gray-400">
-    <p class="text-sm">
-      🚧 PR 2 POC - 更多内容将在后续 PR 中添加
-    </p>
-  </section>
+  <!-- 下划线悬停效果 -->
+  <UnderlineEffects client:load />
 </BaseLayout>

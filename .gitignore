@@ -43,6 +43,4 @@ yarn-error.log*
 
 # astro 编译和缓存文件
 dist/
-
-# Agent instructions
-CLAUDE.md
+.astro/

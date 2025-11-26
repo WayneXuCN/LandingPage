@@ -1,52 +1,46 @@
 ---
 /**
- * /en/index.astro - 英文首页
+ * /zh/contact - 中文联系页
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeaderBar from '../../components/astro/HeaderBar.jsx';
-import Home from '../../components/astro/Home.jsx';
+import Contact from '../../components/astro/Contact.jsx';
+import Footer from '../../components/astro/Footer.jsx';
 import UnderlineEffects from '../../components/astro/UnderlineEffects.jsx';
 import { getLocaleDataSync } from '../../locales/config.js';
-import rssData from '../../data/rss-posts.json';
 
 // 当前语言
-const lang = 'en';
+const lang = 'zh';
 
 // 从统一配置获取 locale 数据
 const translations = getLocaleDataSync(lang);
-const { site, nav, header } = translations;
+const { site, nav, header, contact, footer } = translations;
 
 // 当前路径用于导航高亮
 const currentPath = Astro.url.pathname;
-
-// 获取对应语言的 RSS 帖子
-const rssPosts = rssData[lang] || [];
 ---
 
-<BaseLayout
-  title={site.title}
+<BaseLayout 
+  title={`联系 | ${site.title}`}
   description={site.description}
   author={site.author}
   keywords={site.keywords}
   lang={lang}
 >
-  <!-- HeaderBar 作为 React island，立即加载 -->
   <HeaderBar 
-    client:load 
-    header={header} 
     nav={nav} 
+    header={header} 
     currentPath={currentPath}
     lang={lang}
+    client:load 
   />
   
-  <!-- Home 组件包含 Hero、Websites、Featured Posts 和 Footer -->
-  <Home 
-    client:load
-    translations={translations}
-    language={lang}
-    rssPosts={rssPosts}
+  <Contact 
+    content={{ contact }} 
+    client:load 
   />
   
-  <!-- 下划线悬停效果 -->
+  <Footer footer={footer} client:load />
+  
   <UnderlineEffects client:load />
 </BaseLayout>
