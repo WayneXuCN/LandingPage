@@ -1,0 +1,63 @@
+---
+// 基础测试页面 - 验证 Astro + Tailwind 配置正确
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astro + Tailwind Test</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  </head>
+  <body class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <main class="container mx-auto px-4 py-16">
+      <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          🚀 Astro + Bun Migration
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+          PR 1 - 项目脚手架与基础配置验证
+        </p>
+        
+        <!-- Tailwind 样式测试卡片 -->
+        <div class="card-hover bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">
+            ✅ Tailwind CSS 生效
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            如果你能看到这个带有样式的卡片，说明 Tailwind CSS 已正确配置。
+          </p>
+          
+          <!-- 测试各种 Tailwind 类 -->
+          <div class="flex flex-wrap gap-2 justify-center">
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full text-sm">
+              Blue Badge
+            </span>
+            <span class="px-3 py-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-full text-sm">
+              Green Badge
+            </span>
+            <span class="px-3 py-1 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 rounded-full text-sm">
+              Purple Badge
+            </span>
+          </div>
+        </div>
+        
+        <!-- 动画测试 -->
+        <div class="mt-8 animate-fade-in">
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            ⬆️ 此区块使用了自定义 <code class="bg-gray-200 dark:bg-gray-700 px-1 rounded">animate-fade-in</code> 动画
+          </p>
+        </div>
+        
+        <!-- 下划线效果测试 -->
+        <div class="mt-6">
+          <p class="text-gray-700 dark:text-gray-300">
+            测试 <span class="underline">下划线效果</span> 样式
+          </p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

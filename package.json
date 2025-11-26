@@ -1,22 +1,32 @@
 {
     "name": "SimpleLandingPage",
-    "version": "1.1.0",
-    "description": "Minimalist personal landing page and digital business card built with React and Tailwind CSS",
-    "main": "app.js",
+    "version": "2.0.0",
+    "description": "Minimalist personal landing page and digital business card built with Astro, React and Tailwind CSS",
+    "type": "module",
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "fetch:rss": "node scripts/fetch-rss.js",
-        "prebuild": "node scripts/fetch-rss.js || true",
-        "format": "prettier --write '**/*.{js,jsx,json,css,html}'",
-        "format:check": "prettier --check '**/*.{js,jsx,json,css,html}'"
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "fetch:rss": "bun run scripts/fetch-rss.js",
+        "prebuild": "bun run scripts/fetch-rss.js || true",
+        "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,html,astro}'",
+        "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,html,astro}'",
+        "next:dev": "next dev",
+        "next:build": "next build",
+        "next:start": "next start"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/WayneXuCN/homepage.git"
     },
-    "keywords": [],
+    "keywords": [
+        "astro",
+        "landing-page",
+        "personal-website",
+        "tailwindcss",
+        "react"
+    ],
     "author": "",
     "license": "ISC",
     "bugs": {
@@ -24,18 +34,25 @@
     },
     "homepage": "https://github.com/WayneXuCN/homepage#readme",
     "devDependencies": {
+        "@astrojs/react": "^4.4.2",
+        "@astrojs/tailwind": "^6.0.2",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.4.22",
         "cross-env": "^10.1.0",
         "npm-run-all": "^4.1.5",
         "postcss": "^8.5.6",
         "prettier": "^3.6.2",
-        "react": "^19.2.0",
-        "react-dom": "^19.2.0",
-        "tailwindcss": "^3.4.18"
+        "prettier-plugin-astro": "^0.14.1",
+        "tailwindcss": "^3.4.18",
+        "typescript": "^5.9.3"
     },
     "dependencies": {
         "@emailjs/browser": "^4.4.1",
+        "astro": "^5.16.0",
         "next": "^16.0.3",
-        "prop-types": "^15.8.1"
+        "prop-types": "^15.8.1",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0"
     }
 }
