@@ -3,8 +3,9 @@ export default {
   content: [
     './src/pages/**/*.{astro,js,ts,jsx,tsx,mdx}',
     './src/layouts/**/*.{astro,js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{astro,js,ts,jsx,tsx,mdx}',
     './src/locales/*.json',
+    './src/content/**/*.json',
   ],
   darkMode: 'class',
   theme: {

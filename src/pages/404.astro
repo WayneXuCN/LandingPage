@@ -2,10 +2,9 @@
 /**
  * /404.astro - 根级 404 页面（使用默认语言中文）
  * Astro 会自动将此文件作为 404 错误页面
- * 对于 /zh/xxx 或 /en/xxx 的路径，会使用对应语言文件夹中的 404.astro
  */
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getI18n, defaultLocale, type Locale } from '../lib/i18n';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getI18n, defaultLocale, type Locale } from '@lib/i18n';
 
 // 404 页面使用默认语言
 const lang: Locale = defaultLocale;

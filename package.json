@@ -21,7 +21,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/WayneXuCN/starter-theme.git"
+        "url": "git+https://github.com/WayneXuCN/LandingPage.git"
     },
     "keywords": [
         "astro",
@@ -38,13 +38,12 @@
     "author": "Wenjie Xu <wenjie.xu.cn@outlook.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/WayneXuCN/starter-theme/issues"
+        "url": "https://github.com/WayneXuCN/LandingPage/issues"
     },
-    "homepage": "https://github.com/WayneXuCN/starter-theme#readme",
+    "homepage": "https://github.com/WayneXuCN/LandingPage#readme",
     "devDependencies": {
         "@astrojs/react": "^4.4.2",
         "@astrojs/tailwind": "^6.0.2",
-
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.4.22",
@@ -55,8 +54,14 @@
         "typescript": "^5.9.3"
     },
     "dependencies": {
+        "@astrojs/mdx": "^4.3.12",
+        "@astrojs/sitemap": "^3.6.0",
         "@emailjs/browser": "^4.4.1",
+        "@iconify-json/mdi": "^1.2.3",
         "astro": "^5.16.0",
+        "astro-icon": "^1.1.5",
+        "astro-robots-txt": "^1.0.0",
+        "astro-seo": "^0.8.4",
         "prop-types": "^15.8.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0"

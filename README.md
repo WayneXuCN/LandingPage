@@ -84,37 +84,43 @@ Output is generated in the `dist/` directory, ready for deployment to any static
 ## Project Structure
 
 ```text
-starter-theme/
-├── src/
-│   ├── components/astro/     # React island components
-│   │   ├── HeaderBar.jsx     # Navigation header
-│   │   ├── Hero.jsx          # Hero section
-│   │   ├── Footer.jsx        # Site footer
-│   │   ├── ThemeToggle.jsx   # Dark mode toggle
-│   │   ├── LanguageSwitcher.jsx # Language switcher
-│   │   └── ...
-│   ├── content/
-│   │   └── i18n/             # Translations (Content Collections)
-│   │       ├── en.json
-│   │       └── zh.json
-│   ├── layouts/
-│   │   └── BaseLayout.astro  # Global HTML layout
-│   ├── lib/
-│   │   └── i18n.ts           # i18n utilities
-│   ├── pages/
-│   │   ├── index.astro       # Root redirect
-│   │   ├── 404.astro         # Error page
-│   │   ├── en/               # English routes
-│   │   └── zh/               # Chinese routes
-│   ├── middleware.ts         # Middleware routing redirects
-│   ├── env.d.ts              # TypeScript type declarations
-│   └── content.config.ts     # Content Collections schema
-├── public/                   # Static assets
-├── scripts/
-│   └── fetch-rss.bun.js      # RSS aggregation script
-├── astro.config.mjs          # Astro configuration
-├── tailwind.config.mjs       # Tailwind configuration
-└── package.json
+src/
+├── components/
+│   ├── react/          # React Islands
+│   │   ├── Contact.jsx 
+│   │   ├── ErrorBoundary.jsx
+│   │   ├── HeaderBar.jsx
+│   │   ├── LanguageSwitcher.jsx
+│   │   ├── PrimaryNav.jsx
+│   │   ├── ThemeToggle.jsx
+│   │   └── UnderlineEffects.jsx
+│   │
+│   └── ui/             # Astro 组件
+│       ├── Hero.astro
+│       ├── Footer.astro
+│       ├── WebsiteItem.astro
+│       ├── WebsitesSection.astro
+│       ├── FeaturedPostItem.astro
+│       └── FeaturedPostsSection.astro
+│
+├── layouts/
+│   └── BaseLayout.astro  # 全局布局
+│
+├── lib/
+│   ├── i18n.ts           # i18n 工具函数
+│   └── utils.ts          # 公共工具函数
+│
+├── pages/
+│   ├── index.astro       # 根首页
+│   ├── 404.astro         # 根 404
+│   └── [lang]/           # 动态路由
+│       ├── index.astro
+│       ├── about.astro
+│       ├── contact.astro
+│       └── 404.astro
+│
+└── styles/
+    └── global.css        # 全局样式
 ```
 
 ## Configuration

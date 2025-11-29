@@ -1,0 +1,78 @@
+---
+/**
+ * WebsiteItem.astro
+ * 网站卡片组件 - 极简导航风格
+ * 纯展示组件，无需 React 水合
+ */
+import { resolveContentHref } from '@lib/utils';
+
+interface WebsiteItemData {
+  id?: string;
+  title: string;
+  image: string;
+  url: string;
+  description: string;
+}
+
+interface Props {
+  item: WebsiteItemData;
+  priority?: boolean;
+}
+
+const { item, priority = false } = Astro.props;
+
+// 解析链接
+const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh');
+---
+
+<a
+  href={href}
+  target='_blank'
+  rel='noopener noreferrer'
+  aria-label={`访问 ${item.title}: ${item.description}`}
+  class='group flex flex-row sm:flex-col gap-4 sm:gap-3 p-3 -mx-3 sm:mx-0 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-300 items-center sm:items-stretch'
+>
+  {/* 图片容器 */}
+  <div
+    class='relative w-24 sm:w-full shrink-0 aspect-[16/9] overflow-hidden rounded-lg sm:rounded-xl bg-gray-100 dark:bg-gray-800 shadow-sm group-hover:shadow-md transition-all duration-300'
+  >
+    <img
+      src={item.image}
+      alt={item.title}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding='async'
+      class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+    />
+    {/* 极轻微的内阴影，增加层次感 */}
+    <div
+      class='absolute inset-0 ring-1 ring-inset ring-black/5 dark:ring-white/10 rounded-lg sm:rounded-xl'
+    >
+    </div>
+  </div>
+
+  <div class='flex flex-col min-w-0 flex-grow px-0 sm:px-1'>
+    <div class='flex items-center justify-between'>
+      <h3
+        class='text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate pr-2'
+      >
+        {item.title}
+      </h3>
+      <svg
+        class='w-3.5 h-3.5 text-gray-400 group-hover:text-blue-500 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 duration-300 hidden sm:block'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'
+      >
+        <path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          stroke-width='2'
+          d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'></path>
+      </svg>
+    </div>
+
+    <p class='mt-0.5 sm:mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed'>
+      {item.description}
+    </p>
+  </div>
+</a>

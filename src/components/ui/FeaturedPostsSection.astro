@@ -1,0 +1,95 @@
+---
+/**
+ * FeaturedPostsSection.astro
+ * 精选文章列表区块组件
+ */
+import FeaturedPostItem from './FeaturedPostItem.astro';
+import type { Locale } from '@lib/i18n';
+
+interface PostItem {
+  id?: string;
+  title: string;
+  image: string;
+  url: string;
+  description?: string;
+  categories?: string[];
+  category?: string;
+  pubDate?: string;
+  updated?: string;
+  published?: string;
+  isRSS?: boolean;
+  isManual?: boolean;
+}
+
+interface FeaturedPostsConfig {
+  title?: string;
+  seeAllUrl?: string;
+  seeAllText?: string;
+  rss?: {
+    limit?: number;
+  };
+  items?: PostItem[];
+}
+
+interface Props {
+  config: FeaturedPostsConfig;
+  rssPosts?: PostItem[];
+  language?: Locale;
+}
+
+const { config, rssPosts = [], language = 'zh' } = Astro.props;
+
+// 合并静态帖子和 RSS 数据
+const staticPosts = Array.isArray(config?.items) ? config.items : [];
+const rssItems = Array.isArray(rssPosts) ? rssPosts : [];
+
+// RSS 帖子标记 isRSS，静态帖子标记 isManual
+const markedRSS = rssItems.map(post => ({ ...post, isRSS: true }));
+const markedStatic = staticPosts.map(post => ({ ...post, isManual: true }));
+
+// 合并所有帖子
+const combined = [...markedRSS, ...markedStatic];
+
+// 按发布日期倒序排序
+combined.sort((a, b) => {
+  const dateA = new Date(a.pubDate || a.updated || 0).getTime();
+  const dateB = new Date(b.pubDate || b.updated || 0).getTime();
+  return dateB - dateA;
+});
+
+// 限制数量
+const rssLimit = config?.rss?.limit || 6;
+const totalLimit = rssLimit + staticPosts.length;
+const displayPosts = combined.slice(0, Math.max(rssLimit, totalLimit));
+
+// 判断是否显示 See All 链接
+const showSeeAll = !!(config?.seeAllUrl && config.seeAllUrl !== '#' && config?.seeAllText);
+---
+
+{
+  displayPosts && displayPosts.length > 0 && (
+    <section class='mb-12 sm:mb-16 md:mb-20'>
+      <h2 class='text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 display-font'>
+        {config?.title || 'Featured Posts'}
+      </h2>
+      <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8'>
+        {displayPosts.map(item => (
+          <FeaturedPostItem item={item} language={language} />
+        ))}
+      </div>
+      {showSeeAll && (
+        <div class='mt-8 flex justify-end'>
+          <a
+            href={config.seeAllUrl}
+            class='group inline-flex items-center text-xl font-bold uppercase tracking-wider text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors duration-300'
+          >
+            {config.seeAllText}
+            <span class='ml-2 transform group-hover:translate-x-1 transition-transform duration-300'>
+              &rarr;
+            </span>
+          </a>
+        </div>
+      )}
+    </section>
+  )
+}

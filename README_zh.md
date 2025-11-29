@@ -84,37 +84,43 @@ bun run build
 ## 项目结构
 
 ```text
-starter-theme/
-├── src/
-│   ├── components/astro/     # React 群岛组件
-│   │   ├── HeaderBar.jsx     # 导航头部
-│   │   ├── Hero.jsx          # Hero 区块
-│   │   ├── Footer.jsx        # 页脚
-│   │   ├── ThemeToggle.jsx   # 主题切换
-│   │   ├── LanguageSwitcher.jsx # 语言切换
-│   │   └── ...
-│   ├── content/
-│   │   └── i18n/             # 翻译文件（内容集合）
-│   │       ├── en.json
-│   │       └── zh.json
-│   ├── layouts/
-│   │   └── BaseLayout.astro  # 全局 HTML 布局
-│   ├── lib/
-│   │   └── i18n.ts           # i18n 工具函数
-│   ├── pages/
-│   │   ├── index.astro       # 根路径重定向
-│   │   ├── 404.astro         # 错误页面
-│   │   ├── en/               # 英文路由
-│   │   └── zh/               # 中文路由
-│   ├── middleware.ts         # Middleware 路由重定向 
-│   ├── env.d.ts              # TypeScript 类型声明
-│   └── content.config.ts     # 内容集合 Schema
-├── public/                   # 静态资源
-├── scripts/
-│   └── fetch-rss.bun.js      # RSS 聚合脚本
-├── astro.config.mjs          # Astro 配置
-├── tailwind.config.mjs       # Tailwind 配置
-└── package.json
+src/
+├── components/
+│   ├── react/          # React Islands
+│   │   ├── Contact.jsx 
+│   │   ├── ErrorBoundary.jsx
+│   │   ├── HeaderBar.jsx
+│   │   ├── LanguageSwitcher.jsx
+│   │   ├── PrimaryNav.jsx
+│   │   ├── ThemeToggle.jsx
+│   │   └── UnderlineEffects.jsx
+│   │
+│   └── ui/             # Astro 组件
+│       ├── Hero.astro
+│       ├── Footer.astro
+│       ├── WebsiteItem.astro
+│       ├── WebsitesSection.astro
+│       ├── FeaturedPostItem.astro
+│       └── FeaturedPostsSection.astro
+│
+├── layouts/
+│   └── BaseLayout.astro  # 全局布局
+│
+├── lib/
+│   ├── i18n.ts           # i18n 工具函数
+│   └── utils.ts          # 公共工具函数
+│
+├── pages/
+│   ├── index.astro       # 根首页
+│   ├── 404.astro         # 根 404
+│   └── [lang]/           # 动态路由
+│       ├── index.astro
+│       ├── about.astro
+│       ├── contact.astro
+│       └── 404.astro
+│
+└── styles/
+    └── global.css        # 全局样式
 ```
 
 ## 配置

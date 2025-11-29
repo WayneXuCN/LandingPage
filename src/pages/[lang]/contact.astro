@@ -1,0 +1,53 @@
+---
+/**
+ * /[lang]/contact.astro - 多语言联系页面（动态路由）
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/ui/Hero.astro';
+import Footer from '@components/ui/Footer.astro';
+import HeaderBar from '@components/react/HeaderBar.jsx';
+import ContactPage from '@components/react/Contact.jsx';
+import UnderlineEffects from '@components/react/UnderlineEffects.jsx';
+import { getI18n, locales, type Locale } from '@lib/i18n';
+
+// 生成静态路径
+export function getStaticPaths() {
+  return locales.map(lang => ({
+    params: { lang },
+  }));
+}
+
+// 获取当前语言
+const { lang } = Astro.params as { lang: Locale };
+
+// 从内容集合获取翻译数据
+const translations = await getI18n(lang);
+const { site, nav, header, contact, footer } = translations;
+
+// 当前路径用于导航高亮
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout
+  title={`Contact | ${site.title}`}
+  description={site.description}
+  author={site.author}
+  keywords={site.keywords}
+  lang={lang}
+>
+  <HeaderBar client:load nav={nav} header={header} currentPath={currentPath} lang={lang} />
+
+  {/* Hero 区块 - 纯展示 */}
+  <Hero
+    subtitle={contact.hero?.subtitle}
+    title={contact.hero?.title}
+    description={contact.hero?.description}
+  />
+
+  {/* Contact 组件包含表单交互，需要 React */}
+  <ContactPage client:load content={{ contact }} />
+
+  <Footer footer={footer} />
+
+  <UnderlineEffects client:idle />
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+/**
+ * /[lang]/404.astro - 多语言 404 页面（动态路由）
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getI18n, locales, type Locale } from '@lib/i18n';
+
+// 生成静态路径
+export function getStaticPaths() {
+  return locales.map(lang => ({
+    params: { lang },
+  }));
+}
+
+// 获取当前语言
+const { lang } = Astro.params as { lang: Locale };
+
+// 从内容集合获取翻译数据
+const translations = await getI18n(lang);
+const { site } = translations;
+
+// 404 页面文案
+const content = {
+  zh: {
+    title: '页面未找到',
+    description: '抱歉，您访问的页面不存在。',
+    backHome: '返回首页',
+  },
+  en: {
+    title: 'Page Not Found',
+    description: 'Sorry, the page you are looking for does not exist.',
+    backHome: 'Back to Home',
+  },
+};
+
+const pageContent = content[lang];
+---
+
+<BaseLayout title={`404 | ${site.title}`} description={pageContent.description} lang={lang}>
+  <div class='min-h-[60vh] flex flex-col items-center justify-center text-center'>
+    <h1 class='text-9xl font-bold text-gray-200 dark:text-gray-700 mb-4'>404</h1>
+    <h2 class='text-3xl font-semibold mb-4 text-gray-900 dark:text-white'>
+      {pageContent.title}
+    </h2>
+    <p class='text-gray-600 dark:text-gray-400 mb-8 max-w-md'>
+      {pageContent.description}
+    </p>
+    <a
+      href={`/${lang}/`}
+      class='inline-flex items-center px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors'
+    >
+      <i class='fas fa-arrow-left mr-2'></i>
+      {pageContent.backHome}
+    </a>
+  </div>
+</BaseLayout>

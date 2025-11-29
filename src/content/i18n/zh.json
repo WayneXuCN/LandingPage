@@ -40,49 +40,49 @@
             {
                 "id": "Dashboard",
                 "title": "工作仪表板",
-                "image": "https://picsum.photos/seed/personal/600/350.jpg",
+                "image": "/assets/img/websites/dashboard.png",
                 "url": "https://dashboard.wenjiexu.site",
                 "description": "我的自托管 Glance 工作仪表板，聚合关注信息和常用工具"
             },
             {
                 "id": "Gitea",
                 "title": "My Gitea",
-                "image": "https://picsum.photos/seed/gitea/600/350.jpg",
+                "image": "/assets/img/websites/gitea.png",
                 "url": "https://gitea.wenjiexu.site",
                 "description": "自托管的 Gitea DevSecOps 平台，用于管理个人项目与代码版本控制"
             },
             {
                 "id": "Overleaf",
                 "title": "My Overleaf",
-                "image": "https://picsum.photos/seed/overleaf/600/350.jpg",
+                "image": "/assets/img/websites/overleaf.png",
                 "url": "https://overleaf.wenjiexu.site",
                 "description": "自托管的 LaTeX 在线编辑器，专注于学术论文撰写与排版"
             },
             {
                 "id": "blinko",
                 "title": "闪念笔记",
-                "image": "https://picsum.photos/seed/blinko/600/350.jpg",
+                "image": "/assets/img/websites/Blinko.png",
                 "url": "https://blinko.wenjiexu.site",
                 "description": "自托管的 Blinko 闪念笔记，随时捕捉灵感与想法"
             },
             {
                 "id": "blog",
                 "title": "个人博客",
-                "image": "https://picsum.photos/seed/blog/600/350.jpg",
+                "image": "/assets/img/websites/blogpage.png",
                 "url": "https://blog.wenjiexu.site",
                 "description": "分享个人文章，包括技术分享、研究心得和生活感悟"
             },
             {
                 "id": "projects",
                 "title": "个人项目",
-                "image": "https://picsum.photos/seed/projects/600/350.jpg",
+                "image": "/assets/img/websites/project.png",
                 "url": "https://lab.wenjiexu.site/projects",
                 "description": "探索我的学术研究项目和开源作品"
             },
             {
                 "id": "personal",
                 "title": "学术主页",
-                "image": "https://picsum.photos/seed/personal/600/350.jpg",
+                "image": "/assets/img/websites/labpage.png",
                 "url": "https://lab.wenjiexu.site",
                 "description": "我的学术主页，包含个人介绍、学术活动和出版论文等"
             }

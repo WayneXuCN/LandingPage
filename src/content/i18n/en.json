@@ -12,7 +12,7 @@
     "nav": [
         {
             "label": "Home",
-            "href": "index.html"
+            "href": "/"
         },
         {
             "label": "About",
@@ -39,50 +39,50 @@
         "items": [
             {
                 "id": "Dashboard",
-                "title": "App Overview",
-                "image": "https://picsum.photos/seed/personal/600/350.jpg",
+                "title": "Work Dashboard",
+                "image": "/assets/img/websites/dashboard.png",
                 "url": "https://dashboard.wenjiexu.site",
                 "description": "My self-hosted Glance work dashboard that aggregates information and common tools"
             },
             {
-                "id": "gitea",
+                "id": "Gitea",
                 "title": "My Gitea",
-                "image": "https://picsum.photos/seed/gitea/600/350.jpg",
+                "image": "/assets/img/websites/gitea.png",
                 "url": "https://gitea.wenjiexu.site",
                 "description": "Self-hosted Gitea DevSecOps platform for managing personal projects and version control"
             },
             {
-                "id": "overleaf",
+                "id": "Overleaf",
                 "title": "My Overleaf",
-                "image": "https://picsum.photos/seed/overleaf/600/350.jpg",
+                "image": "/assets/img/websites/overleaf.png",
                 "url": "https://overleaf.wenjiexu.site",
                 "description": "Self-hosted LaTeX online editor for academic paper writing and typesetting"
             },
             {
                 "id": "blinko",
                 "title": "Flash Notes",
-                "image": "https://picsum.photos/seed/blinko/600/350.jpg",
+                "image": "/assets/img/websites/Blinko.png",
                 "url": "https://blinko.wenjiexu.site",
                 "description": "Self-hosted Blinko flash notes for capturing ideas and thoughts instantly"
             },
             {
                 "id": "blog",
                 "title": "Personal Blog",
-                "image": "https://picsum.photos/seed/blog/600/350.jpg",
+                "image": "/assets/img/websites/blogpage.png",
                 "url": "https://blog.wenjiexu.site",
                 "description": "Sharing personal articles, including tech insights, research experiences and life reflections"
             },
             {
                 "id": "projects",
                 "title": "Personal Projects",
-                "image": "https://picsum.photos/seed/projects/600/350.jpg",
+                "image": "/assets/img/websites/project.png",
                 "url": "https://lab.wenjiexu.site/projects",
                 "description": "Explore my academic research projects and open-source works"
             },
             {
                 "id": "personal",
                 "title": "Academic Homepage",
-                "image": "https://picsum.photos/seed/personal/600/350.jpg",
+                "image": "/assets/img/websites/labpage.png",
                 "url": "https://lab.wenjiexu.site",
                 "description": "My academic homepage, including personal introduction, academic activities and published papers"
             }
@@ -94,21 +94,13 @@
             "enabled": true,
             "feeds": [
                 {
-                    "url": "https://lab.wenjiexu.site/en_US/feed.xml",
+                    "url": "https://lab.wenjiexu.site/feed.xml",
                     "parser": "jekyllFeed"
                 }
             ],
             "limit": 6
         },
         "items": [
-            {
-                "id": "markdown-syntax",
-                "title": "Markdown Syntax Guide",
-                "image": "https://picsum.photos/seed/markdown789/600/350.jpg",
-                "url": "#",
-                "description": "Complete Markdown syntax reference guide",
-                "pubDate": "2024-01-20T00:00:00.000Z"
-            },
             {
                 "id": "math-typesetting",
                 "title": "Math Typesetting - use Mathematical notation in blog posts",
@@ -132,7 +124,7 @@
     "footer": {
         "copyright": "© {startYear}-{currentYear} Wenjie Xu. All Rights Reserved.",
         "icp": {
-            "text": "苏ICP备2025220926号",
+            "text": "苏ICP备2025220926号-1",
             "url": "https://beian.miit.gov.cn/"
         },
         "mps": {

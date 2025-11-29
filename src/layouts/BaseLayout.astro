@@ -2,13 +2,10 @@
 /**
  * BaseLayout.astro
  * 全局布局组件，包含 meta、manifest、GA 条件脚本、主题初始化
- *
- * 更新：
- * - 添加 View Transitions 支持（参考：View Transitions Guide）
- * - 添加 transition:animate 指令用于页面切换动画
  */
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import { SEO } from 'astro-seo';
 
 interface Props {
   title?: string;
@@ -18,6 +15,8 @@ interface Props {
   lang?: string;
   ogImage?: string;
   canonicalUrl?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
 }
 
 const {
@@ -28,7 +27,14 @@ const {
   lang = 'en',
   ogImage = '/assets/img/og-image.png',
   canonicalUrl,
+  noindex = false,
+  nofollow = false,
 } = Astro.props;
+
+// 构建完整的 OG 图片 URL
+const siteUrl = Astro.site?.origin || 'https://wenjiexu.site';
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const fullCanonicalUrl = canonicalUrl || Astro.url.href;
 
 // GA ID 从环境变量获取（PUBLIC_ 前缀表示客户端可用）
 const gaId = import.meta.env.PUBLIC_GA_ID;
@@ -39,20 +45,46 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-
-    <!-- SEO Meta -->
-    <title>{title}</title>
-    <meta name='description' content={description} />
-    <meta name='author' content={author} />
-    <meta name='keywords' content={keywords} />
     <meta name='generator' content={Astro.generator} />
-    {canonicalUrl && <link rel='canonical' href={canonicalUrl} />}
 
-    <!-- Open Graph -->
-    <meta property='og:title' content={title} />
-    <meta property='og:description' content={description} />
-    <meta property='og:image' content={ogImage} />
-    <meta property='og:type' content='website' />
+    <!-- astro-seo：自动生成 SEO meta 标签 -->
+    <SEO
+      title={title}
+      description={description}
+      canonical={fullCanonicalUrl}
+      noindex={noindex}
+      nofollow={nofollow}
+      openGraph={{
+        basic: {
+          title: title,
+          type: 'website',
+          image: fullOgImage,
+        },
+        optional: {
+          description: description,
+          locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+          siteName: 'Wenjie Xu',
+        },
+        image: {
+          url: fullOgImage,
+          alt: title,
+          width: 1200,
+          height: 630,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: title,
+        description: description,
+        image: fullOgImage,
+      }}
+      extend={{
+        meta: [
+          { name: 'author', content: author },
+          { name: 'keywords', content: keywords },
+        ],
+      }}
+    />
 
     <!-- Favicon -->
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
@@ -61,7 +93,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <!-- Web Manifest -->
     <link rel='manifest' href='/site.webmanifest' />
 
-    <!-- Google Fonts: Noto Sans SC - 预加载并使用 font-display: swap -->
+    <!-- Google Fonts: Noto Sans SC-->
     <link rel='preconnect' href='https://fonts.googleapis.com' />
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
     <link
@@ -85,7 +117,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <ClientRouter />
 
     <!-- 
-      主题初始化脚本，必须在 body 渲染前执行
+      主题初始化脚本
     -->
     <script is:inline>
       (function () {

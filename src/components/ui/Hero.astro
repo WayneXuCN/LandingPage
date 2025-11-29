@@ -1,0 +1,40 @@
+---
+/**
+ * Hero.astro
+ * Hero 区块组件，展示主标题和描述
+ * 纯展示组件，无需 React 水合
+ */
+interface Props {
+  subtitle?: string;
+  title?: string;
+  description?: string;
+}
+
+const { subtitle, title, description } = Astro.props;
+---
+
+<section class='mb-12 sm:mb-16 md:mb-20'>
+  {
+    subtitle && (
+      <h1 class='text-red-500 dark:text-red-400 text-sm font-extrabold mb-4 sm:mb-6 tracking-[0.2em] uppercase'>
+        {subtitle}
+      </h1>
+    )
+  }
+  {
+    title && (
+      <h2
+        class='text-[length:clamp(2.5rem,8vw,5rem)] font-bold mb-8 sm:mb-10 leading-tight display-font tracking-tight rich-text'
+        set:html={title}
+      />
+    )
+  }
+  {
+    description && (
+      <p
+        class='text-xl sm:text-2xl mb-6 sm:mb-8 text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed rich-text'
+        set:html={description}
+      />
+    )
+  }
+</section>

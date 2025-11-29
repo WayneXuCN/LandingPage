@@ -1,0 +1,113 @@
+---
+/**
+ * FeaturedPostItem.astro
+ * 精选文章卡片组件
+ * 纯展示组件，无需 React 水合
+ */
+import { resolveContentHref, formatDate } from '@lib/utils';
+import type { Locale } from '@lib/i18n';
+
+// 定义特定卡片的样式映射
+const POST_STYLES: Record<string, string> = {
+  'about-MyWork': 'bg-yellow-500 bg-opacity-80',
+  'markdown-syntax': 'bg-blue-900 bg-opacity-80',
+};
+
+interface PostItem {
+  id?: string;
+  title: string;
+  image: string;
+  url: string;
+  description?: string;
+  categories?: string[];
+  category?: string;
+  pubDate?: string;
+  updated?: string;
+  published?: string;
+  isRSS?: boolean;
+}
+
+interface Props {
+  item: PostItem;
+  language?: Locale;
+}
+
+const { item, language = 'zh' } = Astro.props;
+
+const categories = item.categories || (item.category ? [item.category] : []);
+const pubDate = item.pubDate || item.updated || item.published || null;
+const isRSS = item.isRSS || false;
+
+// 获取特定样式
+const customOverlayClass = item.id ? POST_STYLES[item.id] : null;
+const isBlackOverlay = !customOverlayClass;
+
+// 格式化日期
+const formattedDate = pubDate ? formatDate(pubDate, language) : null;
+
+// 解析链接
+const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, language);
+---
+
+<a
+  href={href}
+  target='_blank'
+  rel='noopener noreferrer'
+  aria-label={`阅读文章: ${item.title}`}
+  class='relative block overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:focus:ring-white group'
+>
+  <div class='relative w-full h-64'>
+    <img
+      src={item.image}
+      alt={item.title}
+      loading='lazy'
+      decoding='async'
+      class='absolute inset-0 w-full h-full object-cover'
+    />
+  </div>
+
+  <div
+    class:list={[
+      'absolute inset-0 card-overlay transition-all duration-300 flex flex-col justify-between p-6',
+      isBlackOverlay
+        ? 'bg-gradient-to-b from-black/80 via-black/20 to-black/90 dark:via-black/40'
+        : customOverlayClass,
+    ]}
+  >
+    <div>
+      <h3 class='text-white text-xl font-bold mb-2 line-clamp-2 drop-shadow-md'>
+        {item.title}
+      </h3>
+    </div>
+
+    <div class='mt-auto'>
+      <p
+        class='text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 website-description-text transform translate-y-2 line-clamp-3 mb-4'
+      >
+        {item.description}
+      </p>
+
+      <div class='flex items-end justify-between gap-2'>
+        <div class='flex flex-wrap gap-1.5'>
+          {
+            categories.map((cat, index) => (
+              <span
+                class:list={[
+                  'inline-block text-[10px] font-medium px-2 py-0.5 rounded',
+                  index === 0 ? 'bg-white/90 text-black' : 'bg-white/20 text-white',
+                ]}
+              >
+                {cat}
+              </span>
+            ))
+          }
+        </div>
+
+        <div class='flex flex-col items-end shrink-0'>
+          {isRSS && <span class='text-[10px] text-white/60 mb-0.5'>RSS</span>}
+          {formattedDate && <p class='text-white text-xs opacity-80'>{formattedDate}</p>}
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
