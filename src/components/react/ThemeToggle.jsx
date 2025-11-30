@@ -3,7 +3,7 @@
  * 主题切换按钮，支持 light/dark 模式
  * 使用 localStorage 持久化用户偏好
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const ThemeToggle = () => {
   // 初始状态从 DOM 读取

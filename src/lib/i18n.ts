@@ -2,41 +2,48 @@
  * i18n 工具函数
  * 使用 Astro Content Collections 和原生 i18n 支持
  */
-import { getEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 // 支持的语言列表
-export const locales = ['zh', 'en'] as const;
+export const locales = ['zh_CN', 'en_US'] as const;
 export type Locale = (typeof locales)[number];
 
 // 默认语言
-export const defaultLocale: Locale = 'zh';
+export const defaultLocale: Locale = 'zh_CN';
 
 // 语言元数据配置
 export const localeConfig: Record<Locale, { label: string; name: string; hrefLang: string }> = {
-  zh: {
+  zh_CN: {
     label: '中',
     name: '中文',
     hrefLang: 'zh-CN',
   },
-  en: {
+  en_US: {
     label: 'EN',
     name: 'English',
-    hrefLang: 'en',
+    hrefLang: 'en-US',
   },
 };
 
 /**
  * 从内容集合获取指定语言的翻译数据
- * @param locale - 语言代码 ('zh' | 'en')
+ * @param locale - 语言代码 ('zh_CN' | 'en_US')
  * @returns 翻译数据对象
  */
 export async function getI18n(locale: Locale) {
-  const entry = await getEntry('i18n', locale);
+  // Astro glob loader 会将文件名转为小写作为 ID
+  // 需要做映射: zh_CN -> zh_cn, en_US -> en_us
+  const contentId = locale.toLowerCase();
+  
+  const collection = await getCollection('i18n');
+  const entry = collection.find((e: { id: string }) => e.id === contentId);
+  
   if (!entry) {
     // 回退到默认语言
-    const fallback = await getEntry('i18n', defaultLocale);
+    const defaultContentId = defaultLocale.toLowerCase();
+    const fallback = collection.find((e: { id: string }) => e.id === defaultContentId);
     if (!fallback) {
-      throw new Error(`Missing i18n data for both ${locale} and ${defaultLocale}`);
+      throw new Error(`Missing i18n data for ${locale}`);
     }
     return fallback.data;
   }
@@ -49,10 +56,9 @@ export async function getI18n(locale: Locale) {
  */
 export async function getAllI18n() {
   const collection = await getCollection('i18n');
-  return Object.fromEntries(collection.map(entry => [entry.id, entry.data])) as Record<
-    Locale,
-    Awaited<ReturnType<typeof getI18n>>
-  >;
+  return Object.fromEntries(
+    collection.map((entry: { id: string; data: unknown }) => [entry.id, entry.data])
+  ) as Record<Locale, Awaited<ReturnType<typeof getI18n>>>;
 }
 
 /**
@@ -117,7 +123,7 @@ export function getLocalizedPath(path: string, locale: Locale): string {
   // 移除开头的斜杠
   const cleanPath = path.replace(/^\//, '');
   // 移除可能存在的语言前缀
-  const pathWithoutLocale = cleanPath.replace(/^(zh|en)\//, '');
+  const pathWithoutLocale = cleanPath.replace(/^(zh_CN|en_US)\//, '');
   // 构建新路径
   return `/${locale}/${pathWithoutLocale}`;
 }

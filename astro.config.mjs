@@ -48,10 +48,10 @@ export default defineConfig({
     sitemap({
       // i18n 配置 - 与项目的多语言设置匹配
       i18n: {
-        defaultLocale: 'zh',
+        defaultLocale: 'zh_CN',
         locales: {
-          zh: 'zh-CN',
-          en: 'en-US',
+          zh_CN: 'zh-CN',
+          en_US: 'en-US',
         },
       },
       // 更新频率
@@ -79,8 +79,8 @@ export default defineConfig({
 
   // i18n 国际化配置
   i18n: {
-    defaultLocale: 'zh',
-    locales: ['zh', 'en'],
+    defaultLocale: 'zh_CN',
+    locales: ['zh_CN', 'en_US'],
     routing: {
       prefixDefaultLocale: true,
       redirectToDefaultLocale: false,
@@ -98,5 +98,27 @@ export default defineConfig({
     optimizeDeps: {
       include: ['react', 'react-dom'],
     },
+    // 确保 React 只有一个副本
+    resolve: {
+      dedupe: ['react', 'react-dom'],
+    },
   },
+
+  // 图片优化配置
+  image: {
+    // 允许优化的远程图片域名
+    domains: ['images.unsplash.com', 'unsplash.com'],
+    // 远程图片模式匹配
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.cloudinary.com',
+      },
+    ],
+  },
+
 });

@@ -1,6 +1,6 @@
 /**
  * LanguageSwitcher.jsx (Astro React Island 版本)
- * 语言切换按钮，用于在 /en/ 和 /zh/ 之间切换
+ * 语言切换按钮，用于在 /en_US/ 和 /zh_CN/ 之间切换
  *
  * 更新：
  * - 支持 View Transitions 的 navigate API
@@ -10,14 +10,14 @@
  * - View Transitions Guide - Trigger navigation
  * - Internationalization (i18n) Routing
  */
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const locales = {
-  zh: { label: '中', path: '/zh/' },
-  en: { label: 'EN', path: '/en/' },
+  zh_CN: { label: '中', path: '/zh_CN/' },
+  en_US: { label: 'EN', path: '/en_US/' },
 };
 
-const LanguageSwitcher = ({ currentLang = 'en' }) => {
+const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
   // 用于检测 navigate 函数是否可用
   const [navigateAvailable, setNavigateAvailable] = useState(false);
 
@@ -44,7 +44,7 @@ const LanguageSwitcher = ({ currentLang = 'en' }) => {
   const handleSwitch = useCallback(async () => {
     // 获取当前路径并替换语言前缀
     const currentPath = window.location.pathname;
-    const pathWithoutLang = currentPath.replace(/^\/(en|zh)\//, '/');
+    const pathWithoutLang = currentPath.replace(/^\/(en_US|zh_CN)\//, '/');
     const newPath = `/${nextLang}${pathWithoutLang}`;
 
     // 如果 View Transitions 的 navigate 可用，使用它进行平滑切换

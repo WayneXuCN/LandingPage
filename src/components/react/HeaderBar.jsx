@@ -2,12 +2,12 @@
  * HeaderBar.jsx
  * 头部组件，包含 avatar、name、导航、主题切换和语言切换
  */
-import React from 'react';
+
 import PrimaryNav from './PrimaryNav.jsx';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 
-const HeaderBar = ({ header, nav, currentPath = '/', lang = 'en' }) => {
+const HeaderBar = ({ header, nav, currentPath = '/', lang = 'en_US' }) => {
   const avatarUrl = header?.avatar || '/assets/img/prof_pic.png';
   const name = header?.name || '';
 

@@ -58,7 +58,7 @@
         "@astrojs/sitemap": "^3.6.0",
         "@emailjs/browser": "^4.4.1",
         "@iconify-json/mdi": "^1.2.3",
-        "astro": "^5.16.0",
+        "astro": "^5.16.2",
         "astro-icon": "^1.1.5",
         "astro-robots-txt": "^1.0.0",
         "astro-seo": "^0.8.4",

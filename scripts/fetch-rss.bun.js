@@ -31,7 +31,7 @@ const FETCH_TIMEOUT = 15000; // 15 秒超时
 const MAX_RETRIES = 3;
 
 // 支持的语言列表
-const SUPPORTED_LANGUAGES = ['zh', 'en'];
+const SUPPORTED_LANGUAGES = ['zh_CN', 'en_US'];
 
 // ============================================================================
 // 工具函数

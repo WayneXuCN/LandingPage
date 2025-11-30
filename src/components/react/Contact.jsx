@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
+import { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
 /**
@@ -61,6 +61,8 @@ const Contact = ({ content }) => {
       textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
       textarea.select();
+      // Fallback for older browsers - execCommand is deprecated but still works
+      // eslint-disable-next-line deprecation/deprecation
       const successful = document.execCommand('copy');
       document.body.removeChild(textarea);
       return successful;

@@ -24,7 +24,7 @@ const {
   description = '',
   author = '',
   keywords = '',
-  lang = 'en',
+  lang = 'en_US',
   ogImage = '/assets/img/og-image.png',
   canonicalUrl,
   noindex = false,
@@ -62,7 +62,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
         },
         optional: {
           description: description,
-          locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+          locale: lang === 'zh_CN' ? 'zh_CN' : 'en_US',
           siteName: 'Wenjie Xu',
         },
         image: {
@@ -158,7 +158,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
             window.dataLayer = window.dataLayer || []; const gtag = () => dataLayer.push(arguments);
             gtag('js', new Date()); gtag('config', gaId);
           </script>
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
         </>
       )
     }

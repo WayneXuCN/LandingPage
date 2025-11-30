@@ -22,7 +22,7 @@ interface Props {
 const { item, priority = false } = Astro.props;
 
 // 解析链接
-const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh');
+const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh_CN');
 ---
 
 <a

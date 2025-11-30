@@ -18,7 +18,7 @@ import { getI18n, type Locale } from '@lib/i18n';
 import rssData from '@data/rss-posts.json';
 
 // 使用默认语言
-const lang: Locale = 'zh';
+const lang: Locale = 'zh_CN';
 
 // 从内容集合获取翻译数据
 const translations = await getI18n(lang);
@@ -40,7 +40,7 @@ type RssPost = {
 const rssPosts = ((rssData as Record<string, RssPost[]>)[lang] || []) as RssPost[];
 
 // canonical URL 指向带语言前缀的页面
-const canonicalUrl = new URL('/zh/', Astro.site);
+const canonicalUrl = new URL('/zh_CN/', Astro.site);
 ---
 
 <BaseLayout

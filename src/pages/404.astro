@@ -8,8 +8,7 @@ import { getI18n, defaultLocale, type Locale } from '@lib/i18n';
 
 // 404 页面使用默认语言
 const lang: Locale = defaultLocale;
-const translations = await getI18n(lang);
-const { site } = translations;
+await getI18n(lang);
 
 // 404 页面文本
 const t = {

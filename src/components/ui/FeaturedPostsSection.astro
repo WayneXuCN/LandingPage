@@ -37,7 +37,7 @@ interface Props {
   language?: Locale;
 }
 
-const { config, rssPosts = [], language = 'zh' } = Astro.props;
+const { config, rssPosts = [], language = 'zh_CN' } = Astro.props;
 
 // 合并静态帖子和 RSS 数据
 const staticPosts = Array.isArray(config?.items) ? config.items : [];

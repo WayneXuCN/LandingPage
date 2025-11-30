@@ -32,7 +32,7 @@ interface Props {
   language?: Locale;
 }
 
-const { item, language = 'zh' } = Astro.props;
+const { item, language = 'zh_CN' } = Astro.props;
 
 const categories = item.categories || (item.category ? [item.category] : []);
 const pubDate = item.pubDate || item.updated || item.published || null;

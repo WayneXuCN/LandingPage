@@ -11,7 +11,7 @@ import type { Locale } from './i18n';
  * @param lang - 当前语言
  * @returns 处理后的链接
  */
-export function resolveContentHref(href: string | undefined | null, lang: Locale = 'zh'): string {
+export function resolveContentHref(href: string | undefined | null, lang: Locale = 'zh_CN'): string {
   if (!href) return '#';
 
   // 外部链接直接返回
@@ -33,7 +33,7 @@ export function resolveContentHref(href: string | undefined | null, lang: Locale
  * @param locale - 语言代码
  * @returns 格式化后的日期字符串
  */
-export function formatDate(date: string | Date, locale: Locale = 'zh'): string {
+export function formatDate(date: string | Date, locale: Locale = 'zh_CN'): string {
   const d = typeof date === 'string' ? new Date(date) : date;
 
   if (isNaN(d.getTime())) {
@@ -46,7 +46,7 @@ export function formatDate(date: string | Date, locale: Locale = 'zh'): string {
     day: 'numeric',
   };
 
-  return d.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', options);
+  return d.toLocaleDateString(locale === 'zh_CN' ? 'zh-CN' : 'en-US', options);
 }
 
 /**
