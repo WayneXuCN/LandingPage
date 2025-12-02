@@ -31,7 +31,7 @@ const {
   nofollow = false,
 } = Astro.props;
 
-// 构建完整的 OG 图片 URL
+// 构建完整的 OG 图片 URL (从 astro.config.mjs 读取 site 配置)
 const siteUrl = Astro.site?.origin || 'https://wenjiexu.site';
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 const fullCanonicalUrl = canonicalUrl || Astro.url.href;

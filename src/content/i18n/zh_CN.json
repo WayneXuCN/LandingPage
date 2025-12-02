@@ -12,16 +12,16 @@
     "nav": [
         {
             "label": "首页",
-            "href": "index.html"
+            "href": "/"
         },
         {
             "label": "关于",
-            "href": "about.html",
+            "href": "/about",
             "hidden": false
         },
         {
             "label": "联系",
-            "href": "contact.html",
+            "href": "/contact",
             "hidden": false
         }
     ],
@@ -210,15 +210,15 @@
                 "title": "关于“数字化”与“学术工具”的思考",
                 "description": "除了风险研究，我也关注科研效率工具的开发。我认为优秀的工具不应仅仅是功能的堆砌，而应是思维流的自然延伸，帮助研究者在信息过载中保持清醒。",
                 "linkText": "查看工具集",
-                "linkUrl": "index.html"
+                "linkUrl": "/"
             }
         },
         "philosophy": {
             "subtitle": "MOTTO",
-            "title": "「博学笃志，格物明德」",
+            "title": "「博学笃志,格物明德」",
             "description": "科研是一场漫长的攀登。如果您对复杂系统、风险决策感兴趣，或有相关数据与课题希望探讨，欢迎随时交流。",
             "ctaText": "建立联系",
-            "ctaUrl": "contact.html"
+            "ctaUrl": "/contact"
         }
     },
     "contact": {

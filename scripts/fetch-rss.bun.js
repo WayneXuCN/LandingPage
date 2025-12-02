@@ -118,11 +118,18 @@ function getTagContent(xml, tagName) {
 function getLinkHref(xml) {
   // Atom 风格: <link href="..." />
   const hrefMatch = xml.match(/<link[^>]*href=["']([^"']+)["'][^>]*>/i);
-  if (hrefMatch) return hrefMatch[1];
+  if (hrefMatch) {
+    // 修复双斜杠问题
+    return hrefMatch[1].replace(/([^:])(\/\/+)/g, '$1/');
+  }
 
   // RSS 风格: <link>...</link>
   const linkContent = getTagContent(xml, 'link');
-  return linkContent || '#';
+  if (linkContent) {
+    // 修复双斜杠问题
+    return linkContent.replace(/([^:])(\/\/+)/g, '$1/');
+  }
+  return '#';
 }
 
 /**

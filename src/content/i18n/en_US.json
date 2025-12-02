@@ -16,12 +16,12 @@
         },
         {
             "label": "About",
-            "href": "about.html",
+            "href": "/about",
             "hidden": false
         },
         {
             "label": "Contact",
-            "href": "contact.html",
+            "href": "/contact",
             "hidden": false
         }
     ],
@@ -210,7 +210,7 @@
                 "title": "On 'Digitalization' & 'Academic Tools'",
                 "description": "Beyond risk research, I focus on tools for scientific efficiency. Excellent tools shouldn't just pile up features; they should extend the flow of thought, helping researchers stay clear-headed amidst information overload.",
                 "linkText": "View Toolset",
-                "linkUrl": "index.html"
+                "linkUrl": "/"
             }
         },
         "philosophy": {
@@ -218,7 +218,7 @@
             "title": "\"Broad Learning, Steadfast Will.\"",
             "description": "Research is a long ascent. If you are interested in complex systems or risk decision-making, or wish to discuss data and topics, I welcome the exchange.",
             "ctaText": "Connect",
-            "ctaUrl": "contact.html"
+            "ctaUrl": "/contact"
         }
     },
     "contact": {
