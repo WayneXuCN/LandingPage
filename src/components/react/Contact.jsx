@@ -50,20 +50,36 @@ const Contact = ({ content }) => {
   const copyToClipboard = useCallback(async text => {
     if (typeof window === 'undefined') return false;
     try {
+      // 优先使用现代 Clipboard API
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
         return true;
       }
+      // Fallback: 使用 textarea + selection API
       const textarea = document.createElement('textarea');
       textarea.value = text;
       textarea.setAttribute('readonly', '');
       textarea.style.position = 'absolute';
       textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
-      textarea.select();
-      // Fallback for older browsers - execCommand is deprecated but still works
-      // eslint-disable-next-line deprecation/deprecation
-      const successful = document.execCommand('copy');
+      
+      // 使用现代 selection API
+      const selection = document.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(textarea);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      textarea.setSelectionRange(0, text.length);
+      
+      // 尝试使用 Clipboard API 作为最后的 fallback
+      let successful = false;
+      try {
+        successful = await navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+      } catch {
+        // 如果都不支持，则静默失败
+        console.warn('Clipboard API not supported in this browser');
+      }
+      
       document.body.removeChild(textarea);
       return successful;
     } catch (error) {
