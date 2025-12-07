@@ -5,7 +5,7 @@
 <h1 align="center">Starter Theme</h1>
 
 <p align="center">
-  <strong>A modern, minimalist personal landing page theme built with Astro 5</strong>
+  <strong>A modern, minimalist personal landing page theme built with Astro 5, React 19 and Tailwind CSS</strong>
 </p>
 
 <p align="center">
@@ -29,8 +29,10 @@
 <p align="center">
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
+  <a href="#project-structure">Project Structure</a> •
   <a href="#configuration">Configuration</a> •
-  <a href="#customization">Customization</a>
+  <a href="#deployment">Deployment</a> •
+  <a href="#contributing">Contributing</a>
 </p>
 
 <p align="center">
@@ -39,19 +41,21 @@
 
 ---
 
-## Features
+## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
-| **Internationalization** | Built-in internationalization with Astro's native i18n routing and Content Collections |
-| **Dark Mode** | Automatic theme switching with system preference detection and localStorage persistence |
-| **Responsive Design** | Mobile-first design that looks great on all devices |
-| **RSS Aggregation** | Fetch and display posts from external RSS/Atom feeds |
-| **Contact Form** | Pre-configured EmailJS integration for functional contact forms |
-| **Analytics** | Optional Google Analytics 4 integration |
-| **Islands Architecture** | Interactive React components with minimal JavaScript |
+| **🌐 Internationalization** | Built-in i18n with Astro's native routing and Content Collections |
+| **🌙 Dark Mode** | Automatic theme switching with system preference detection |
+| **📱 Responsive Design** | Mobile-first design optimized for all devices |
+| **📰 RSS Aggregation** | Fetch and display posts from external RSS/Atom feeds |
+| **📧 Contact Form** | Pre-configured EmailJS integration with form validation |
+| **📊 Analytics** | Optional Google Analytics 4 integration |
+| **🏝️ Islands Architecture** | React components loaded on demand, minimizing JS bundle size |
+| **🔍 SEO Optimized** | Auto-generated sitemap.xml and robots.txt |
+| **⚡ Fast Performance** | Static site generation with optimized assets |
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -60,8 +64,8 @@
 ### Create Your Site
 
 ```bash
-# Clone the template
-git clone https://github.com/WayneXuCN/starter-theme.git my-site
+# Clone the repository
+git clone https://github.com/WayneXuCN/LandingPage.git my-site
 cd my-site
 
 # Install dependencies
@@ -76,54 +80,66 @@ Open [http://localhost:4321](http://localhost:4321) to see your site.
 ### Build for Production
 
 ```bash
+# Build the site
 bun run build
+
+# Preview the production build
+bun run preview
 ```
 
-Output is generated in the `dist/` directory, ready for deployment to any static hosting platform.
+Output is generated in the `dist/` directory, ready for deployment.
 
-## Project Structure
+## 📁 Project Structure
 
-```text
+```
 src/
 ├── components/
-│   ├── react/          # React Islands
-│   │   ├── Contact.jsx 
-│   │   ├── ErrorBoundary.jsx
-│   │   ├── HeaderBar.jsx
-│   │   ├── LanguageSwitcher.jsx
-│   │   ├── PrimaryNav.jsx
-│   │   ├── ThemeToggle.jsx
-│   │   └── UnderlineEffects.jsx
+│   ├── react/          # React Islands (interactive components)
+│   │   ├── Contact.jsx        # Contact form with EmailJS
+│   │   ├── ErrorBoundary.jsx  # React error boundary
+│   │   ├── HeaderBar.jsx      # Navigation header with language switcher
+│   │   ├── LanguageSwitcher.jsx # Language selector component
+│   │   ├── PrimaryNav.jsx     # Primary navigation menu
+│   │   ├── ThemeToggle.jsx    # Dark/light mode toggle
+│   │   └── UnderlineEffects.jsx # Underline hover effects
 │   │
-│   └── ui/             # Astro 组件
-│       ├── Hero.astro
-│       ├── Footer.astro
-│       ├── WebsiteItem.astro
-│       ├── WebsitesSection.astro
-│       ├── FeaturedPostItem.astro
-│       └── FeaturedPostsSection.astro
+│   └── ui/             # Astro Components (static components)
+│       ├── Hero.astro              # Hero section
+│       ├── Footer.astro            # Site footer
+│       ├── WebsiteItem.astro       # Website showcase item
+│       ├── WebsitesSection.astro   # Websites showcase section
+│       ├── FeaturedPostItem.astro  # Featured post item
+│       └── FeaturedPostsSection.astro # Featured posts section
 │
 ├── layouts/
-│   └── BaseLayout.astro  # 全局布局
+│   └── BaseLayout.astro  # Global layout with SEO and meta tags
 │
 ├── lib/
-│   ├── i18n.ts           # i18n 工具函数
-│   └── utils.ts          # 公共工具函数
+│   ├── i18n.ts           # Internationalization utilities
+│   └── utils.ts          # Common utility functions
 │
 ├── pages/
-│   ├── index.astro       # 根首页
-│   ├── 404.astro         # 根 404
-│   └── [lang]/           # 动态路由
-│       ├── index.astro
-│       ├── about.astro
-│       ├── contact.astro
-│       └── 404.astro
+│   ├── index.astro       # Root homepage (renders Chinese version)
+│   ├── 404.astro         # Root 404 page
+│   └── [lang]/           # Dynamic routes for languages
+│       ├── index.astro   # Language-specific homepage
+│       ├── about.astro   # About page
+│       ├── contact.astro # Contact page
+│       └── 404.astro     # Language-specific 404 page
+│
+├── content/
+│   └── i18n/             # Internationalization content
+│       ├── zh_CN.json    # Chinese content
+│       └── en_US.json    # English content
+│
+├── data/
+│   └── rss-posts.json    # RSS aggregated posts data
 │
 └── styles/
-    └── global.css        # 全局样式
+    └── global.css        # Global styles and custom CSS
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 ### Environment Variables
 
@@ -141,12 +157,35 @@ PUBLIC_GA_ID=G-XXXXXXXXXX
 
 ### Site Configuration
 
-Edit `astro.config.mjs` to update your site URL:
+Main configuration is in `astro.config.mjs`:
 
 ```js
 export default defineConfig({
+  // Site URL for production
   site: 'https://your-domain.com',
-  // ...
+  
+  // Static site generation
+  output: 'static',
+  
+  // Internationalization
+  i18n: {
+    defaultLocale: 'zh_CN',
+    locales: ['zh_CN', 'en_US'],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
+    },
+  },
+  
+  // Integrations
+  integrations: [
+    react(),      // React support
+    mdx(),        // MDX support
+    tailwind(),   // Tailwind CSS
+    icon(),       // Iconify icons
+    sitemap(),    // Auto-generate sitemap.xml
+    robotsTxt(),  // Auto-generate robots.txt
+  ],
 });
 ```
 
@@ -156,26 +195,191 @@ All site content is managed through JSON files in `src/content/i18n/`:
 
 | File | Description |
 |------|-------------|
-| `zh.json` | Chinese content |
-| `en.json` | English content |
+| `zh_CN.json` | Chinese content |
+| `en_US.json` | English content |
 
-Each file contains:
+Content structure follows a strict schema defined in `src/content.config.ts`:
 
 ```json
 {
-  "site": { "title": "...", "description": "...", "author": "..." },
-  "nav": [{ "label": "Home", "href": "index.html" }],
-  "header": { "name": "...", "avatar": "..." },
-  "hero": { "title": "...", "subtitle": "...", "description": "..." },
-  "websites": { "title": "...", "items": [...] },
-  "featuredPosts": { "title": "...", "rss": {...}, "items": [...] },
-  "footer": { "copyright": "...", "socialLinks": [...] },
-  "about": { ... },
-  "contact": { ... }
+  "site": {
+    "title": "Site Title",
+    "author": "Your Name",
+    "description": "Site description",
+    "keywords": "keywords, for, seo"
+  },
+  "nav": [
+    { "label": "Home", "href": "index.html" },
+    { "label": "About", "href": "about.html" },
+    { "label": "Contact", "href": "contact.html" }
+  ],
+  "header": {
+    "avatar": "/assets/img/prof_pic.png",
+    "name": "Your Name"
+  },
+  "hero": {
+    "subtitle": "Welcome",
+    "title": "Your Name",
+    "description": "Your introduction text..."
+  },
+  "websites": {
+    "title": "My Websites",
+    "items": [
+      {
+        "id": "website-1",
+        "title": "Website Title",
+        "image": "/assets/img/website.png",
+        "url": "https://example.com",
+        "description": "Website description"
+      }
+    ]
+  },
+  "featuredPosts": {
+    "title": "Featured Posts",
+    "rss": {
+      "enabled": true,
+      "feeds": [
+        { "url": "https://blog.example.com/feed.xml", "parser": "default" }
+      ],
+      "limit": 6
+    },
+    "items": [],
+    "seeAllText": "See all posts",
+    "seeAllUrl": "https://blog.example.com"
+  },
+  "footer": {
+    "copyright": "© 2024 Your Name. All rights reserved.",
+    "icp": {
+      "text": "ICP备案号",
+      "url": "https://beian.miit.gov.cn"
+    },
+    "mps": {
+      "text": "公安备案号",
+      "url": "https://www.beian.gov.cn",
+      "logo": "/assets/img/mps-logo.png"
+    },
+    "socialLinks": [
+      {
+        "icon": "mdi:github",
+        "url": "https://github.com/yourusername",
+        "title": "GitHub"
+      }
+    ]
+  },
+  "about": {
+    "hero": {
+      "subtitle": "About",
+      "title": "About Me",
+      "description": "About me description..."
+    },
+    "timeline": {
+      "subtitle": "Journey",
+      "title": "My Timeline",
+      "period": "2018 - Present",
+      "items": [
+        {
+          "period": "2020-2023",
+          "title": "Job Title",
+          "description": "Job description..."
+        }
+      ]
+    },
+    "values": {
+      "subtitle": "Values",
+      "title": "My Values",
+      "items": [
+        {
+          "label": "Value 1",
+          "text": "Value description..."
+        }
+      ],
+      "product": {
+        "subtitle": "Product",
+        "title": "My Product",
+        "description": "Product description...",
+        "linkText": "Learn more",
+        "linkUrl": "https://product.example.com"
+      }
+    },
+    "philosophy": {
+      "subtitle": "Philosophy",
+      "title": "My Philosophy",
+      "description": "Philosophy description...",
+      "ctaText": "Get in touch",
+      "ctaUrl": "/contact"
+    }
+  },
+  "contact": {
+    "hero": {
+      "subtitle": "Contact",
+      "title": "Get in Touch",
+      "description": "Contact description..."
+    },
+    "cards": {
+      "email": {
+        "subtitle": "Email",
+        "address": "your.email@example.com",
+        "note": "Response within 24 hours"
+      },
+      "social": {
+        "subtitle": "Social Media",
+        "items": [
+          {
+            "label": "GitHub",
+            "url": "https://github.com/yourusername",
+            "icon": "mdi:github",
+            "handle": "@yourusername"
+          }
+        ]
+      }
+    },
+    "form": {
+      "subtitle": "Send Message",
+      "title": "Contact Form",
+      "note": "All fields are required"
+    },
+    "actions": {
+      "writeEmail": "Write Email",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "formLabels": {
+      "name": "Name",
+      "email": "Email",
+      "topic": "Topic",
+      "message": "Message"
+    },
+    "formPlaceholders": {
+      "name": "Your name",
+      "email": "your.email@example.com",
+      "message": "Your message..."
+    },
+    "formOptions": {
+      "consulting": "Consulting",
+      "content": "Content Creation",
+      "share": "Share Ideas",
+      "other": "Other"
+    },
+    "formSubmit": {
+      "default": "Send Message",
+      "sending": "Sending...",
+      "success": "Message Sent!",
+      "error": "Error Sending"
+    },
+    "services": {
+      "items": [
+        {
+          "subtitle": "Service 1",
+          "title": "Service Title",
+          "description": "Service description..."
+        }
+      ]
+    }
+  }
 }
 ```
 
-### RSS Feeds
+### RSS Configuration
 
 Configure RSS aggregation in your locale JSON:
 
@@ -193,59 +397,64 @@ Configure RSS aggregation in your locale JSON:
 }
 ```
 
-## Customization
+Fetch RSS feeds manually:
+
+```bash
+bun run fetch:rss
+```
+
+## 🛠️ Customization
 
 ### Adding a New Language
 
-1. **Update Astro config** (`astro.config.mjs`):
+1. **Update Astro configuration** (`astro.config.mjs`):
 
    ```js
    i18n: {
-     defaultLocale: 'zh',
-     locales: ['zh', 'en', 'ja'],
-     routing: { prefixDefaultLocale: true },
+     defaultLocale: 'zh_CN',
+     locales: ['zh_CN', 'en_US', 'NEW_LOCALE'],
    },
    ```
 
 2. **Update i18n utilities** (`src/lib/i18n.ts`):
 
    ```ts
-   export const locales = ['zh', 'en', 'ja'] as const;
-   
-   export const localeConfig = {
-     // ...existing
-     ja: { label: '日', name: '日本語', hrefLang: 'ja' },
+   export const locales = ['zh_CN', 'en_US', 'NEW_LOCALE'] as const;
+   export const localeConfig: Record<Locale, { label: string; name: string; hrefLang: string }> = {
+     NEW_LOCALE: {
+       label: 'XX',
+       name: 'Language Name',
+       hrefLang: 'new-locale',
+     },
    };
    ```
 
-3. **Create translation file** (`src/content/i18n/ja.json`)
+3. **Create translation file** (`i18n/NEW_LOCALE.json`):
+   Copy `en_US.json` and translate all content.
 
-4. **Create page routes** (`src/pages/ja/`)
+4. **Create page routes** (`src/pages/[lang]/`):
+   Copy existing language pages and update content references.
 
 ### Styling
 
 - **Colors & Theme**: Edit `tailwind.config.mjs`
 - **Global Styles**: Edit `src/styles/global.css`
 - **Dark Mode**: Use Tailwind's `dark:` prefix
+- **Custom Icons**: Add to `public/assets/css/custom-icons.css`
 
 ### Components
 
-All interactive components are React islands in `src/components/astro/`:
+| Component | Purpose | Client Directive |
+|-----------|---------|------------------|
+| `HeaderBar.jsx` | Navigation with language switcher | `client:load` |
+| `Contact.jsx` | Contact form with EmailJS | `client:load` |
+| `ErrorBoundary.jsx` | React error boundary | - |
+| `LanguageSwitcher.jsx` | Language selector | `client:load` |
+| `PrimaryNav.jsx` | Primary navigation | `client:load` |
+| `ThemeToggle.jsx` | Dark/light mode toggle | `client:load` |
+| `UnderlineEffects.jsx` | Underline hover effects | `client:idle` |
 
-| Component | Purpose |
-|-----------|---------|
-| `HeaderBar.jsx` | Navigation with language switcher |
-| `Hero.jsx` | Hero section with title and CTA |
-| `Home.jsx` | Homepage layout with sections |
-| `About.jsx` | About page content |
-| `Contact.jsx` | Contact page with form |
-| `Footer.jsx` | Site footer |
-| `ThemeToggle.jsx` | Dark/light mode toggle |
-| `LanguageSwitcher.jsx` | Language selector |
-
-## Deployment
-
-The theme generates static HTML files that can be deployed anywhere:
+## 🚀 Deployment
 
 ### Vercel
 
@@ -261,7 +470,7 @@ npx netlify deploy --prod --dir=dist
 
 ### GitHub Pages
 
-Use the included GitHub Actions workflow or deploy manually:
+Use the included GitHub Actions workflow (`.github/workflows/deploy.yml`) or deploy manually:
 
 ```bash
 bun run build
@@ -275,25 +484,35 @@ Connect your repository and set:
 - **Build command**: `bun run build`
 - **Output directory**: `dist`
 
-## Scripts
+## 📦 Scripts
 
 | Command | Description |
 |---------|-------------|
-| `bun run dev` | Start development server |
-| `bun run build` | Build for production |
+| `bun run dev` | Start development server (Bun runtime) |
+| `bun run dev:node` | Start development server (Node.js runtime) |
+| `bun run build` | Build for production (Bun runtime) |
+| `bun run build:node` | Build for production (Node.js runtime) |
 | `bun run preview` | Preview production build |
 | `bun run fetch:rss` | Fetch RSS feeds |
 | `bun run format` | Format code with Prettier |
+| `bun run format:check` | Check code formatting |
+| `bun run type-check` | TypeScript type checking |
+| `bun run lint` | Astro code linting |
+| `bun run clean` | Clean build artifacts |
+| `bun run reinstall` | Clean and reinstall dependencies |
 
-## Tech Stack
+## 🏗️ Tech Stack
 
 - **Framework**: [Astro](https://astro.build/) 5.x
 - **UI**: [React](https://react.dev/) 19.x
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) 3.x
-- **Runtime**: [Bun](https://bun.sh/) 1.x
+- **Runtime**: [Bun](https://bun.sh/) 1.x (recommended) or Node.js 18+
 - **Email**: [EmailJS](https://www.emailjs.com/)
+- **Icons**: [Iconify](https://iconify.design/) (Material Design Icons)
+- **Content**: Astro Content Collections with TypeScript validation
+- **SEO**: Auto-generated sitemap.xml and robots.txt
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a PR.
 
@@ -303,12 +522,12 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
 
 <p align="center">
-  Made with love by <a href="https://github.com/WayneXuCN">Wenjie Xu</a>
+  Made with ❤️ by <a href="https://github.com/WayneXuCN">Wenjie Xu</a>
 </p>

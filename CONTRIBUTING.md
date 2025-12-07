@@ -103,7 +103,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 ### File Organization
 
 - Components go in `src/components/astro/`
-- Translations go in `src/content/i18n/`
+- Translations go in `i18n/`
 - Utilities go in `src/lib/`
 - Tests go in `tests/`
 

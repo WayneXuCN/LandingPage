@@ -4,8 +4,9 @@
  * 全局布局组件，包含 meta、manifest、GA 条件脚本、主题初始化
  */
 import '../styles/global.css';
-import { ClientRouter } from 'astro:transitions';
 import { SEO } from 'astro-seo';
+import { getImage } from 'astro:assets';
+import { getLocalImage } from '@lib/localImages';
 
 interface Props {
   title?: string;
@@ -20,20 +21,63 @@ interface Props {
 }
 
 const {
-  title = 'Home',
-  description = '',
-  author = '',
-  keywords = '',
-  lang = 'en_US',
-  ogImage = '/assets/img/og-image.png',
+  title = 'Wenjie Xu',
+  description = 'My personal landing page.',
+  author = 'Wenjie Xu',
+  keywords = 'Landing Page, Astro, Personal Website',
+  lang = 'zh_CN',
+  ogImage = '/img/og-image.png',
   canonicalUrl,
   noindex = false,
   nofollow = false,
 } = Astro.props;
 
-// 构建完整的 OG 图片 URL (从 astro.config.mjs 读取 site 配置)
-const siteUrl = Astro.site?.origin || 'https://wenjiexu.site';
-const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+// 构建完整的 OG 图片 URL
+// 从 astro.config.mjs 读取 site 配置
+// 如果未设置 site，在开发环境使用 localhost，生产环境使用相对路径
+const getSiteUrl = () => {
+  if (Astro.site?.origin) {
+    return Astro.site.origin;
+  }
+
+  // 开发环境使用 localhost，生产环境使用相对路径
+  return import.meta.env.DEV ? 'http://localhost:4321' : '';
+};
+const siteUrl = getSiteUrl();
+
+// 如果传入的 ogImage 指向 src/assets/img 下的本地图片，则在构建期生成标准的 OG 尺寸图
+const localOgSource = getLocalImage(ogImage);
+const ogTransform = localOgSource
+  ? await getImage({
+      src: localOgSource,
+      width: 1200,
+      height: 630,
+      format: 'jpg',
+      quality: 80,
+    })
+  : null;
+
+const resolvedOgImage = ogTransform?.src ?? ogImage;
+
+// Apple touch icon：同样可以用 getImage() 生成更轻量的 180x180 png
+const localAppleTouchSource =
+  getLocalImage('/img/apple-touch-icon.png') || getLocalImage('/assets/img/apple-touch-icon.png');
+const appleTouchTransform = localAppleTouchSource
+  ? await getImage({
+      src: localAppleTouchSource,
+      width: 180,
+      height: 180,
+      format: 'png',
+    })
+  : null;
+const appleTouchIconHref = appleTouchTransform?.src ?? '/assets/img/apple-touch-icon.png';
+
+// 处理 OG 图片 URL 和 Canonical URL
+const fullOgImage = resolvedOgImage.startsWith('http')
+  ? resolvedOgImage
+  : siteUrl
+    ? `${siteUrl}${resolvedOgImage}`
+    : resolvedOgImage;
 const fullCanonicalUrl = canonicalUrl || Astro.url.href;
 
 // GA ID 从环境变量获取（PUBLIC_ 前缀表示客户端可用）
@@ -88,33 +132,30 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
 
     <!-- Favicon -->
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
-    <link rel='apple-touch-icon' href='/assets/img/apple-touch-icon.png' />
+    <link rel='apple-touch-icon' href={appleTouchIconHref} />
 
     <!-- Web Manifest -->
     <link rel='manifest' href='/site.webmanifest' />
 
-    <!-- Google Fonts: Noto Sans SC-->
+    <!-- Google Fonts: Noto Sans SC (defer as non-render-blocking) -->
     <link rel='preconnect' href='https://fonts.googleapis.com' />
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
     <link
       rel='stylesheet'
       href='https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap'
+      media='print'
+      onload="this['media']='all'"
     />
+    <noscript>
+      <link
+        rel='stylesheet'
+        href='https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap'
+      />
+    </noscript>
 
-    <!-- Font Awesome CDN -->
-    <link
-      rel='stylesheet'
-      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-      crossorigin='anonymous'
-    />
+    <!-- Icons use inline SVG; no external icon font CSS required -->
 
-    <!-- Custom Icons -->
-    <link rel='stylesheet' href='/assets/css/custom-icons.css' />
-
-    <!-- 
-      View Transitions
-    -->
-    <ClientRouter />
+    <!-- View Transitions 已移除：减少首屏 JS 与潜在阻塞 -->
 
     <!-- 
       主题初始化脚本
@@ -155,8 +196,8 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       gaId && (
         <>
           <script is:inline define:vars={{ gaId }}>
-            window.dataLayer = window.dataLayer || []; const gtag = () => dataLayer.push(arguments);
-            gtag('js', new Date()); gtag('config', gaId);
+            window.dataLayer = window.dataLayer || []; dataLayer.push(['js', new Date()]);
+            dataLayer.push(['config', gaId]);
           </script>
           <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
         </>

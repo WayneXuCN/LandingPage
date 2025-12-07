@@ -2,8 +2,8 @@
 /**
  * FeaturedPostItem.astro
  * 精选文章卡片组件
- * 纯展示组件，无需 React 水合
  */
+import { Image } from 'astro:assets';
 import { resolveContentHref, formatDate } from '@lib/utils';
 import type { Locale } from '@lib/i18n';
 
@@ -57,12 +57,17 @@ const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.u
   class='relative block overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:focus:ring-white group'
 >
   <div class='relative w-full h-64'>
-    <img
+    <Image
       src={item.image}
       alt={item.title}
+      width={600}
+      height={350}
       loading='lazy'
       decoding='async'
+      sizes='(max-width: 640px) 100vw, 768px'
       class='absolute inset-0 w-full h-full object-cover'
+      format='webp'
+      quality={80}
     />
   </div>
 

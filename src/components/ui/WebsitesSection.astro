@@ -23,7 +23,10 @@ const { title = 'Websites', items = [] } = Astro.props;
 
 {
   items && items.length > 0 && (
-    <section class='mb-12 sm:mb-16 md:mb-20'>
+    <section
+      class='mb-12 sm:mb-16 md:mb-20'
+      style='content-visibility:auto; contain-intrinsic-size: 1px 900px;'
+    >
       <h2 class='text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 display-font'>{title}</h2>
       <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'>
         {items.map((item, index) => (

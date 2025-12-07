@@ -1,0 +1,313 @@
+{
+    "site": {
+        "title": "Wenjie Xu",
+        "author": "徐文杰",
+        "description": "徐文杰的主页。中国科学院科技战略咨询研究院博士生，关注关键基础设施风险管理与系统韧性。",
+        "keywords": "徐文杰, 博士生, 风险管理, 关键基础设施, 系统韧性, 决策分析, 中国科学院, CAS",
+        "favicon": {
+            "ico": "/assets/img/favicon.ico",
+            "appleTouchIcon": "/assets/img/apple-touch-icon.png"
+        }
+    },
+    "nav": [
+        {
+            "label": "首页",
+            "href": "/"
+        },
+        {
+            "label": "关于",
+            "href": "/about",
+            "hidden": false
+        },
+        {
+            "label": "联系",
+            "href": "/contact",
+            "hidden": false
+        }
+    ],
+    "header": {
+        "avatar": "/img/prof_pic.png",
+        "name": "徐文杰"
+    },
+    "hero": {
+        "subtitle": "WENJIE XU",
+        "title": "<span class=\"inline-block\">保持好奇</span> <span class=\"inline-block\">保持自在</span>",
+        "description": "与来自不同领域的人合作，总能带来新的可能。<br>如果你希望<a href=\"mailto:wenjie.xu.cn@outlook.com\" class=\"underline\">联系我</a>，我很乐意与你交流！"
+    },
+    "websites": {
+        "title": "Websites",
+        "items": [
+            {
+                "id": "Dashboard",
+                "title": "工作仪表板",
+                "image": "/websites/dashboard.png",
+                "url": "https://dashboard.wenjiexu.site",
+                "description": "我的自托管 Glance 工作仪表板，聚合关注信息和常用工具"
+            },
+            {
+                "id": "Gitea",
+                "title": "My Gitea",
+                "image": "/websites/gitea.png",
+                "url": "https://gitea.wenjiexu.site",
+                "description": "自托管的 Gitea DevSecOps 平台，用于管理个人项目与代码版本控制"
+            },
+            {
+                "id": "Overleaf",
+                "title": "My Overleaf",
+                "image": "/websites/overleaf.png",
+                "url": "https://overleaf.wenjiexu.site",
+                "description": "自托管的 LaTeX 在线编辑器，专注于学术论文撰写与排版"
+            },
+            {
+                "id": "blinko",
+                "title": "闪念笔记",
+                "image": "/websites/Blinko.png",
+                "url": "https://blinko.wenjiexu.site",
+                "description": "自托管的 Blinko 闪念笔记，随时捕捉灵感与想法"
+            },
+            {
+                "id": "blog",
+                "title": "个人博客",
+                "image": "/websites/blogpage.png",
+                "url": "https://blog.wenjiexu.site",
+                "description": "分享个人文章，包括技术分享、研究心得和生活感悟"
+            },
+            {
+                "id": "projects",
+                "title": "个人项目",
+                "image": "/websites/project.png",
+                "url": "https://lab.wenjiexu.site/projects",
+                "description": "探索我的学术研究项目和开源作品"
+            },
+            {
+                "id": "personal",
+                "title": "学术主页",
+                "image": "/websites/labpage.png",
+                "url": "https://lab.wenjiexu.site",
+                "description": "我的学术主页，包含个人介绍、学术活动和出版论文等"
+            }
+        ]
+    },
+    "featuredPosts": {
+        "title": "Featured Posts",
+        "rss": {
+            "enabled": true,
+            "feeds": [
+                {
+                    "url": "https://blog.wenjiexu.site/zh/rss.xml",
+                    "parser": "astroPaper"
+                }
+            ],
+            "limit": 6
+        },
+        "items": [
+            {
+                "id": "math-typesetting",
+                "title": "Math Typesetting - use Mathematical notation in blog posts",
+                "image": "https://picsum.photos/seed/math101/600/350.jpg",
+                "url": "#",
+                "description": "在博客中使用数学公式和符号",
+                "pubDate": "2024-01-15T00:00:00.000Z"
+            },
+            {
+                "id": "rich-content",
+                "title": "Rich Content",
+                "image": "https://picsum.photos/seed/richcontent202/600/350.jpg",
+                "url": "#",
+                "description": "创建丰富多样的博客内容",
+                "pubDate": "2024-01-10T00:00:00.000Z"
+            }
+        ],
+        "seeAllText": "查看所有文章",
+        "seeAllUrl": "https://blog.wenjiexu.site"
+    },
+    "footer": {
+        "copyright": "© {startYear}-{currentYear} 徐文杰. 版权所有.",
+        "icp": {
+            "text": "苏ICP备2025220926号-1",
+            "url": "https://beian.miit.gov.cn/"
+        },
+        "mps": {
+            "text": "京公网安备11010802046735号",
+            "url": "https://beian.mps.gov.cn/",
+            "logo": "https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"
+        },
+        "socialLinks": [
+            {
+                "icon": "fas fa-globe",
+                "url": "https://waynexucn.github.io/",
+                "title": "个人网站"
+            },
+            {
+                "icon": "far fa-envelope",
+                "url": "mailto:wenjie.xu.cn@outlook.com",
+                "title": "邮箱"
+            },
+            {
+                "icon": "fab fa-github",
+                "url": "https://github.com/WayneXuCN",
+                "title": "GitHub"
+            },
+            {
+                "icon": "fab fa-google",
+                "url": "https://scholar.google.com/citations?user=eWTidmsAAAAJ",
+                "title": "Google Scholar"
+            },
+            {
+                "icon": "fab fa-researchgate",
+                "url": "https://www.researchgate.net/profile/Wenjie-Xu-2",
+                "title": "ResearchGate"
+            }
+        ]
+    },
+    "about": {
+        "hero": {
+            "subtitle": "STORY",
+            "title": "<span class=\"inline-block\">透视复杂</span> <span class=\"inline-block\">重构韧性</span>",
+            "description": "<span class=\"underline\">风险</span>是万物互联的阴影。我试图在混沌的演化中，寻找系统安全的边界"
+        },
+        "timeline": {
+            "subtitle": "RESEARCH FOCUS",
+            "title": "研究重点",
+            "period": "Key Areas",
+            "items": [
+                {
+                    "period": "01",
+                    "title": "系统复杂性与级联失效",
+                    "description": "跳出单一设施的视角，关注能源、交通等网络之间的耦合关系。研究风险如何在异构网络中传播，以及如何识别引发系统崩溃的“关键节点”。"
+                },
+                {
+                    "period": "02",
+                    "title": "数据驱动的韧性评估",
+                    "description": "理论模型需要真实数据的支撑。利用多源异构数据（时空轨迹、传感器日志等），构建动态的韧性评估指标，让“安全”变得可度量。"
+                },
+                {
+                    "period": "03",
+                    "title": "应急管理与优化决策",
+                    "description": "从“预测风险”走向“管理风险”。结合运筹学方法，研究在资源受限和信息不完备的极端场景下，如何制定最优的恢复策略。"
+                }
+            ]
+        },
+        "values": {
+            "subtitle": "METHODOLOGY",
+            "title": "研究范式",
+            "items": [
+                {
+                    "label": "系统思维",
+                    "text": "整体大于部分之和，关注要素间的非线性涌现。"
+                },
+                {
+                    "label": "计算社会科学",
+                    "text": "用计算的方法重新审视传统的公共管理问题。"
+                },
+                {
+                    "label": "经世致用",
+                    "text": "学术的终点不是发表，而是为现实决策提供逻辑支撑。"
+                }
+            ],
+            "product": {
+                "subtitle": "CURRENT THOUGHTS",
+                "title": "关于“数字化”与“学术工具”的思考",
+                "description": "除了风险研究，我也关注科研效率工具的开发。我认为优秀的工具不应仅仅是功能的堆砌，而应是思维流的自然延伸，帮助研究者在信息过载中保持清醒。",
+                "linkText": "查看工具集",
+                "linkUrl": "/"
+            }
+        },
+        "philosophy": {
+            "subtitle": "MOTTO",
+            "title": "「博学笃志,格物明德」",
+            "description": "科研是一场漫长的攀登。如果您对复杂系统、风险决策感兴趣，或有相关数据与课题希望探讨，欢迎随时交流。",
+            "ctaText": "建立联系",
+            "ctaUrl": "/contact"
+        }
+    },
+    "contact": {
+        "hero": {
+            "subtitle": "LET'S CONNECT",
+            "title": "<span class=\"inline-block\">保持对话</span> <span class=\"inline-block\">思想碰撞</span>",
+            "description": "<span class=\"underline\">学术探讨、课题合作或数据分享</span>，都可以在这里发起"
+        },
+        "cards": {
+            "email": {
+                "subtitle": "EMAIL",
+                "address": "wenjie.xu.cn@outlook.com",
+                "note": "无论是技术探讨、跨学科的合作构想，还是简单的问候，都欢迎随时来信"
+            },
+            "social": {
+                "subtitle": "SOCIAL / ACADEMIC",
+                "items": [
+                    {
+                        "label": "GitHub",
+                        "url": "https://github.com/WayneXuCN",
+                        "icon": "fab fa-github",
+                        "handle": "@WayneXuCN"
+                    },
+                    {
+                        "label": "Google Scholar",
+                        "url": "https://scholar.google.com/citations?user=eWTidmsAAAAJ",
+                        "icon": "fab fa-google",
+                        "handle": "@WayneXuCN"
+                    },
+                    {
+                        "label": "Personal Site",
+                        "url": "https://waynexucn.github.io/",
+                        "icon": "fas fa-globe",
+                        "handle": "waynexucn.github.io"
+                    }
+                ]
+            }
+        },
+        "form": {
+            "subtitle": "PROJECT INTAKE",
+            "title": "写下你的想法",
+            "note": "平均响应时间：<strong class=\"text-gray-700\">12h</strong>"
+        },
+        "actions": {
+            "writeEmail": "写邮件",
+            "copy": "复制",
+            "copied": "已复制"
+        },
+        "formLabels": {
+            "name": "称呼",
+            "email": "邮箱",
+            "topic": "交流类型",
+            "message": "简要说明"
+        },
+        "formPlaceholders": {
+            "name": "例如：徐同学 / 徐教授 / 课题组",
+            "email": "you@example.com",
+            "message": "关于论文探讨、合作意向或会议邀请..."
+        },
+        "formOptions": {
+            "consulting": "学术交流",
+            "content": "课题合作",
+            "share": "资源分享",
+            "other": "其他想法"
+        },
+        "formSubmit": {
+            "default": "发送给 Wenjie Xu",
+            "sending": "发送中...",
+            "success": "发送成功！我会尽快查收",
+            "error": "发送失败，请稍后重试"
+        },
+        "services": {
+            "items": [
+                {
+                    "subtitle": "Data",
+                    "title": "数据洞察",
+                    "description": "多源异构数据挖掘与可视化"
+                },
+                {
+                    "subtitle": "Research",
+                    "title": "风险建模",
+                    "description": "复杂系统风险评估与仿真"
+                },
+                {
+                    "subtitle": "Analysis",
+                    "title": "决策支持",
+                    "description": "不确定性下的应对策略与战略规划"
+                }
+            ]
+        }
+    }
+}

@@ -10,7 +10,7 @@
  * - View Transitions Guide - Trigger navigation
  * - Internationalization (i18n) Routing
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 const locales = {
   zh_CN: { label: '中', path: '/zh_CN/' },
@@ -18,28 +18,20 @@ const locales = {
 };
 
 const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
-  // 用于检测 navigate 函数是否可用
-  const [navigateAvailable, setNavigateAvailable] = useState(false);
-
-  useEffect(() => {
-    // 动态导入 astro:transitions/client 模块
-    // 只在客户端执行，避免 SSR 问题
-    import('astro:transitions/client')
-      .then(() => setNavigateAvailable(true))
-      .catch(() => setNavigateAvailable(false));
-  }, []);
+  // 确保 currentLang 在 locales 中有定义
+  const safeCurrentLang = locales[currentLang] ? currentLang : 'en_US';
 
   // 获取下一个语言
   const getNextLang = () => {
     const localeKeys = Object.keys(locales);
-    const currentIndex = localeKeys.indexOf(currentLang);
+    const currentIndex = localeKeys.indexOf(safeCurrentLang);
     const nextIndex = (currentIndex + 1) % localeKeys.length;
     return localeKeys[nextIndex];
   };
 
   const nextLang = getNextLang();
   const nextLabel = locales[nextLang].label;
-  const currentLabel = locales[currentLang].label;
+  const currentLabel = locales[safeCurrentLang].label;
 
   const handleSwitch = useCallback(async () => {
     // 获取当前路径并替换语言前缀
@@ -47,23 +39,9 @@ const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
     const pathWithoutLang = currentPath.replace(/^\/(en_US|zh_CN)\//, '/');
     const newPath = `/${nextLang}${pathWithoutLang}`;
 
-    // 如果 View Transitions 的 navigate 可用，使用它进行平滑切换
-    if (navigateAvailable) {
-      try {
-        const { navigate } = await import('astro:transitions/client');
-        // 使用 replace 模式，不在历史记录中创建新条目
-        // 这样用户按返回键不会在语言间来回切换
-        await navigate(newPath, { history: 'replace' });
-        return;
-      } catch (error) {
-        // fallback to normal navigation
-        console.warn('View Transitions navigate failed, falling back to normal navigation');
-      }
-    }
-
-    // Fallback：普通导航
+    // 普通导航（更轻量，避免为 View Transitions 引入额外 JS）
     window.location.href = newPath;
-  }, [nextLang, navigateAvailable]);
+  }, [nextLang]);
 
   return (
     <button

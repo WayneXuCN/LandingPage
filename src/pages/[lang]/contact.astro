@@ -1,13 +1,12 @@
 ---
 /**
- * /[lang]/contact.astro - 多语言联系页面（动态路由）
+ * /[lang]/contact.astro
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/ui/Hero.astro';
 import Footer from '@components/ui/Footer.astro';
-import HeaderBar from '@components/react/HeaderBar.jsx';
+import HeaderBar from '@components/ui/HeaderBar.astro';
 import ContactPage from '@components/react/Contact.jsx';
-import UnderlineEffects from '@components/react/UnderlineEffects.jsx';
 import { getI18n, locales, type Locale } from '@lib/i18n';
 
 // 生成静态路径
@@ -35,7 +34,7 @@ const currentPath = Astro.url.pathname;
   keywords={site.keywords}
   lang={lang}
 >
-  <HeaderBar client:load nav={nav} header={header} currentPath={currentPath} lang={lang} />
+  <HeaderBar nav={nav} header={header} currentPath={currentPath} lang={lang} />
 
   {/* Hero 区块 - 纯展示 */}
   <Hero
@@ -44,10 +43,9 @@ const currentPath = Astro.url.pathname;
     description={contact.hero?.description}
   />
 
-  {/* Contact 组件包含表单交互，需要 React */}
-  <ContactPage client:load content={{ contact }} />
+  {/* Contact 组件包含表单交互，需要 React；延迟到空闲时水合以降低 TBT */}
+  <ContactPage client:idle content={{ contact }} />
 
   <Footer footer={footer} />
 
-  <UnderlineEffects client:idle />
 </BaseLayout>

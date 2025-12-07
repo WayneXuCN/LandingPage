@@ -1,6 +1,5 @@
 /**
  * i18n 工具函数
- * 使用 Astro Content Collections 和原生 i18n 支持
  */
 import { getCollection } from 'astro:content';
 
@@ -15,7 +14,7 @@ export const defaultLocale: Locale = 'zh_CN';
 export const localeConfig: Record<Locale, { label: string; name: string; hrefLang: string }> = {
   zh_CN: {
     label: '中',
-    name: '中文',
+    name: '简体中文',
     hrefLang: 'zh-CN',
   },
   en_US: {
@@ -31,15 +30,15 @@ export const localeConfig: Record<Locale, { label: string; name: string; hrefLan
  * @returns 翻译数据对象
  */
 export async function getI18n(locale: Locale) {
-  // Astro glob loader 会将文件名转为小写作为 ID
-  // 需要做映射: zh_CN -> zh_cn, en_US -> en_us
+  // 将语言代码转换为小写形式以满足内容集合的 ID 兼容性需求
   const contentId = locale.toLowerCase();
-  
+
+  // 获取 i18n 内容集合
   const collection = await getCollection('i18n');
   const entry = collection.find((e: { id: string }) => e.id === contentId);
-  
+
   if (!entry) {
-    // 回退到默认语言
+    // 如果指定语言的 i18n 数据不存在，则使用默认语言作为回退
     const defaultContentId = defaultLocale.toLowerCase();
     const fallback = collection.find((e: { id: string }) => e.id === defaultContentId);
     if (!fallback) {
@@ -55,6 +54,7 @@ export async function getI18n(locale: Locale) {
  * @returns 所有语言的翻译数据
  */
 export async function getAllI18n() {
+  // 获取 i18n 内容集合
   const collection = await getCollection('i18n');
   return Object.fromEntries(
     collection.map((entry: { id: string; data: unknown }) => [entry.id, entry.data])

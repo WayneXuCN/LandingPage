@@ -21,7 +21,8 @@ const HeaderBar = ({ header, nav, currentPath = '/', lang = 'en_US' }) => {
           height={56}
           className='w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4 shadow-sm object-cover'
           loading='eager'
-          decoding='async'
+          decoding='sync'
+          fetchpriority='high'
         />
         <span className='font-medium text-gray-900 dark:text-white text-lg tracking-tight'>
           {name}

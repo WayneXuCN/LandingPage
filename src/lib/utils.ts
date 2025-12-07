@@ -11,7 +11,10 @@ import type { Locale } from './i18n';
  * @param lang - 当前语言
  * @returns 处理后的链接
  */
-export function resolveContentHref(href: string | undefined | null, lang: Locale = 'zh_CN'): string {
+export function resolveContentHref(
+  href: string | undefined | null,
+  lang: Locale = 'zh_CN'
+): string {
   if (!href) return '#';
 
   // 外部链接直接返回

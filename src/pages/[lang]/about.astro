@@ -1,12 +1,11 @@
 ---
 /**
- * /[lang]/about.astro - 多语言关于页面（动态路由）
+ * /[lang]/about.astro
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/ui/Hero.astro';
 import Footer from '@components/ui/Footer.astro';
-import HeaderBar from '@components/react/HeaderBar.jsx';
-import UnderlineEffects from '@components/react/UnderlineEffects.jsx';
+import HeaderBar from '@components/ui/HeaderBar.astro';
 import { getI18n, locales, type Locale } from '@lib/i18n';
 import { resolveContentHref } from '@lib/utils';
 
@@ -36,7 +35,7 @@ const currentPath = Astro.url.pathname;
   keywords={site.keywords}
   lang={lang}
 >
-  <HeaderBar client:load nav={nav} header={header} currentPath={currentPath} lang={lang} />
+  <HeaderBar nav={nav} header={header} currentPath={currentPath} lang={lang} />
 
   {/* Hero 区块 */}
   <Hero subtitle={hero.subtitle} title={hero.title} description={hero.description} />
@@ -101,7 +100,19 @@ const currentPath = Astro.url.pathname;
           class='inline-flex items-center text-pink-500 dark:text-pink-400 font-medium underline mt-4'
         >
           {values.product.linkText}
-          <i class='fas fa-arrow-right ml-2'></i>
+          <svg
+            class='ml-2 w-4 h-4'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <path d='M5 12h14' />
+            <path d='M13 5l7 7-7 7' />
+          </svg>
         </a>
       </div>
     </div>
@@ -120,12 +131,23 @@ const currentPath = Astro.url.pathname;
         class='inline-flex items-center text-black bg-white dark:text-white dark:bg-gray-700 px-5 py-3 rounded-full font-semibold'
       >
         {philosophy.ctaText}
-        <i class='fas fa-arrow-right ml-3'></i>
+        <svg
+          class='ml-3 w-4 h-4'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M5 12h14' />
+          <path d='M13 5l7 7-7 7' />
+        </svg>
       </a>
     </div>
   </section>
 
   <Footer footer={footer} />
 
-  <UnderlineEffects client:idle />
 </BaseLayout>

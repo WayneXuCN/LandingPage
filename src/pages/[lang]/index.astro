@@ -1,16 +1,13 @@
 ---
 /**
- * /[lang]/index.astro - 多语言首页（动态路由）
- *
- * 通过动态路由统一处理中英文首页，避免代码重复
+ * /[lang]/index.astro
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/ui/Hero.astro';
 import WebsitesSection from '@components/ui/WebsitesSection.astro';
 import FeaturedPostsSection from '@components/ui/FeaturedPostsSection.astro';
 import Footer from '@components/ui/Footer.astro';
-import HeaderBar from '@components/react/HeaderBar.jsx';
-import UnderlineEffects from '@components/react/UnderlineEffects.jsx';
+import HeaderBar from '@components/ui/HeaderBar.astro';
 import { getI18n, locales, type Locale } from '@lib/i18n';
 import rssData from '@data/rss-posts.json';
 
@@ -24,7 +21,7 @@ export function getStaticPaths() {
 // 获取当前语言
 const { lang } = Astro.params as { lang: Locale };
 
-// 从内容集合获取翻译数据
+// 从内容集合获取 i18n 文本
 const translations = await getI18n(lang);
 const { site, nav, header, hero, websites, featuredPosts, footer } = translations;
 
@@ -51,21 +48,18 @@ const rssPosts = ((rssData as Record<string, RssPost[]>)[lang] || []) as RssPost
   keywords={site.keywords}
   lang={lang}
 >
-  {/* HeaderBar 需要交互功能，保持 React island */}
-  <HeaderBar client:load header={header} nav={nav} currentPath={currentPath} lang={lang} />
+  <HeaderBar header={header} nav={nav} currentPath={currentPath} lang={lang} />
 
-  {/* Hero 区块 - 纯展示，使用 Astro 组件 */}
+  {/* Hero 区块，静态内容，Astro 组件 */}
   <Hero subtitle={hero?.subtitle} title={hero?.title} description={hero?.description} />
 
-  {/* Websites 区块 - 纯展示，使用 Astro 组件 */}
+  {/* Websites 区块，静态内容，Astro 组件 */}
   <WebsitesSection title={websites?.title} items={websites?.items || []} />
 
-  {/* Featured Posts 区块 - 纯展示，使用 Astro 组件 */}
+  {/* Featured Posts 区块，静态内容，Astro 组件 */}
   <FeaturedPostsSection config={featuredPosts} rssPosts={rssPosts} language={lang} />
 
-  {/* Footer - 纯展示，使用 Astro 组件 */}
+  {/* Footer 区块，静态内容，Astro 组件 */}
   <Footer footer={footer} />
 
-  {/* 下划线悬停效果 - 延迟加载 */}
-  <UnderlineEffects client:idle />
 </BaseLayout>

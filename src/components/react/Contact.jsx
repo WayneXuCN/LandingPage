@@ -1,6 +1,91 @@
 import { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
+const Icon = ({ name, className = '' }) => {
+  const common = {
+    className,
+    viewBox: '0 0 24 24',
+    'aria-hidden': true,
+  };
+
+  switch (name) {
+    case 'envelope':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M4 4h16v16H4z' />
+          <path d='M22 6l-10 7L2 6' />
+        </svg>
+      );
+    case 'check':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M20 6L9 17l-5-5' />
+        </svg>
+      );
+    case 'alert':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M10.3 3.7L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.7a2 2 0 00-3.4 0z' />
+          <path d='M12 9v4' />
+          <path d='M12 17h.01' />
+        </svg>
+      );
+    case 'copy':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M8 8h12v12H8z' />
+          <path d='M4 16H3a1 1 0 01-1-1V3a1 1 0 011-1h12a1 1 0 011 1v1' />
+        </svg>
+      );
+    case 'external':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M14 3h7v7' />
+          <path d='M10 14L21 3' />
+          <path d='M21 14v7H3V3h7' />
+        </svg>
+      );
+    case 'github':
+      return (
+        <svg {...common} fill='currentColor'>
+          <path d='M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.24 1.83 1.24 1.07 1.84 2.8 1.31 3.48 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.82.58A12 12 0 0012 .5z' />
+        </svg>
+      );
+    case 'globe':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <circle cx='12' cy='12' r='10' />
+          <path d='M2 12h20' />
+          <path d='M12 2a15 15 0 010 20' />
+          <path d='M12 2a15 15 0 000 20' />
+        </svg>
+      );
+    case 'scholar':
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M22 10L12 5 2 10l10 5 10-5z' />
+          <path d='M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5' />
+        </svg>
+      );
+    default:
+      return (
+        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+          <path d='M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 000-7.07 5 5 0 00-7.07 0L10 5.86' />
+          <path d='M14 11a5 5 0 00-7.07 0L5.52 12.4a5 5 0 000 7.07 5 5 0 007.07 0L14 18.14' />
+        </svg>
+      );
+  }
+};
+
+const getIconKindFromFa = faClass => {
+  const v = String(faClass || '').toLowerCase();
+  if (v.includes('github')) return 'github';
+  if (v.includes('google')) return 'scholar';
+  if (v.includes('globe') || v.includes('web')) return 'globe';
+  if (v.includes('envelope') || v.includes('mail')) return 'envelope';
+  return 'link';
+};
+
 /**
  * Contact
  * 联系页面交互组件，包含邮箱卡片、社交链接和联系表单
@@ -62,7 +147,7 @@ const Contact = ({ content }) => {
       textarea.style.position = 'absolute';
       textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
-      
+
       // 使用现代 selection API
       const selection = document.getSelection();
       const range = document.createRange();
@@ -70,16 +155,19 @@ const Contact = ({ content }) => {
       selection?.removeAllRanges();
       selection?.addRange(range);
       textarea.setSelectionRange(0, text.length);
-      
+
       // 尝试使用 Clipboard API 作为最后的 fallback
       let successful = false;
       try {
-        successful = await navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+        successful = await navigator.clipboard
+          .writeText(text)
+          .then(() => true)
+          .catch(() => false);
       } catch {
         // 如果都不支持，则静默失败
         console.warn('Clipboard API not supported in this browser');
       }
-      
+
       document.body.removeChild(textarea);
       return successful;
     } catch (error) {
@@ -155,7 +243,7 @@ const Contact = ({ content }) => {
         <div className='p-8 border border-gray-200 dark:border-gray-700 rounded-3xl card-hover flex flex-col justify-between h-full group bg-white dark:bg-gray-800 relative overflow-hidden'>
           {/* 装饰背景 Icon */}
           <div className='absolute -right-6 -top-6 text-9xl text-gray-50 dark:text-gray-700 opacity-50 group-hover:opacity-100 group-hover:text-gray-100 dark:group-hover:text-gray-600 transition-all duration-500 pointer-events-none select-none'>
-            <i className='far fa-envelope'></i>
+            <Icon name='envelope' className='w-24 h-24' />
           </div>
 
           <div className='relative z-10'>
@@ -194,17 +282,17 @@ const Contact = ({ content }) => {
             >
               {copyStatus === 'success' ? (
                 <span className='text-green-600 dark:text-green-400'>
-                  <i className='fas fa-check mr-2'></i>
+                  <Icon name='check' className='inline-block w-4 h-4 mr-2 align-[-2px]' />
                   {actions?.copied || '已复制'}
                 </span>
               ) : copyStatus === 'error' ? (
                 <span className='text-red-600 dark:text-red-400'>
-                  <i className='fas fa-exclamation-triangle mr-2'></i>
+                  <Icon name='alert' className='inline-block w-4 h-4 mr-2 align-[-2px]' />
                   {actions?.copyError || '复制失败'}
                 </span>
               ) : (
                 <span>
-                  <i className='far fa-copy mr-2'></i>
+                  <Icon name='copy' className='inline-block w-4 h-4 mr-2 align-[-2px]' />
                   {actions?.copy || '复制'}
                 </span>
               )}
@@ -227,9 +315,10 @@ const Contact = ({ content }) => {
                 >
                   <div className='flex items-center space-x-4'>
                     <div className='w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-700 flex items-center justify-center group-hover:bg-white dark:group-hover:bg-gray-600 group-hover:shadow-sm transition-all border border-transparent group-hover:border-gray-100 dark:group-hover:border-gray-500'>
-                      <i
-                        className={`${item.icon || 'fas fa-link'} text-lg text-gray-600 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors`}
-                      ></i>
+                      <Icon
+                        name={getIconKindFromFa(item.icon)}
+                        className='w-5 h-5 text-gray-600 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors'
+                      />
                     </div>
                     <div>
                       <h4 className='font-medium text-gray-900 dark:text-gray-100'>{item.label}</h4>
@@ -238,7 +327,7 @@ const Contact = ({ content }) => {
                       )}
                     </div>
                   </div>
-                  <i className='fas fa-arrow-up-right-from-square text-gray-300 dark:text-gray-600 text-sm group-hover:text-black dark:group-hover:text-white transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300'></i>
+                  <Icon name='external' className='w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-black dark:group-hover:text-white transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300' />
                 </a>
               </li>
             ))}

@@ -1,6 +1,6 @@
 ---
 /**
- * /[lang]/404.astro - 多语言 404 页面（动态路由）
+ * /[lang]/404.astro
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getI18n, locales, type Locale } from '@lib/i18n';
@@ -33,7 +33,7 @@ const content = {
   },
 };
 
-const pageContent = content[lang];
+const pageContent = content[lang] || content.en_US;
 ---
 
 <BaseLayout title={`404 | ${site.title}`} description={pageContent.description} lang={lang}>
@@ -49,7 +49,19 @@ const pageContent = content[lang];
       href={`/${lang}/`}
       class='inline-flex items-center px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors'
     >
-      <i class='fas fa-arrow-left mr-2'></i>
+      <svg
+        class='mr-2 w-4 h-4'
+        viewBox='0 0 24 24'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        aria-hidden='true'
+      >
+        <path d='M19 12H5' />
+        <path d='M12 19l-7-7 7-7' />
+      </svg>
       {pageContent.backHome}
     </a>
   </div>

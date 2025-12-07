@@ -52,6 +52,14 @@ export default defineConfig({
         locales: {
           zh_CN: 'zh-CN',
           en_US: 'en-US',
+          ja_JP: 'ja-JP',
+          ko_KR: 'ko-KR',
+          es_ES: 'es-ES',
+          fr_FR: 'fr-FR',
+          de_DE: 'de-DE',
+          ru_RU: 'ru-RU',
+          pt_BR: 'pt-BR',
+          ar_SA: 'ar-SA',
         },
       },
       // 更新频率
@@ -107,7 +115,7 @@ export default defineConfig({
   // 图片优化配置
   image: {
     // 允许优化的远程图片域名
-    domains: ['images.unsplash.com', 'unsplash.com'],
+    domains: ['images.unsplash.com', 'unsplash.com', 'picsum.photos', 'blog.wenjiexu.site'],
     // 远程图片模式匹配
     remotePatterns: [
       {
@@ -116,9 +124,19 @@ export default defineConfig({
       },
       {
         protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+      {
+        protocol: 'https',
+        hostname: 'blog.wenjiexu.site',
+      },
+      {
+        protocol: 'https',
         hostname: '**.cloudinary.com',
       },
     ],
+    // 开启 Astro 的响应式图片全局样式，确保自适应（与 Tailwind 共存）
+    responsiveStyles: true,
   },
 
 });

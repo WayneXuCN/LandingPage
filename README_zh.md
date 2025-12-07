@@ -141,14 +141,126 @@ PUBLIC_GA_ID=G-XXXXXXXXXX
 
 ### 站点配置
 
-编辑 `astro.config.mjs` 更新站点 URL：
+所有站点相关的配置都在 `astro.config.mjs` 文件中。以下是主要的配置项：
+
+#### 环境说明
+
+Astro 自动区分两种环境：
+
+1. **开发环境**：运行 `bun run dev` 时
+   - `import.meta.env.DEV` 为 `true`
+   - 热重载、开发服务器等功能启用
+   - 默认使用 `http://localhost:4321`
+
+2. **生产环境**：运行 `bun run build` 构建时
+   - `import.meta.env.DEV` 为 `false`
+   - 代码优化、压缩等处理
+   - 生成静态文件到 `dist/` 目录
+
+#### 配置文件详解
 
 ```js
 export default defineConfig({
+  // 1. 站点域名配置
+  // 如果您有域名，请在这里设置您的域名，例如：
   site: 'https://your-domain.com',
-  // ...
+  
+  // 如果您没有域名或只在本地测试，可以将此行注释掉或设置为空字符串：
+  // site: '',
+  
+  // 2. 尾部斜杠策略
+  // 'never' - URL 不以斜杠结尾
+  // 'always' - URL 总是以斜杠结尾
+  // 'ignore' - 保持原样（默认）
+  trailingSlash: 'ignore',
+  
+  // 3. 构建输出模式
+  // 'static' - 静态站点生成（推荐用于大多数部署）
+  // 'hybrid' - 混合模式（部分页面预渲染）
+  // 'server' - 服务器端渲染
+  output: 'static',
+  
+  // 4. 国际化配置
+  i18n: {
+    defaultLocale: 'zh_CN',  // 默认语言
+    locales: ['zh_CN', 'en_US'],  // 支持的语言列表
+    routing: {
+      prefixDefaultLocale: true,  // 是否为默认语言添加前缀
+      redirectToDefaultLocale: false,  // 是否重定向到默认语言
+    },
+  },
+  
+  // 5. 集成配置（插件）
+  integrations: [
+    react(),      // React 支持
+    mdx(),        // MDX 支持
+    tailwind(),   // Tailwind CSS
+    icon(),       // 图标支持
+    sitemap(),    // 自动生成 sitemap.xml
+    robotsTxt(),  // 自动生成 robots.txt
+  ],
 });
 ```
+
+**重要配置说明**：
+
+1. **域名配置**：
+   - **有域名的情况**：设置 `site` 为您的完整域名（如 `https://your-domain.com`）
+   - **本地测试无域名**：将 `site` 设置为空字符串或注释掉此行，系统会自动使用 `http://localhost:4321`（开发环境）或相对路径（生产环境）
+   - **生产环境部署**：确保设置正确的域名，否则 sitemap.xml 和 robots.txt 可能包含错误的 URL
+
+2. **国际化配置**：
+   - 修改 `defaultLocale` 更改默认语言
+   - 在 `locales` 数组中添加或删除支持的语言
+   - 调整 `routing` 选项控制 URL 结构
+
+3. **SEO 优化**：
+   - `sitemap` 集成会自动生成 sitemap.xml
+   - `robotsTxt` 集成会自动生成 robots.txt
+   - 这些都依赖于正确的 `site` 配置
+
+4. **构建模式**：
+   - 大多数情况下使用 `static` 模式即可
+   - 如需动态功能可考虑 `hybrid` 或 `server` 模式
+
+#### URL 处理逻辑
+
+在 `src/layouts/BaseLayout.astro` 中，URL 的处理逻辑如下：
+
+```javascript
+const getSiteUrl = () => {
+  // 1. 如果在 astro.config.mjs 中配置了 site，使用配置的域名
+  if (Astro.site?.origin) {
+    return Astro.site.origin;
+  }
+  
+  // 2. 如果没有配置 site，根据环境使用不同的 URL
+  // 开发环境：使用 localhost
+  // 生产环境：使用空字符串（相对路径）
+  return import.meta.env.DEV ? 'http://localhost:4321' : '';
+};
+
+// 3. 生成完整的 OG 图片 URL
+const fullOgImage = ogImage.startsWith('http')
+  ? ogImage
+  : (siteUrl ? `${siteUrl}${ogImage}` : ogImage);
+```
+
+**不同场景下的 URL 处理**：
+
+1. **有域名配置**（推荐）：
+   - 开发环境：`https://your-domain.com/assets/img/og-image.png`
+   - 生产环境：`https://your-domain.com/assets/img/og-image.png`
+
+2. **无域名配置 - 开发环境**：
+   - URL：`http://localhost:4321/assets/img/og-image.png`
+   - 适合本地测试和开发
+
+3. **无域名配置 - 生产环境**：
+   - URL：`/assets/img/og-image.png`（相对路径）
+   - 适合部署到子目录或不确定最终域名的情况
+
+这种设计确保了无论是否有域名配置，网站都能正常工作。
 
 ### 内容管理
 
@@ -156,8 +268,8 @@ export default defineConfig({
 
 | 文件 | 说明 |
 |------|------|
-| `zh.json` | 中文内容 |
-| `en.json` | 英文内容 |
+| `zh_CN.json` | 中文内容 |
+| `en_US.json` | 英文内容 |
 
 文件结构：
 
@@ -197,30 +309,93 @@ export default defineConfig({
 
 ### 添加新语言
 
+项目默认支持 2 种语言（中文和英文）。要添加新语言，请按以下步骤操作：
+
 1. **更新 Astro 配置**（`astro.config.mjs`）：
 
    ```js
+   // 在 i18n 部分添加新的语言代码
    i18n: {
-     defaultLocale: 'zh',
-     locales: ['zh', 'en', 'ja'],
-     routing: { prefixDefaultLocale: true },
+     defaultLocale: 'zh_CN',
+     locales: ['zh_CN', 'en_US', 'NEW_LOCALE'], // 在此添加新的语言代码
+     routing: {
+       prefixDefaultLocale: true,
+       redirectToDefaultLocale: false,
+     },
    },
+   ```
+
+   同时更新站点地图的 i18n 配置：
+
+   ```js
+   sitemap({
+     i18n: {
+       defaultLocale: 'zh_CN',
+       locales: {
+         zh_CN: 'zh-CN',
+         en_US: 'en-US',
+         // ... 现有语言
+         NEW_LOCALE: 'new-locale', // 添加新的语言映射
+       },
+     },
+   }),
    ```
 
 2. **更新 i18n 工具**（`src/lib/i18n.ts`）：
 
    ```ts
-   export const locales = ['zh', 'en', 'ja'] as const;
+   // 添加到 locales 数组
+   export const locales = ['zh_CN', 'en_US', 'NEW_LOCALE'] as const;
    
-   export const localeConfig = {
-     // ...现有语言
-     ja: { label: '日', name: '日本語', hrefLang: 'ja' },
+   // 添加到 localeConfig 对象
+   export const localeConfig: Record<Locale, { label: string; name: string; hrefLang: string }> = {
+     // ... 现有语言
+     NEW_LOCALE: {
+       label: 'XX', // 简短标签（1-3个字符）
+       name: '语言名称', // 完整语言名称
+       hrefLang: 'new-locale', // BCP 47 语言标签
+     },
    };
    ```
 
-3. **创建翻译文件**（`src/content/i18n/ja.json`）
+3. **创建翻译文件**（`i18n/NEW_LOCALE.json`）：
 
-4. **创建页面路由**（`src/pages/ja/`）
+   复制现有的翻译文件（如 `en_US.json`）并翻译所有内容。文件应遵循以下结构：
+
+   ```json
+   {
+     "site": {
+       "title": "您的网站标题",
+       "description": "您的网站描述",
+       "author": "您的姓名"
+     },
+     "nav": [
+       { "label": "首页", "href": "index.html" },
+       { "label": "关于", "href": "about.html" },
+       { "label": "联系", "href": "contact.html" }
+     ],
+     "header": {
+       "name": "您的姓名",
+       "avatar": "/assets/img/prof_pic.png"
+     },
+     "hero": {
+       "title": "欢迎访问我的网站",
+       "subtitle": "您的副标题",
+       "description": "您的描述文本..."
+     },
+     // ... 翻译所有其他部分
+   }
+   ```
+
+4. **更新内容配置**（`src/content.config.ts`）：
+
+   内容配置通过 `i18n` 集合模式自动支持新语言，此处无需更改。
+
+#### 语言代码规范
+
+- 使用 `ISO 639-1` 语言代码 + `ISO 3166-1 alpha-2` 国家代码格式（如 `en_US`、`zh_CN`）
+- 对于没有国家变体的语言，仅使用语言代码（如西班牙语使用 `es`）
+- 确保所有配置文件中的语言代码完全一致
 
 ### 样式定制
 
@@ -230,19 +405,17 @@ export default defineConfig({
 
 ### 组件说明
 
-所有交互组件位于 `src/components/astro/`：
+所有交互组件位于 `src/components/react/`：
 
 | 组件 | 用途 |
 |------|------|
 | `HeaderBar.jsx` | 导航头部，含语言切换 |
-| `Hero.jsx` | Hero 区块，标题与 CTA |
-| `Home.jsx` | 首页布局 |
-| `About.jsx` | 关于页面内容 |
 | `Contact.jsx` | 联系页面与表单 |
-| `Footer.jsx` | 页脚 |
-| `ThemeToggle.jsx` | 深色/浅色模式切换 |
+| `ErrorBoundary.jsx` | React 组件错误边界 |
 | `LanguageSwitcher.jsx` | 语言选择器 |
 | `PrimaryNav.jsx` | 主导航 |
+| `ThemeToggle.jsx` | 深色/浅色模式切换 |
+| `UnderlineEffects.jsx` | 下划线悬停效果 |
 
 ## 脚本命令
 

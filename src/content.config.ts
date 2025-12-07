@@ -216,7 +216,7 @@ const i18nSchema = z.object({
 const i18n = defineCollection({
   loader: glob({
     pattern: '**/*.json',
-    base: './src/content/i18n',
+    base: './i18n',
   }),
   schema: i18nSchema,
 });

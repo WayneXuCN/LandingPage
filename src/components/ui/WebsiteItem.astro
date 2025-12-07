@@ -5,6 +5,8 @@
  * 纯展示组件，无需 React 水合
  */
 import { resolveContentHref } from '@lib/utils';
+import { getWebsiteImage } from '@lib/websiteImages';
+import { Image } from 'astro:assets';
 
 interface WebsiteItemData {
   id?: string;
@@ -23,6 +25,9 @@ const { item, priority = false } = Astro.props;
 
 // 解析链接
 const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh_CN');
+
+// i18n 中保存的是文件名（例如 dashboard.png），通过映射拿到 ImageMetadata 才能被 Astro 优化
+const localImage = getWebsiteImage(item.image);
 ---
 
 <a
@@ -36,13 +41,36 @@ const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.u
   <div
     class='relative w-24 sm:w-full shrink-0 aspect-[16/9] overflow-hidden rounded-lg sm:rounded-xl bg-gray-100 dark:bg-gray-800 shadow-sm group-hover:shadow-md transition-all duration-300'
   >
-    <img
-      src={item.image}
-      alt={item.title}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding='async'
-      class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
-    />
+    {
+      localImage ? (
+        <Image
+          src={localImage}
+          alt={item.title}
+          width={640}
+          height={360}
+          layout='constrained'
+          sizes='(max-width: 640px) 100vw, 384px'
+          fit='cover'
+          position='center'
+          format='webp'
+          quality={80}
+          priority={priority}
+          class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+        />
+      ) : (
+        <img
+          src={item.image}
+          alt={item.title}
+          width={640}
+          height={360}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding='async'
+          fetchpriority={priority ? 'high' : 'auto'}
+          sizes='(max-width: 640px) 100vw, 384px'
+          class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+        />
+      )
+    }
     {/* 极轻微的内阴影，增加层次感 */}
     <div
       class='absolute inset-0 ring-1 ring-inset ring-black/5 dark:ring-white/10 rounded-lg sm:rounded-xl'

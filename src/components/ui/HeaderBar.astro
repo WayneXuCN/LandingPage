@@ -1,0 +1,165 @@
+---
+/**
+ * HeaderBar.astro
+ * 顶部栏组件（静态版本）：包含头像、名称和导航
+ * 仅将需要交互的按钮（主题切换和语言切换）作为小型 React Islands 加载。
+ */
+import ThemeToggle from '@components/react/ThemeToggle.jsx';
+import LanguageSwitcher from '@components/react/LanguageSwitcher.jsx';
+import { Image } from 'astro:assets';
+import { getLocalImage } from '@lib/localImages';
+
+interface NavItem {
+  label: string;
+  href: string;
+  hidden?: boolean;
+}
+
+interface HeaderData {
+  avatar?: string;
+  name?: string;
+}
+
+interface Props {
+  header?: HeaderData;
+  nav?: NavItem[];
+  currentPath?: string;
+  lang?: string;
+}
+
+const { header, nav = [], currentPath = '/', lang = 'en_US' } = Astro.props as Props;
+
+const avatarRef = header?.avatar || '/img/prof_pic.png';
+const localAvatar = getLocalImage(avatarRef);
+const name = header?.name || '';
+
+const normalizePath = (href?: string) => {
+  if (!href) return '/';
+  if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return href;
+
+  let normalized = href.replace(/\.html$/i, '');
+  if (normalized === 'index' || normalized === '/index') normalized = '/';
+  if (!normalized.startsWith('/')) normalized = '/' + normalized;
+  return normalized;
+};
+
+const resolveHref = (href: string) => {
+  const normalized = normalizePath(href);
+
+  // 外部链接和锚点
+  if (
+    normalized.startsWith('http') ||
+    normalized.startsWith('mailto:') ||
+    normalized.startsWith('#')
+  ) {
+    return normalized;
+  }
+
+  // 首页
+  if (normalized === '/' || normalized === '/index') {
+    return `/${lang}/`;
+  }
+
+  // 添加语言前缀，确保尾部斜杠
+  return `/${lang}${normalized}/`;
+};
+
+const isActiveLink = (href: string) => {
+  const normalizedHref = normalizePath(href);
+  const normalizedCurrent = normalizePath(currentPath);
+
+  if (normalizedHref.startsWith('http') || normalizedHref.startsWith('mailto:')) return false;
+
+  // 首页
+  if (normalizedHref === '/' || normalizedHref === '/index') {
+    return (
+      normalizedCurrent === '/' ||
+      normalizedCurrent === `/${lang}` ||
+      normalizedCurrent === `/${lang}/`
+    );
+  }
+
+  return normalizedCurrent.endsWith(normalizedHref) || normalizedCurrent === `/${lang}${normalizedHref}`;
+};
+
+const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hidden) : [];
+---
+
+<header class='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12 sm:mb-16 md:mb-20 animate-fade-in'>
+  <div class='flex items-center'>
+    {
+      localAvatar ? (
+        <Image
+          src={localAvatar}
+          alt={name}
+          width={56}
+          height={56}
+          class='w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4 shadow-sm object-cover'
+          loading='eager'
+          decoding='sync'
+          fetchpriority='high'
+          format='webp'
+          quality={80}
+        />
+      ) : (
+        <img
+          src={avatarRef}
+          alt={name}
+          width={56}
+          height={56}
+          class='w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4 shadow-sm object-cover'
+          loading='eager'
+          decoding='sync'
+          fetchpriority='high'
+        />
+      )
+    }
+    <span class='font-medium text-gray-900 dark:text-white text-lg tracking-tight'>
+      {name}
+    </span>
+  </div>
+
+  <div class='flex flex-wrap justify-center items-center gap-y-4 gap-x-4 sm:gap-8'>
+    <nav class='flex flex-wrap items-center gap-3 sm:gap-8 text-base font-medium text-gray-600 dark:text-gray-300'>
+      {
+        navLinks.map((link, index) => {
+          const resolvedHref = resolveHref(link.href);
+          const active = isActiveLink(link.href);
+          const isExternal = resolvedHref.startsWith('http') || resolvedHref.startsWith('mailto:');
+
+          return (
+            <>
+              {index > 0 && (
+                <span class='text-gray-300 dark:text-gray-600 select-none text-sm sm:text-base'>/</span>
+              )}
+              <a
+                href={resolvedHref}
+                aria-current={active ? 'page' : undefined}
+                data-astro-prefetch={!isExternal ? 'hover' : undefined}
+                class:list={[
+                  'relative group transition-colors py-1',
+                  active
+                    ? 'text-black dark:text-white font-bold'
+                    : 'hover:text-black dark:hover:text-white',
+                ]}
+              >
+                {link.label}
+                <span
+                  class:list={[
+                    'absolute bottom-0 left-0 h-[2px] bg-black dark:bg-white transition-all duration-300 ease-out',
+                    active ? 'w-full' : 'w-0 group-hover:w-full',
+                  ]}
+                />
+              </a>
+            </>
+          );
+        })
+      }
+    </nav>
+
+    <div class='flex items-center gap-2'>
+      <ThemeToggle client:idle />
+      <LanguageSwitcher client:idle currentLang={lang} />
+    </div>
+  </div>
+</header>
