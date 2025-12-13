@@ -47,12 +47,14 @@ const formattedDate = pubDate ? formatDate(pubDate, language) : null;
 
 // 解析链接
 const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, language);
+const isExternal = typeof href === 'string' && href.startsWith('http');
+const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '#';
 ---
 
 <a
-  href={href}
-  target='_blank'
-  rel='noopener noreferrer'
+  href={isValidHref ? href : undefined}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
   aria-label={`阅读文章: ${item.title}`}
   class='relative block overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:focus:ring-white group'
 >
@@ -62,6 +64,7 @@ const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.u
       alt={item.title}
       width={600}
       height={350}
+      widths={[360, 600]}
       loading='lazy'
       decoding='async'
       sizes='(max-width: 640px) 100vw, 768px'

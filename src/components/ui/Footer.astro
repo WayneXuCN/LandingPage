@@ -75,14 +75,14 @@ const { icp, mps } = footer;
         {/* 备案信息 */}
         {
           (icp?.text || mps?.text) && (
-            <div class='flex flex-col sm:flex-row items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs text-gray-500 dark:text-gray-400'>
+            <div class='flex flex-col sm:flex-row items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs text-gray-600 dark:text-gray-300'>
               {/* ICP备案 */}
               {icp?.text && icp?.url && (
                 <a
                   href={icp.url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  class='hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 whitespace-nowrap'
+                  target={icp.url.startsWith('http') ? '_blank' : undefined}
+                  rel={icp.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  class='inline-flex items-center whitespace-nowrap rounded-md -mx-2 px-2 py-2 min-h-[44px] sm:min-h-0 sm:mx-0 sm:px-0 sm:py-0 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900'
                 >
                   {icp.text}
                 </a>
@@ -97,9 +97,9 @@ const { icp, mps } = footer;
               {mps?.text && mps?.url && (
                 <a
                   href={mps.url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  class='flex items-center gap-1 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 whitespace-nowrap'
+                  target={mps.url.startsWith('http') ? '_blank' : undefined}
+                  rel={mps.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  class='inline-flex items-center gap-1 whitespace-nowrap rounded-md -mx-2 px-2 py-2 min-h-[44px] sm:min-h-0 sm:mx-0 sm:px-0 sm:py-0 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900'
                 >
                   {mps?.logo && (
                     <img
@@ -127,8 +127,8 @@ const { icp, mps } = footer;
               class='text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors social-icon text-xl'
               title={link.title || ''}
               aria-label={link.title || 'Social link'}
-              target='_blank'
-              rel='noopener noreferrer'
+              target={link.url?.startsWith('http') ? '_blank' : undefined}
+              rel={link.url?.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
               {link.imageUrl ? (
                 <img

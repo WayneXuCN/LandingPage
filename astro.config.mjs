@@ -17,6 +17,11 @@ export default defineConfig({
   // 静态站点生成
   output: 'static',
 
+  // 构建输出优化：内联项目 CSS，减少关键路径中的阻塞样式请求
+  build: {
+    inlineStylesheets: 'always',
+  },
+
   // 集成配置
   integrations: [
     // React 支持

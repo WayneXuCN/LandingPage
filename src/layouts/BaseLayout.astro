@@ -7,6 +7,7 @@ import '../styles/global.css';
 import { SEO } from 'astro-seo';
 import { getImage } from 'astro:assets';
 import { getLocalImage } from '@lib/localImages';
+import { getHrefLang, type Locale } from '@lib/i18n';
 
 interface Props {
   title?: string;
@@ -31,6 +32,20 @@ const {
   noindex = false,
   nofollow = false,
 } = Astro.props;
+
+// HTML lang 必须是有效的 BCP47（例如 zh-CN / en-US）。
+// 项目内部 locale 使用 zh_CN / en_US，这里做一次安全转换并提供回退。
+const htmlLang = (() => {
+  if (typeof lang !== 'string' || !lang.trim()) return 'zh-CN';
+
+  // 常见内部格式：zh_CN / en_US
+  if (/^[a-z]{2}_[A-Z]{2}$/.test(lang)) {
+    return getHrefLang(lang as Locale) || lang.replace('_', '-');
+  }
+
+  // 已经是 BCP47（或其他合法值），直接返回
+  return lang;
+})();
 
 // 构建完整的 OG 图片 URL
 // 从 astro.config.mjs 读取 site 配置
@@ -85,7 +100,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <!doctype html>
-<html lang={lang} class='scroll-smooth'>
+<html lang={htmlLang} class='scroll-smooth'>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
@@ -106,7 +121,11 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
         },
         optional: {
           description: description,
-          locale: lang === 'zh_CN' ? 'zh_CN' : 'en_US',
+          // Open Graph locale 习惯使用下划线格式（en_US / zh_CN）
+          locale:
+            typeof lang === 'string'
+              ? (lang.includes('_') ? lang : lang.replace('-', '_'))
+              : 'en_US',
           siteName: 'Wenjie Xu',
         },
         image: {
@@ -137,21 +156,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <!-- Web Manifest -->
     <link rel='manifest' href='/site.webmanifest' />
 
-    <!-- Google Fonts: Noto Sans SC (defer as non-render-blocking) -->
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-    <link
-      rel='stylesheet'
-      href='https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap'
-      media='print'
-      onload="this['media']='all'"
-    />
-    <noscript>
-      <link
-        rel='stylesheet'
-        href='https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap'
-      />
-    </noscript>
+    <!-- Fonts: use system font stack (avoid render-blocking + third-party font CSS) -->
 
     <!-- Icons use inline SVG; no external icon font CSS required -->
 

@@ -4,18 +4,31 @@
 
 :root {
   /* 全局字体与颜色变量 */
+  /*
+    字体策略（性能优先）：
+    - 不下载 Web Font（减少阻塞、减少未使用字节、避免第三方请求）。
+    - 优先使用各平台常见的中文无衬线字体，观感与 Noto Sans SC 接近。
+  */
   --font-family-base:
-    "Noto Sans SC", "Noto Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    /* macOS */ "PingFang SC", "Hiragino Sans GB",
+    /* Windows */ "Microsoft YaHei", "Microsoft YaHei UI",
+    /* Linux/Android */ "Noto Sans CJK SC", "WenQuanYi Micro Hei",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-family-display: "Noe Display", Georgia, Times, serif;
-  --font-noto-sans: "Noto Sans SC", "Noto Sans", system-ui, sans-serif;
+  --font-noto-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft YaHei UI", "Noto Sans CJK SC",
+    "WenQuanYi Micro Hei", sans-serif;
   --text-primary: #111;
   --text-secondary: #444;
   --accent-color: #10b981;
   --background-color: #fff;
   --border-color: #e5e7eb;
   --font-sans:
-    "Noto Sans SC", "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft YaHei UI", "Noto Sans CJK SC",
+    "WenQuanYi Micro Hei", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   /* 下划线效果颜色 */

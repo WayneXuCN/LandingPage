@@ -25,15 +25,17 @@ const { item, priority = false } = Astro.props;
 
 // 解析链接
 const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh_CN');
+const isExternal = typeof href === 'string' && href.startsWith('http');
+const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '#';
 
 // i18n 中保存的是文件名（例如 dashboard.png），通过映射拿到 ImageMetadata 才能被 Astro 优化
 const localImage = getWebsiteImage(item.image);
 ---
 
 <a
-  href={href}
-  target='_blank'
-  rel='noopener noreferrer'
+  href={isValidHref ? href : undefined}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
   aria-label={`访问 ${item.title}: ${item.description}`}
   class='group flex flex-row sm:flex-col gap-4 sm:gap-3 p-3 -mx-3 sm:mx-0 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-300 items-center sm:items-stretch'
 >
@@ -48,6 +50,7 @@ const localImage = getWebsiteImage(item.image);
           alt={item.title}
           width={640}
           height={360}
+          widths={[384, 640]}
           layout='constrained'
           sizes='(max-width: 640px) 100vw, 384px'
           fit='cover'
@@ -86,7 +89,7 @@ const localImage = getWebsiteImage(item.image);
         {item.title}
       </h3>
       <svg
-        class='w-3.5 h-3.5 text-gray-400 group-hover:text-blue-500 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 duration-300 hidden sm:block'
+        class='w-3.5 h-3.5 text-gray-500 group-hover:text-blue-500 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 duration-300 hidden sm:block'
         fill='none'
         viewBox='0 0 24 24'
         stroke='currentColor'
