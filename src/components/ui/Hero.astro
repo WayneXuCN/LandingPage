@@ -2,18 +2,32 @@
 /**
  * Hero.astro
  * Hero 区块组件，展示主标题和描述
- * 纯展示组件，无需 React 水合
+ *
+ * 用于展示页面主要标题和描述的纯展示组件，支持副标题、主标题和描述文本。
+ * 纯静态组件，无需 React 水合，提供高性能渲染。
+ *
+ * @component
+ */
+
+/**
+ * 组件属性接口
  */
 interface Props {
+  /** 副标题文本，通常显示在主标题上方 */
   subtitle?: string;
+  /** 主标题文本，支持HTML内容 */
   title?: string;
+  /** 描述文本，支持HTML内容 */
   description?: string;
 }
 
+// 解构组件属性
 const { subtitle, title, description } = Astro.props;
 ---
 
+{/* Hero区块容器 */}
 <section class='mb-12 sm:mb-16 md:mb-20'>
+  {/* 副标题：条件渲染 */}
   {
     subtitle && (
       <h1 class='text-red-600 dark:text-red-400 text-sm font-extrabold mb-4 sm:mb-6 tracking-[0.2em] uppercase'>
@@ -21,6 +35,8 @@ const { subtitle, title, description } = Astro.props;
       </h1>
     )
   }
+
+  {/* 主标题：条件渲染，支持HTML内容 */}
   {
     title && (
       <h2
@@ -29,6 +45,8 @@ const { subtitle, title, description } = Astro.props;
       />
     )
   }
+
+  {/* 描述文本：条件渲染，支持HTML内容 */}
   {
     description && (
       <p

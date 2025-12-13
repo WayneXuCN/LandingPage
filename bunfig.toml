@@ -1,43 +1,56 @@
+# @fileoverview Bun 配置文件
+# @module bunfig
+# @version 1.0.0
+# @author LandingPage Team
+# @since 1.0.0
+# @description 本文件定义了 Bun 运行时的全局配置选项，包括依赖安装、运行时行为、
+# 测试设置和性能优化等。Bun 是一个快速的 JavaScript 运行时、打包器、
+# 转译器和包管理器，专为提升开发体验而设计。
+#
+# @see https://bun.sh/docs/runtime/bunfig
+# @license MIT
+# @copyright 2023 LandingPage Team
+
 [install]
-# Save a text lockfile by default (for version control)
-# 是否安装可选依赖
+# 依赖安装配置：控制 bun install 命令的行为
+# 是否安装可选依赖（optionalDependencies）
 optional = true
-# 是否安装开发依赖
+# 是否安装开发依赖（devDependencies）
 dev = true
-# 是否安装对等依赖
+# 是否安装对等依赖（peerDependencies）
 peer = true
-# 生产模式安装（等同于 --production 标志）
+# 生产模式安装：仅安装生产依赖，跳过开发依赖
 production = false
-# 使用冻结锁文件模式（确保依赖版本一致性）
+# 冻结锁文件模式：确保依赖版本完全一致，不自动更新
 frozenLockfile = false
 
-# 锁文件格式配置
 [lockfile]
-# 使用文本格式的锁文件（便于Git diff）
+# 锁文件格式配置：控制依赖锁定文件的存储方式
+# 使用文本格式锁文件，便于版本控制系统进行差异比较
 saveTextLockfile = true
 
-# 运行时配置
 [run]
-# 运行脚本时的默认shell
+# 运行时配置：控制 bun run 命令的行为
+# 运行脚本时使用的默认 shell 环境
 shell = "system"
-# 默认使用bun运行时
+# 优先使用 Bun 运行时执行脚本，而非系统默认的 Node.js
 bun = true
 
-# 测试配置
 [test]
-# 启用代码覆盖率
+# 测试框架配置：控制 bun test 命令的行为
+# 启用代码覆盖率统计，帮助评估测试完整性
 coverage = true
-# 测试超时时间（毫秒）
+# 测试用例超时时间（毫秒），防止无限等待
 timeout = 10000
 
-# 性能优化配置
 [optimize]
-# 启用依赖预构建
+# 性能优化配置：提升 Bun 运行时性能
+# 启用依赖预构建，减少启动时间
 prebuild = true
-# 缓存配置
+# 启用缓存机制，加速重复操作
 cache = true
 
-# 日志配置
 [loglevel]
-# 日志级别：debug, info, warn, error
+# 日志级别配置：控制输出信息的详细程度
+# 可选级别：debug（最详细）、info（默认）、warn（警告）、error（仅错误）
 level = "info"

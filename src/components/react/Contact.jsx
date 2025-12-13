@@ -1,6 +1,26 @@
 import { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
+/**
+ * @fileoverview Contact.jsx
+ * @description 联系页面交互组件，包含邮箱卡片、社交链接和联系表单
+ * @author Wenjie
+ * @version 1.0.0
+ *
+ * 环境变量（Astro 使用 PUBLIC_ 前缀）：
+ * - PUBLIC_EMAILJS_SERVICE_ID: EmailJS 服务 ID
+ * - PUBLIC_EMAILJS_TEMPLATE_ID: EmailJS 模板 ID
+ * - PUBLIC_EMAILJS_PUBLIC_KEY: EmailJS 公钥
+ */
+
+/**
+ * Icon 组件
+ * @description 渲染不同类型的 SVG 图标
+ * @param {Object} props - 组件属性
+ * @param {string} props.name - 图标名称，支持 'envelope', 'check', 'alert', 'copy', 'external', 'github', 'globe', 'scholar' 等
+ * @param {string} [props.className=''] - 自定义 CSS 类名
+ * @returns {JSX.Element} SVG 图标元素
+ */
 const Icon = ({ name, className = '' }) => {
   const common = {
     className,
@@ -11,20 +31,41 @@ const Icon = ({ name, className = '' }) => {
   switch (name) {
     case 'envelope':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M4 4h16v16H4z' />
           <path d='M22 6l-10 7L2 6' />
         </svg>
       );
     case 'check':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M20 6L9 17l-5-5' />
         </svg>
       );
     case 'alert':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M10.3 3.7L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.7a2 2 0 00-3.4 0z' />
           <path d='M12 9v4' />
           <path d='M12 17h.01' />
@@ -32,14 +73,28 @@ const Icon = ({ name, className = '' }) => {
       );
     case 'copy':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M8 8h12v12H8z' />
           <path d='M4 16H3a1 1 0 01-1-1V3a1 1 0 011-1h12a1 1 0 011 1v1' />
         </svg>
       );
     case 'external':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M14 3h7v7' />
           <path d='M10 14L21 3' />
           <path d='M21 14v7H3V3h7' />
@@ -53,7 +108,14 @@ const Icon = ({ name, className = '' }) => {
       );
     case 'globe':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <circle cx='12' cy='12' r='10' />
           <path d='M2 12h20' />
           <path d='M12 2a15 15 0 010 20' />
@@ -62,14 +124,28 @@ const Icon = ({ name, className = '' }) => {
       );
     case 'scholar':
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M22 10L12 5 2 10l10 5 10-5z' />
           <path d='M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5' />
         </svg>
       );
     default:
       return (
-        <svg {...common} fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+        <svg
+          {...common}
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
           <path d='M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 000-7.07 5 5 0 00-7.07 0L10 5.86' />
           <path d='M14 11a5 5 0 00-7.07 0L5.52 12.4a5 5 0 000 7.07 5 5 0 007.07 0L14 18.14' />
         </svg>
@@ -77,6 +153,12 @@ const Icon = ({ name, className = '' }) => {
   }
 };
 
+/**
+ * 从 FontAwesome 类名获取图标类型
+ * @description 将 FontAwesome 类名转换为内部图标类型
+ * @param {string} faClass - FontAwesome 类名
+ * @returns {string} 对应的内部图标类型
+ */
 const getIconKindFromFa = faClass => {
   const v = String(faClass || '').toLowerCase();
   if (v.includes('github')) return 'github';
@@ -87,14 +169,20 @@ const getIconKindFromFa = faClass => {
 };
 
 /**
- * Contact
- * 联系页面交互组件，包含邮箱卡片、社交链接和联系表单
- * Hero 由 Astro 页面单独渲染
- *
- * 环境变量（Astro 使用 PUBLIC_ 前缀）：
- * - PUBLIC_EMAILJS_SERVICE_ID
- * - PUBLIC_EMAILJS_TEMPLATE_ID
- * - PUBLIC_EMAILJS_PUBLIC_KEY
+ * Contact 组件
+ * @description 联系页面主组件，包含邮箱卡片、社交链接和联系表单
+ * @param {Object} props - 组件属性
+ * @param {Object} props.content - 页面内容数据
+ * @param {Object} props.content.contact - 联系相关内容
+ * @param {Object} props.content.contact.cards - 卡片内容
+ * @param {Object} props.content.contact.form - 表单内容
+ * @param {Object} props.content.contact.services - 服务内容
+ * @param {Object} props.content.contact.actions - 操作按钮文本
+ * @param {Object} props.content.contact.formLabels - 表单标签
+ * @param {Object} props.content.contact.formPlaceholders - 表单占位符
+ * @param {Object} props.content.contact.formOptions - 表单选项
+ * @param {Object} props.content.contact.formSubmit - 表单提交相关文本
+ * @returns {JSX.Element} 联系页面组件
  */
 const Contact = ({ content }) => {
   const { contact } = content;
@@ -110,10 +198,15 @@ const Contact = ({ content }) => {
   } = contact;
   const form = useRef();
   const statusResetRef = useRef(null);
-  const [status, setStatus] = useState('idle'); // idle, sending, success, error
-  const [copyStatus, setCopyStatus] = useState('idle'); // idle, success, error
+  const [status, setStatus] = useState('idle'); // 表单状态: idle, sending, success, error
+  const [copyStatus, setCopyStatus] = useState('idle'); // 复制状态: idle, success, error
   const emailAddress = cards.email.address;
 
+  /**
+   * 安排状态重置
+   * @description 设置定时器在5秒后重置表单状态
+   * @returns {void}
+   */
   const scheduleStatusReset = useCallback(() => {
     if (statusResetRef.current) {
       clearTimeout(statusResetRef.current);
@@ -132,6 +225,12 @@ const Contact = ({ content }) => {
     };
   }, []);
 
+  /**
+   * 复制文本到剪贴板
+   * @description 使用现代 Clipboard API 或传统方法复制文本
+   * @param {string} text - 要复制的文本
+   * @returns {Promise<boolean>} 复制是否成功
+   */
   const copyToClipboard = useCallback(async text => {
     if (typeof window === 'undefined') return false;
     try {
@@ -176,6 +275,12 @@ const Contact = ({ content }) => {
     }
   }, []);
 
+  /**
+   * 处理邮箱复制事件
+   * @description 点击复制按钮时复制邮箱地址到剪贴板
+   * @param {Event} e - 点击事件对象
+   * @returns {Promise<void>}
+   */
   const handleCopyEmail = useCallback(
     async e => {
       e.preventDefault();
@@ -186,6 +291,12 @@ const Contact = ({ content }) => {
     [copyToClipboard, emailAddress]
   );
 
+  /**
+   * 发送邮件表单
+   * @description 使用 EmailJS 服务发送联系表单
+   * @param {Event} e - 表单提交事件
+   * @returns {Promise<void>}
+   */
   const sendEmail = async e => {
     e.preventDefault();
     if (status === 'sending') return;
@@ -224,6 +335,11 @@ const Contact = ({ content }) => {
     }
   };
 
+  /**
+   * 获取状态文本
+   * @description 根据当前表单状态返回相应的提示文本
+   * @returns {string} 状态提示文本
+   */
   const statusText = useMemo(() => {
     switch (status) {
       case 'sending':
@@ -327,7 +443,10 @@ const Contact = ({ content }) => {
                       )}
                     </div>
                   </div>
-                  <Icon name='external' className='w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-black dark:group-hover:text-white transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300' />
+                  <Icon
+                    name='external'
+                    className='w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-black dark:group-hover:text-white transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300'
+                  />
                 </a>
               </li>
             ))}

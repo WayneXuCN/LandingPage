@@ -1,9 +1,17 @@
 /**
- * PrimaryNav.jsx
- * 主导航组件，支持 active 状态高亮
+ * @fileoverview PrimaryNav.jsx
+ * @description 主导航组件，支持 active 状态高亮和国际化路由
+ * @author Wenjie
+ * @version 1.0.0
  */
 import React, { useMemo } from 'react';
 
+/**
+ * 标准化路径
+ * @description 处理各种路径格式，确保路径格式一致
+ * @param {string} href - 原始路径
+ * @returns {string} 标准化后的路径
+ */
 const normalizePath = href => {
   if (!href) return '/';
   // 处理外部链接和锚点
@@ -23,14 +31,32 @@ const normalizePath = href => {
   return normalized;
 };
 
+/**
+ * PrimaryNav 组件
+ * @description 主导航组件，支持 active 状态高亮和国际化路由
+ * @param {Object} props - 组件属性
+ * @param {Array} [props.nav=[]] - 导航菜单项数组
+ * @param {string} [props.currentPath='/'] - 当前页面路径
+ * @param {string} [props.lang='en'] - 当前语言代码
+ * @returns {JSX.Element} 主导航组件
+ */
 const PrimaryNav = ({ nav = [], currentPath = '/', lang = 'en' }) => {
-  // 过滤隐藏的导航项
+  /**
+   * 过滤隐藏的导航项
+   * @description 使用 useMemo 缓存过滤结果，避免不必要的重新计算
+   * @type {Array}
+   */
   const navLinks = useMemo(() => {
     if (!Array.isArray(nav)) return [];
     return nav.filter(link => link?.href && !link.hidden);
   }, [nav]);
 
-  // 判断是否为当前激活链接
+  /**
+   * 判断是否为当前激活链接
+   * @description 根据当前路径和语言判断链接是否处于激活状态
+   * @param {string} href - 链接地址
+   * @returns {boolean} 是否为激活状态
+   */
   const isActiveLink = href => {
     const normalizedHref = normalizePath(href);
     const normalizedCurrent = normalizePath(currentPath);
@@ -57,6 +83,10 @@ const PrimaryNav = ({ nav = [], currentPath = '/', lang = 'en' }) => {
 
   /**
    * 解析链接 href（添加语言前缀）
+   * @description 将相对路径转换为带有语言前缀的完整路径
+   * @param {string} href - 原始链接地址
+   * @returns {string} 带有语言前缀的完整路径
+   *
    * 注意：由于这是 React 客户端组件，无法直接使用 astro:i18n
    * 因此保持手动拼接方式，但遵循 Astro i18n 的 URL 规范
    */

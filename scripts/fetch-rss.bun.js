@@ -1,29 +1,31 @@
 #!/usr/bin/env bun
 /**
  * @fileoverview RSS/Atom Feed 抓取与解析脚本
- * @name fetch-rss.bun.js
+ * @module fetch-rss.bun.js
  * @version 2.0.0
  * @author LandingPage Team
- * @description
+ * @since 1.0.0
+ * @description 从多个 RSS/Atom 源抓取文章数据并转换为统一格式的自动化脚本
  *
- * 本脚本用于从多个 RSS/Atom 源抓取文章数据，并将其转换为统一格式供前端使用。
- *
- * 主要功能：
- * 1. 从国际化配置文件中读取 RSS 源配置 (i18n/zh_CN.json, i18n/en_US.json)
- * 2. 使用 Bun 原生 fetch API 并发抓取 RSS/Atom feeds
- * 3. 解析 XML 内容并提取文章元数据（标题、链接、描述、发布日期、分类等）
- * 4. 基于文章 URL 和标题生成确定性哈希值，用于获取一致的随机图片
- * 5. 将处理后的数据输出为 JSON 格式到 src/data/rss-posts.json
+ * 功能概述：
+ * - 从国际化配置文件读取 RSS 源配置 (i18n/zh_CN.json, i18n/en_US.json)
+ * - 使用 Bun 原生 fetch API 并发抓取 RSS/Atom feeds
+ * - 解析 XML 内容并提取文章元数据（标题、链接、描述、发布日期、分类等）
+ * - 基于文章 URL 和标题生成确定性哈希值，用于获取一致的随机图片
+ * - 将处理后的数据输出为 JSON 格式到 src/data/rss-posts.json
  *
  * 支持的 RSS 格式：
  * - RSS 2.0
  * - Atom 1.0
  * - 特定主题格式（如 Astro Paper）
  *
- * 使用方法：
- *   bun run scripts/fetch-rss.bun.js
+ * 执行方式：
+ * ```bash
+ * bun run scripts/fetch-rss.bun.js
+ * ```
  *
- * 输出格式：
+ * 输出数据结构：
+ * ```json
  * {
  *   "zh_CN": [
  *     {
@@ -43,6 +45,10 @@
  *   ],
  *   "en_US": [...]
  * }
+ * ```
+ *
+ * @license MIT
+ * @copyright 2023 LandingPage Team
  */
 
 import { file, write } from 'bun';
@@ -85,6 +91,11 @@ const SUPPORTED_LANGUAGES = ['zh_CN', 'en_US'];
  * @description 使用 Bun 原生的 CryptoHasher 生成 MD5 哈希值，用于生成一致的随机图片种子
  * @param {string} str - 需要哈希的字符串
  * @returns {string} 8位十六进制哈希值
+ * @example
+ * ```javascript
+ * const hash = getHash('https://example.com/article-title');
+ * console.log(hash); // 输出: 'a1b2c3d4'
+ * ```
  */
 function getHash(str) {
   const hasher = new Bun.CryptoHasher('md5');
@@ -96,9 +107,9 @@ function getHash(str) {
  * 带重试机制和超时控制的网络请求函数
  * @description 实现指数退避重试策略，提高网络请求的可靠性
  * @param {string} url - 请求的 URL
- * @param {object} options - 请求选项
- * @param {number} options.retries - 最大重试次数，默认为 MAX_RETRIES
- * @param {number} options.timeout - 超时时间（毫秒），默认为 FETCH_TIMEOUT
+ * @param {object} [options={}] - 请求选项
+ * @param {number} [options.retries=MAX_RETRIES] - 最大重试次数
+ * @param {number} [options.timeout=FETCH_TIMEOUT] - 超时时间（毫秒）
  * @returns {Promise<string>} 响应文本内容
  * @throws {Error} 当所有重试均失败时抛出错误
  */
@@ -148,6 +159,11 @@ async function fetchWithRetry(url, options = {}) {
  * @description 移除 HTML 标签和 CDATA 标记，返回纯文本内容
  * @param {string} html - 包含 HTML 标签的字符串
  * @returns {string} 清理后的纯文本
+ * @example
+ * ```javascript
+ * const cleanText = stripHtml('<p>Hello <strong>World</strong></p>');
+ * console.log(cleanText); // 输出: 'Hello World'
+ * ```
  */
 function stripHtml(html) {
   if (!html) return '';
@@ -163,6 +179,11 @@ function stripHtml(html) {
  * @param {string} xml - XML 字符串
  * @param {string} tagName - 要提取的标签名
  * @returns {string|null} 标签内容，如果未找到则返回 null
+ * @example
+ * ```javascript
+ * const title = getTagContent('<title>Article Title</title>', 'title');
+ * console.log(title); // 输出: 'Article Title'
+ * ```
  */
 function getTagContent(xml, tagName) {
   const regex = new RegExp(`<${tagName}(?:\\s+[^>]*)?>([\\s\\S]*?)<\\/${tagName}>`, 'i');
@@ -176,19 +197,24 @@ function getTagContent(xml, tagName) {
  * @description 支持 Atom 格式的 href 属性和 RSS 格式的标签内容
  * @param {string} xml - 包含链接信息的 XML 片段
  * @returns {string} 提取的链接地址，如果未找到则返回 '#'
+ * @example
+ * ```javascript
+ * const link = getLinkHref('<link href="https://example.com/article" />');
+ * console.log(link); // 输出: 'https://example.com/article'
+ * ```
  */
 function getLinkHref(xml) {
-  // Atom 风格: <link href="..." />
+  // Atom 格式: <link href="..." />
   const hrefMatch = xml.match(/<link[^>]*href=["']([^"']+)["'][^>]*>/i);
   if (hrefMatch) {
-    // 修复双斜杠问题
+    // 修复 URL 中的双斜杠问题
     return hrefMatch[1].replace(/([^:])(\/\/+)/g, '$1/');
   }
 
-  // RSS 风格: <link>...</link>
+  // RSS 格式: <link>...</link>
   const linkContent = getTagContent(xml, 'link');
   if (linkContent) {
-    // 修复双斜杠问题
+    // 修复 URL 中的双斜杠问题
     return linkContent.replace(/([^:])(\/\/+)/g, '$1/');
   }
   return '#';
@@ -199,11 +225,16 @@ function getLinkHref(xml) {
  * @description 支持 Atom 格式的 term 属性和 RSS 格式的标签内容
  * @param {string} xml - 包含分类信息的 XML 片段
  * @returns {string[]} 分类名称数组
+ * @example
+ * ```javascript
+ * const categories = getCategories('<category term="Tech" /><category>JavaScript</category>');
+ * console.log(categories); // 输出: ['Tech', 'JavaScript']
+ * ```
  */
 function getCategories(xml) {
   const categories = [];
 
-  // Atom: <category term="X" />
+  // Atom 格式: <category term="X" />
   const termRegex = /<category[^>]*term=["']([^"']+)["'][^>]*>/gi;
   let match;
   while ((match = termRegex.exec(xml)) !== null) {
@@ -212,7 +243,7 @@ function getCategories(xml) {
     }
   }
 
-  // RSS: <category>X</category>
+  // RSS 格式: <category>X</category>
   const tagRegex = /<category(?:\s+[^>]*)?>([\s\S]*?)<\/category>/gi;
   while ((match = tagRegex.exec(xml)) !== null) {
     const cat = stripHtml(match[1]);
@@ -233,11 +264,16 @@ function getCategories(xml) {
  * @description 使用正则表达式解析 RSS 2.0 和 Atom 1.0 格式的 feed，提取文章条目
  * @param {string} xml - RSS/Atom XML 内容
  * @returns {Array<object>} 解析后的文章条目数组
+ * @example
+ * ```javascript
+ * const entries = parseFeed(rssXmlContent);
+ * console.log(entries[0]); // 输出: { title: 'Article Title', url: '...', ... }
+ * ```
  */
 function parseFeed(xml) {
   const entries = [];
 
-  // 匹配 entry (Atom) 或 item (RSS) 标签
+  // 匹配 entry (Atom) 或 item (RSS) 条目标签
   const entryRegex = /<(entry|item)(?:\s+[^>]*)?>([\s\S]*?)<\/\1>/gi;
 
   let match;
@@ -276,6 +312,11 @@ function parseFeed(xml) {
  * 规则：第一个 category 作为主分类，其余作为 tags
  * @param {string} xml - RSS/Atom XML 内容
  * @returns {Array<object>} 解析后的文章条目数组，包含 category 和 tags 字段
+ * @example
+ * ```javascript
+ * const entries = parseAstroPaper(rssXmlContent);
+ * console.log(entries[0]); // 输出: { title: '...', category: 'Tech', tags: ['JS', 'React'], ... }
+ * ```
  */
 function parseAstroPaper(xml) {
   const entries = parseFeed(xml);
@@ -296,6 +337,7 @@ function parseAstroPaper(xml) {
 /**
  * RSS 解析器映射表
  * @description 根据配置中的 parser 名称选择对应的解析函数
+ * @type {Object.<string, Function>}
  */
 const PARSERS = {
   default: parseFeed,
@@ -310,6 +352,11 @@ const PARSERS = {
 /**
  * 获取支持的语言代码列表
  * @returns {string[]} 支持的语言代码数组
+ * @example
+ * ```javascript
+ * const languages = getLanguages();
+ * console.log(languages); // 输出: ['zh_CN', 'en_US']
+ * ```
  */
 function getLanguages() {
   return SUPPORTED_LANGUAGES;
@@ -320,6 +367,11 @@ function getLanguages() {
  * @description 从国际化配置文件中提取 RSS 源配置信息
  * @param {string} lang - 语言代码（如 'zh_CN', 'en_US'）
  * @returns {Promise<object|null>} RSS 配置对象，如果文件不存在或读取失败则返回 null
+ * @example
+ * ```javascript
+ * const config = await getConfig('zh_CN');
+ * console.log(config.feeds); // 输出: RSS 源配置数组
+ * ```
  */
 async function getConfig(lang) {
   try {
@@ -345,6 +397,7 @@ async function getConfig(lang) {
 /**
  * 主函数 - RSS 抓取与处理流程
  * @description 执行完整的 RSS 抓取、解析、处理和输出流程
+ * @returns {Promise<void>}
  */
 async function main() {
   console.log('🚀 Bun RSS Fetcher v2.0');
@@ -367,7 +420,7 @@ async function main() {
     const limit = config?.limit || 4;
 
     if (feeds.length === 0) {
-      console.log(`  ℹ️ 未配置 RSS feeds，跳过。`);
+      console.log(`  ℹ️ 未配置 RSS feeds，跳过处理。`);
       allData[lang] = [];
       continue;
     }

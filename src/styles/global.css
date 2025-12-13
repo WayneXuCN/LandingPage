@@ -1,97 +1,146 @@
+/**
+ * @file 全局样式文件
+ * @description 此文件定义了网站的全局样式，包括：
+ * - Tailwind CSS 框架导入
+ * - CSS 自定义属性（变量）定义
+ * - 全局基础样式
+ * - 通用组件样式
+ * - 动画效果定义
+ */
+
+/**
+ * @section Tailwind CSS 框架导入
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * @section CSS 自定义属性（变量）定义
+ */
 :root {
-  /* 全局字体与颜色变量 */
-  /*
-    字体策略（性能优先）：
-    - 不下载 Web Font（减少阻塞、减少未使用字节、避免第三方请求）。
-    - 优先使用各平台常见的中文无衬线字体，观感与 Noto Sans SC 接近。
-  */
+  /**
+   * 字体系统变量
+   *
+   * 字体策略（性能优先）：
+   * - 不下载 Web Font（减少阻塞、减少未使用字节、避免第三方请求）
+   * - 优先使用各平台常见的中文无衬线字体，观感与 Noto Sans SC 接近
+   */
   --font-family-base:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    /* macOS */ "PingFang SC", "Hiragino Sans GB",
-    /* Windows */ "Microsoft YaHei", "Microsoft YaHei UI",
-    /* Linux/Android */ "Noto Sans CJK SC", "WenQuanYi Micro Hei",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, /* macOS */ "PingFang SC",
+    "Hiragino Sans GB", /* Windows */ "Microsoft YaHei", "Microsoft YaHei UI", /* Linux/Android */ "Noto Sans CJK SC",
+    "WenQuanYi Micro Hei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  /* 展示字体，用于标题等需要突出显示的文本 */
   --font-family-display: "Noe Display", Georgia, Times, serif;
+
+  /* Noto Sans 字体栈，用于需要特定字体的场景 */
   --font-noto-sans:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft YaHei UI", "Noto Sans CJK SC",
-    "WenQuanYi Micro Hei", sans-serif;
-  --text-primary: #111;
-  --text-secondary: #444;
-  --accent-color: #10b981;
-  --background-color: #fff;
-  --border-color: #e5e7eb;
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Microsoft YaHei UI", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+
+  /* 无衬线字体栈 */
   --font-sans:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft YaHei UI", "Noto Sans CJK SC",
-    "WenQuanYi Micro Hei", sans-serif;
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Microsoft YaHei UI", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+
+  /* 等宽字体栈，用于代码等场景 */
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* 下划线效果颜色 */
-  --underline-base-color: #e5e7eb;
+  /**
+   * 颜色系统变量
+   */
+  --text-primary: #111; /* 主要文本颜色 */
+  --text-secondary: #444; /* 次要文本颜色 */
+  --accent-color: #10b981; /* 强调色，用于链接、按钮等交互元素 */
+  --background-color: #fff; /* 背景色 */
+  --border-color: #e5e7eb; /* 边框颜色 */
+
+  /**
+   * 特殊效果变量
+   */
+  --underline-base-color: #e5e7eb; /* 下划线基础颜色 */
 }
 
+/**
+ * @section 全局基础样式
+ */
 body {
   font-family: var(--font-family-base);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; /* 改善字体渲染效果 */
+  -moz-osx-font-smoothing: grayscale; /* 改善字体渲染效果 */
   @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
 }
 
+/**
+ * @section 展示字体类
+ */
 .display-font {
   font-family: var(--font-family-display);
 }
 
-/* 卡片动画 */
+/**
+ * @section 卡片悬停效果
+ */
 .card-hover {
   transition:
     transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow 0.4s ease,
-    border-color 0.3s ease;
+    /* 弹性变换效果 */ box-shadow 0.4s ease,
+    /* 阴影过渡效果 */ border-color 0.3s ease; /* 边框颜色过渡效果 */
   cursor: pointer;
 }
 
 .card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
-  border-color: rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px); /* 向上移动 */
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1); /* 增强阴影 */
+  border-color: rgba(0, 0, 0, 0.1); /* 添加边框颜色 */
 }
 
-/* 全局淡入动画 */
+/**
+ * @section 全局淡入动画
+ */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(10px); /* 从下方淡入 */
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0); /* 到达最终位置 */
   }
 }
 
+/**
+ * @section 淡入动画类
+ */
 .animate-fade-in {
   animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/**
+ * @section 卡片遮罩层过渡效果
+ */
 .card-overlay {
   transition: background-color 0.3s ease;
 }
 
 .card-hover:hover .card-overlay {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8); /* 悬停时显示半透明黑色遮罩 */
 }
 
-/* 自定义下划线：使用 :is 提升特异性 */
+/**
+ * @section 自定义下划线效果
+ * @description 使用 :is 提升特异性
+ */
 :is(p span.underline, .rich-text span.underline, .underline) {
   position: relative !important;
   z-index: 0;
   text-decoration: none !important;
 }
 
+/**
+ * @section 下划线渐变动画
+ */
 @keyframes underlineGradientShift {
   0% {
     background-position: 0% 50%;
@@ -101,6 +150,9 @@ body {
   }
 }
 
+/**
+ * @section 下划线伪元素实现
+ */
 :is(p span.underline, .rich-text span.underline, .underline)::after {
   content: "" !important;
   position: absolute !important;
@@ -117,66 +169,69 @@ body {
   transition: background-image 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/**
+ * @section 悬停时的彩虹渐变下划线效果
+ */
 :is(p span.underline, .rich-text span.underline, .underline):hover::after {
-  background-image: linear-gradient(
-    90deg,
-    #10b981,
-    #3b82f6,
-    #f97316,
-    #8b5cf6,
-    #ec4899,
-    #10b981
-  ) !important;
+  background-image: linear-gradient(90deg, #10b981, #3b82f6, #f97316, #8b5cf6, #ec4899, #10b981) !important;
   background-size: 300% 100% !important;
   animation: underlineGradientShift 1.2s ease-in-out infinite !important;
 }
 
-/* 网站导航卡片样式 - 与原Website样式保持一致 */
+/**
+ * @section 网站导航卡片样式
+ * @description 与原Website样式保持一致
+ */
 .website-item {
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    /* 变换过渡 */ box-shadow 0.3s ease; /* 阴影过渡 */
   min-height: 240px;
 }
 
 .website-item:hover {
-  transform: translateY(-5px);
-  box-shadow:
+  transform: translateY(-5px); /* 向上移动效果 */
+  box-shadow:                                              /* 多层阴影增强立体感 */
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .website-item:hover .card-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7); /* 悬停时显示半透明黑色遮罩 */
 }
 
 /* 悬停时显示描述信息 */
 .website-item:hover .website-description-text {
   opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.1s;
+  transform: translateY(0); /* 从下方移动到原位 */
+  transition-delay: 0.1s; /* 延迟显示，提升交互体验 */
 }
 
-/* 精选文章卡片动画 - 与网站卡片保持一致 */
+/**
+ * @section 精选文章卡片动画
+ * @description 与网站卡片保持一致
+ */
 .featured-post-item {
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    /* 变换过渡 */ box-shadow 0.3s ease; /* 阴影过渡 */
   min-height: 240px;
 }
 
 .featured-post-item:hover {
-  transform: translateY(-5px);
-  box-shadow:
+  transform: translateY(-5px); /* 向上移动效果 */
+  box-shadow:                                              /* 多层阴影增强立体感 */
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .featured-post-item:hover .card-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7); /* 悬停时显示半透明黑色遮罩 */
 }
 
-/* 备案信息样式 */
+/**
+ * @section 备案信息样式
+ */
 .icp-info {
   display: flex;
   flex-direction: column;
@@ -184,6 +239,9 @@ body {
   gap: 0.5rem;
 }
 
+/**
+ * @section 备案链接容器
+ */
 .icp-links {
   display: flex;
   flex-direction: column;
@@ -191,6 +249,10 @@ body {
   gap: 0.5rem;
 }
 
+/**
+ * @section 响应式布局
+ * @description 小屏幕及以上改为水平排列
+ */
 @media (min-width: 640px) {
   .icp-links {
     flex-direction: row;
@@ -198,6 +260,9 @@ body {
   }
 }
 
+/**
+ * @section 备案链接样式
+ */
 .icp-link {
   color: #6b7280;
   font-size: 0.75rem;
@@ -209,23 +274,33 @@ body {
 }
 
 .icp-link:hover {
-  color: #374151;
+  color: #374151; /* 悬停时加深颜色 */
 }
 
+/**
+ * @section 暗色模式下的备案链接样式
+ */
 .dark .icp-link {
   color: #9ca3af;
 }
 
 .dark .icp-link:hover {
-  color: #d1d5db;
+  color: #d1d5db; /* 暗色模式下悬停时变亮 */
 }
 
+/**
+ * @section 公安备案标志样式
+ */
 .mps-logo {
   width: 12px;
   height: 12px;
   object-fit: contain;
 }
 
+/**
+ * @section 响应式调整
+ * @description 小屏幕及以上增大标志尺寸
+ */
 @media (min-width: 640px) {
   .mps-logo {
     width: 14px;
@@ -233,12 +308,14 @@ body {
   }
 }
 
-/* 社交图标样式 */
+/**
+ * @section 社交图标样式
+ */
 .social-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.25rem;
   height: 1.25rem;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease; /* 所有属性过渡效果 */
 }

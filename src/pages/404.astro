@@ -1,43 +1,71 @@
 ---
 /**
  * /404.astro 根级 404 页面
+ *
+ * 网站根级别的404错误页面，当用户访问不存在的页面时显示。
+ * 使用默认语言（中文）提供友好的错误提示和导航选项。
+ *
+ * @page
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getI18n, defaultLocale, type Locale } from '@lib/i18n';
 
-// 404 页面使用默认语言
+// 404页面使用默认语言
 const lang: Locale = defaultLocale;
 await getI18n(lang);
 
-// 404 页面文本
+// 404页面文本内容
 const t = {
+  /** 页面标题 */
   title: '404 - 页面未找到',
+  /** 页面描述 */
   description: '抱歉，您访问的页面不存在',
+  /** 主标题 */
   heading: '页面好像走丢了',
+  /** 提示信息 */
   message: '链接或许已更新，但好消息是，灵感仍在。试试看以下操作：',
+  /** 返回首页按钮文本 */
   homeButton: '返回首页',
+  /** 联系按钮文本 */
   contactButton: '联系 Wenjie',
+  /** 项目区块标题 */
   projectsTitle: '最近项目',
+  /** 项目区块链接前缀 */
   projectsText: '浏览',
+  /** 项目区块链接文本 */
   projectsLink: '关于页',
+  /** 项目区块链接后缀 */
   projectsEnd: '了解正在进行的实验与作品',
+  /** 联系区块标题 */
   contactTitle: '联系合作',
+  /** 联系区块链接前缀 */
   contactText: '想和我聊聊？点此',
+  /** 联系区块链接文本 */
   contactLink: '发送邮件',
+  /** 联系区块链接后缀 */
   contactEnd: '，我随时准备提供帮助',
 };
 ---
 
 <BaseLayout title={t.title} description={t.description} lang={lang}>
+  {/* 404页面内容容器 */}
   <div class='min-h-[70vh] flex items-center justify-center py-20'>
+    {/* 内容区域 */}
     <div class='max-w-3xl mx-auto px-6 text-center'>
+      {/* 404错误代码 */}
       <p class='text-xs uppercase tracking-[0.6em] text-red-600 font-semibold mb-6'>404</p>
+
+      {/* 主标题 */}
       <h1 class='display-font text-5xl sm:text-6xl font-bold mb-6'>{t.heading}</h1>
+
+      {/* 描述信息 */}
       <p class='text-lg text-gray-600 dark:text-gray-400 mb-10'>
         {t.message}
       </p>
+
+      {/* 操作按钮区域 */}
       <div class='flex flex-col sm:flex-row sm:justify-center gap-4 mb-12'>
-        <!-- 添加 prefetch 支持，使用 viewport 策略进入视口时预获取 -->
+        {/* 返回首页按钮：添加viewport预取支持 */}
         <a
           href={`/${lang}/`}
           data-astro-prefetch='viewport'
@@ -45,6 +73,8 @@ const t = {
         >
           {t.homeButton}
         </a>
+
+        {/* 联系按钮：添加viewport预取支持 */}
         <a
           href={`/${lang}/contact/`}
           data-astro-prefetch='viewport'
@@ -53,7 +83,10 @@ const t = {
           {t.contactButton}
         </a>
       </div>
+
+      {/* 建议操作区域 */}
       <div class='grid sm:grid-cols-2 gap-6 text-left'>
+        {/* 项目建议卡片 */}
         <article
           class='p-6 border border-gray-200 dark:border-gray-700 rounded-3xl card-hover bg-white dark:bg-gray-800'
         >
@@ -62,6 +95,7 @@ const t = {
           </h3>
           <p class='text-gray-600 dark:text-gray-400 text-sm'>
             {t.projectsText}
+            {/* 关于页面链接：添加hover预取支持 */}
             <a
               href={`/${lang}/about/`}
               data-astro-prefetch='hover'
@@ -72,6 +106,8 @@ const t = {
             {t.projectsEnd}
           </p>
         </article>
+
+        {/* 联系建议卡片 */}
         <article
           class='p-6 border border-gray-200 dark:border-gray-700 rounded-3xl card-hover bg-white dark:bg-gray-800'
         >
@@ -80,6 +116,7 @@ const t = {
           </h3>
           <p class='text-gray-600 dark:text-gray-400 text-sm'>
             {t.contactText}
+            {/* 邮件链接 */}
             <a
               class='underline ml-1 hover:text-black dark:hover:text-white'
               href='mailto:wenjie.xu.cn@outlook.com'

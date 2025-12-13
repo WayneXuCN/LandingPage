@@ -2,36 +2,57 @@
 /**
  * WebsiteItem.astro
  * 网站卡片组件 - 极简导航风格
- * 纯展示组件，无需 React 水合
+ *
+ * 用于展示网站链接的卡片组件，采用极简导航风格设计。
+ * 支持图片优化、悬停效果和响应式布局。纯静态组件，无需 React 水合。
+ *
+ * @component
  */
 import { resolveContentHref } from '@lib/utils';
 import { getWebsiteImage } from '@lib/websiteImages';
 import { Image } from 'astro:assets';
 
+/**
+ * 网站项数据接口
+ */
 interface WebsiteItemData {
+  /** 网站唯一标识符 */
   id?: string;
+  /** 网站标题 */
   title: string;
+  /** 网站封面图片文件名 */
   image: string;
+  /** 网站链接地址 */
   url: string;
+  /** 网站描述文本 */
   description: string;
 }
 
+/**
+ * 组件属性接口
+ */
 interface Props {
+  /** 网站数据对象 */
   item: WebsiteItemData;
+  /** 是否优先加载图片，用于首屏重要内容 */
   priority?: boolean;
 }
 
+// 解构组件属性，设置默认优先级为false
 const { item, priority = false } = Astro.props;
 
-// 解析链接
+// 解析链接：外部链接直接使用，内部链接通过工具函数处理
 const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh_CN');
+// 判断是否为外部链接
 const isExternal = typeof href === 'string' && href.startsWith('http');
+// 验证链接有效性
 const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '#';
 
-// i18n 中保存的是文件名（例如 dashboard.png），通过映射拿到 ImageMetadata 才能被 Astro 优化
+// 获取本地优化图片：i18n中保存的是文件名，通过映射拿到ImageMetadata才能被Astro优化
 const localImage = getWebsiteImage(item.image);
 ---
 
+{/* 网站卡片容器 */}
 <a
   href={isValidHref ? href : undefined}
   target={isExternal ? '_blank' : undefined}
@@ -45,6 +66,7 @@ const localImage = getWebsiteImage(item.image);
   >
     {
       localImage ? (
+        /* 优化后的本地图片 */
         <Image
           src={localImage}
           alt={item.title}
@@ -61,6 +83,7 @@ const localImage = getWebsiteImage(item.image);
           class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
         />
       ) : (
+        /* 备用图片 */
         <img
           src={item.image}
           alt={item.title}
@@ -81,13 +104,16 @@ const localImage = getWebsiteImage(item.image);
     </div>
   </div>
 
+  {/* 内容区域：标题和描述 */}
   <div class='flex flex-col min-w-0 flex-grow px-0 sm:px-1'>
+    {/* 标题行：包含标题和箭头图标 */}
     <div class='flex items-center justify-between'>
       <h3
         class='text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate pr-2'
       >
         {item.title}
       </h3>
+      {/* 外部链接指示箭头：悬停时显示 */}
       <svg
         class='w-3.5 h-3.5 text-gray-500 group-hover:text-blue-500 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 duration-300 hidden sm:block'
         fill='none'
@@ -102,6 +128,7 @@ const localImage = getWebsiteImage(item.image);
       </svg>
     </div>
 
+    {/* 描述文本 */}
     <p class='mt-0.5 sm:mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed'>
       {item.description}
     </p>

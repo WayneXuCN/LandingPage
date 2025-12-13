@@ -1,27 +1,37 @@
 /**
- * LanguageSwitcher.jsx (Astro React Island 版本)
- * 语言切换按钮，用于在 /en_US/ 和 /zh_CN/ 之间切换
- *
- * 更新：
- * - 支持 View Transitions 的 navigate API
- * - 使用 astro:transitions/client 实现平滑的语言切换
- *
- * 参考文档：
- * - View Transitions Guide - Trigger navigation
- * - Internationalization (i18n) Routing
+ * @fileoverview LanguageSwitcher.jsx
+ * @description 语言切换按钮组件，用于在 /en_US/ 和 /zh_CN/ 之间切换
+ * @author Wenjie
+ * @version 1.0.0
  */
 import { useCallback } from 'react';
 
+/**
+ * 支持的语言配置
+ * @description 定义支持的语言及其标签和路径
+ * @type {Object.<string, {label: string, path: string}>}
+ */
 const locales = {
   zh_CN: { label: '中', path: '/zh_CN/' },
   en_US: { label: 'EN', path: '/en_US/' },
 };
 
+/**
+ * LanguageSwitcher 组件
+ * @description 语言切换按钮，用于在不同语言版本之间切换
+ * @param {Object} props - 组件属性
+ * @param {string} [props.currentLang='en_US'] - 当前语言代码
+ * @returns {JSX.Element} 语言切换按钮
+ */
 const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
   // 确保 currentLang 在 locales 中有定义
   const safeCurrentLang = locales[currentLang] ? currentLang : 'en_US';
 
-  // 获取下一个语言
+  /**
+   * 获取下一个语言代码
+   * @description 根据当前语言计算下一个要切换的语言
+   * @returns {string} 下一个语言代码
+   */
   const getNextLang = () => {
     const localeKeys = Object.keys(locales);
     const currentIndex = localeKeys.indexOf(safeCurrentLang);
@@ -33,6 +43,11 @@ const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
   const nextLabel = locales[nextLang].label;
   const currentLabel = locales[safeCurrentLang].label;
 
+  /**
+   * 处理语言切换
+   * @description 点击按钮时切换到下一个语言，保持当前页面路径
+   * @returns {Promise<void>}
+   */
   const handleSwitch = useCallback(async () => {
     // 获取当前路径并替换语言前缀
     const currentPath = window.location.pathname;

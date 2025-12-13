@@ -2,34 +2,59 @@
 /**
  * WebsitesSection.astro
  * 网站列表区块组件
+ *
+ * 用于展示网站列表的区块组件，以网格布局展示多个网站卡片。
+ * 支持自定义标题和网站数据，提供响应式布局和性能优化。
+ *
+ * @component
  */
 import WebsiteItem from './WebsiteItem.astro';
 
+/**
+ * 网站项数据接口
+ */
 interface WebsiteItemData {
+  /** 网站唯一标识符 */
   id?: string;
+  /** 网站标题 */
   title: string;
+  /** 网站封面图片文件名 */
   image: string;
+  /** 网站链接地址 */
   url: string;
+  /** 网站描述文本 */
   description: string;
 }
 
+/**
+ * 组件属性接口
+ */
 interface Props {
+  /** 区块标题 */
   title?: string;
+  /** 网站数据列表 */
   items: WebsiteItemData[];
 }
 
+// 解构组件属性，设置默认值
 const { title = 'Websites', items = [] } = Astro.props;
 ---
 
+{/* 条件渲染：仅在有网站数据时显示区块 */}
 {
   items && items.length > 0 && (
+    /* 网站列表区块容器 */
     <section
       class='mb-12 sm:mb-16 md:mb-20'
       style='content-visibility:auto; contain-intrinsic-size: 1px 900px;'
     >
+      {/* 区块标题 */}
       <h2 class='text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 display-font'>{title}</h2>
+
+      {/* 网站卡片网格布局 */}
       <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'>
         {items.map((item, index) => (
+          /* 网站卡片：前两个卡片设置优先加载 */
           <WebsiteItem item={item} priority={index < 2} />
         ))}
       </div>

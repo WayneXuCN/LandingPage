@@ -1,6 +1,12 @@
 ---
 /**
  * /[lang]/contact.astro
+ * 联系页面
+ *
+ * 多语言联系页面，提供联系表单和联系信息。
+ * 包含静态Hero区域和React交互式联系表单组件。
+ *
+ * @page
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/ui/Hero.astro';
@@ -9,14 +15,17 @@ import HeaderBar from '@components/ui/HeaderBar.astro';
 import ContactPage from '@components/react/Contact.jsx';
 import { getI18n, locales, type Locale } from '@lib/i18n';
 
-// 生成静态路径
+/**
+ * 生成静态路径
+ * 为每个支持的语言生成静态路径
+ */
 export function getStaticPaths() {
   return locales.map(lang => ({
     params: { lang },
   }));
 }
 
-// 获取当前语言
+// 获取当前语言参数
 const { lang } = Astro.params as { lang: Locale };
 
 // 从内容集合获取翻译数据
@@ -47,5 +56,4 @@ const currentPath = Astro.url.pathname;
   <ContactPage client:idle content={{ contact }} />
 
   <Footer footer={footer} />
-
 </BaseLayout>

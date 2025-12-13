@@ -1,19 +1,48 @@
 import React from 'react';
 
 /**
- * ErrorBoundary
- * 错误边界组件，捕获子组件的 JavaScript 错误
+ * @fileoverview ErrorBoundary.jsx
+ * @description 错误边界组件，捕获子组件的 JavaScript 错误并提供友好的错误界面
+ * @author Wenjie
+ * @version 1.0.0
+ */
+
+/**
+ * ErrorBoundary 组件
+ * @description React 错误边界类组件，用于捕获子组件树中的 JavaScript 错误
+ * @class
+ * @extends React.Component
+ * @param {Object} props - 组件属性
+ * @param {React.ReactNode} props.children - 子组件
+ * @returns {JSX.Element} 错误边界组件
  */
 class ErrorBoundary extends React.Component {
+  /**
+   * 构造函数
+   * @param {Object} props - 组件属性
+   */
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null, errorInfo: null };
   }
 
+  /**
+   * 静态方法：从错误中派生状态
+   * @description 当子组件抛出错误时调用，更新组件状态
+   * @param {Error} _error - 捕获的错误对象
+   * @returns {Object} 新的状态对象
+   */
   static getDerivedStateFromError(_error) {
     return { hasError: true };
   }
 
+  /**
+   * 生命周期方法：捕获错误
+   * @description 当子组件抛出错误时调用，记录错误信息
+   * @param {Error} error - 捕获的错误对象
+   * @param {Object} errorInfo - 错误信息对象
+   * @returns {void}
+   */
   componentDidCatch(error, errorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
     this.setState({
@@ -22,6 +51,11 @@ class ErrorBoundary extends React.Component {
     });
   }
 
+  /**
+   * 渲染方法
+   * @description 根据错误状态渲染错误界面或子组件
+   * @returns {JSX.Element} 渲染的组件
+   */
   render() {
     if (this.state.hasError) {
       return (

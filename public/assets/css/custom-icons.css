@@ -1,19 +1,33 @@
-/* 社交图标通用样式 */
+/**
+ * @file 自定义图标样式文件
+ * @description 此文件定义了网站中使用的自定义图标样式，包括：
+ * - 社交图标通用样式
+ * - 特定平台图标悬停效果
+ * - 图片悬停反馈效果
+ */
+
+/**
+ * @section 社交图标通用样式
+ */
 .social-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 20px; /* 图标宽度 */
+  height: 20px; /* 图标高度 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
 }
 
-/* 微博专属悬停色 */
+/**
+ * @section 微博专属悬停效果
+ */
 a:hover .fa-weibo {
-  color: #e6162d !important;
+  color: #e6162d !important; /* 微博品牌红色 */
 }
 
-/* 统一图片悬停反馈 */
+/**
+ * @section 统一图片悬停反馈效果
+ */
 a:hover img {
-  opacity: 0.8;
-  filter: brightness(1.1);
+  opacity: 0.8; /* 降低不透明度 */
+  filter: brightness(1.1); /* 增加亮度 */
 }

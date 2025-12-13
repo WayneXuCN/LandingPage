@@ -1,6 +1,12 @@
 ---
 /**
  * /[lang]/index.astro
+ * 多语言首页
+ *
+ * 多语言版本的首页，根据URL中的语言参数显示对应语言的内容。
+ * 包含Hero区域、网站展示、精选文章等主要区块。
+ *
+ * @page
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/ui/Hero.astro';
@@ -11,33 +17,47 @@ import HeaderBar from '@components/ui/HeaderBar.astro';
 import { getI18n, locales, type Locale } from '@lib/i18n';
 import rssData from '@data/rss-posts.json';
 
-// 生成静态路径
+/**
+ * 生成静态路径
+ * 为每个支持的语言生成静态路径
+ */
 export function getStaticPaths() {
   return locales.map(lang => ({
     params: { lang },
   }));
 }
 
-// 获取当前语言
+// 获取当前语言参数
 const { lang } = Astro.params as { lang: Locale };
 
-// 从内容集合获取 i18n 文本
+// 从内容集合获取i18n文本
 const translations = await getI18n(lang);
 const { site, nav, header, hero, websites, featuredPosts, footer } = translations;
 
 // 当前路径用于导航高亮
 const currentPath = Astro.url.pathname;
 
-// 获取对应语言的 RSS 帖子
+/**
+ * RSS文章数据接口
+ */
 type RssPost = {
+  /** 文章唯一标识符 */
   id?: string;
+  /** 文章标题 */
   title: string;
+  /** 文章封面图片 */
   image: string;
+  /** 文章链接地址 */
   url: string;
+  /** 文章描述 */
   description?: string;
+  /** 文章分类标签 */
   categories?: string[];
+  /** 文章发布日期 */
   pubDate?: string;
 };
+
+// 获取对应语言的RSS文章
 const rssPosts = ((rssData as Record<string, RssPost[]>)[lang] || []) as RssPost[];
 ---
 
@@ -61,5 +81,4 @@ const rssPosts = ((rssData as Record<string, RssPost[]>)[lang] || []) as RssPost
 
   {/* Footer 区块，静态内容，Astro 组件 */}
   <Footer footer={footer} />
-
 </BaseLayout>

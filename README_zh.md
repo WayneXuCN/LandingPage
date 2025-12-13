@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="public/assets/img/website.png" alt="Starter Theme 预览" width="800" />
+  <img src="public/assets/img/website.png" alt="LandingPage 预览" width="800" />
 </p>
 
-<h1 align="center">Starter Theme</h1>
+<h1 align="center">LandingPage</h1>
 
 <p align="center">
-  <strong>基于 Astro 5 构建的现代极简个人主页主题</strong>g
+  <strong>基于 Astro 5 构建的现代极简个人主页主题</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/WayneXuCN/starter-theme/blob/main/LICENSE">
+  <a href="https://github.com/WayneXuCN/LandingPage/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   </a>
   <a href="https://astro.build/">
@@ -29,8 +29,10 @@
 <p align="center">
   <a href="#特性">特性</a> •
   <a href="#快速开始">快速开始</a> •
+  <a href="#项目结构">项目结构</a> •
   <a href="#配置">配置</a> •
-  <a href="#自定义">自定义</a>
+  <a href="#部署">部署</a> •
+  <a href="#贡献">贡献</a>
 </p>
 
 <p align="center">
@@ -43,13 +45,18 @@
 
 | 特性 | 说明 |
 |------|------|
-| **国际化支持** | 基于 Astro 原生 i18n 路由和内容集合的多语言支持 |
+| **国际化支持** | 基于 Astro 原生 i18n 路由和内容集合的多语言支持，包含 TypeScript 类型验证 |
 | **深色模式** | 自动检测系统偏好，支持 localStorage 持久化 |
-| **响应式设计** | 、适配各种设备 |
-| **RSS 聚合** | 从外部 RSS/Atom 源获取并展示文章 |
+| **响应式设计** | 移动优先设计，适配各种设备 |
+| **RSS 聚合** | 高级 RSS/Atom 源系统，支持多种解析器、自动图片生成和预构建抓取 |
 | **联系表单** | 预配置 EmailJS 集成，开箱即用 |
 | **数据分析** | 可选的 Google Analytics 4 集成 |
 | **群岛架构** | React 组件按需加载，最小化 JS 体积 |
+| **SEO 优化** | 自动生成支持 i18n 的 sitemap.xml 和 robots.txt |
+| **极速性能** | 静态站点生成，优化资源和图片处理 |
+| **图片优化** | 集成 Astro Image API，支持响应式图片生成 |
+| **内容验证** | 所有内容使用 Zod 模式验证，提供 TypeScript 类型安全 |
+| **自动化 RSS 抓取** | 预构建 RSS 抓取，包含重试逻辑和错误处理 |
 
 ## 快速开始
 
@@ -61,7 +68,7 @@
 
 ```bash
 # 克隆模板
-git clone https://github.com/WayneXuCN/starter-theme.git my-site
+git clone https://github.com/WayneXuCN/LandingPage.git my-site
 cd my-site
 
 # 安装依赖
@@ -76,7 +83,11 @@ bun run dev
 ### 构建生产版本
 
 ```bash
+# 构建站点（RSS 源会自动抓取）
 bun run build
+
+# 预览生产构建
+bun run preview
 ```
 
 输出文件生成在 `dist/` 目录，可部署到任意静态托管平台。
@@ -86,41 +97,57 @@ bun run build
 ```text
 src/
 ├── components/
-│   ├── react/          # React Islands
-│   │   ├── Contact.jsx 
-│   │   ├── ErrorBoundary.jsx
-│   │   ├── HeaderBar.jsx
-│   │   ├── LanguageSwitcher.jsx
-│   │   ├── PrimaryNav.jsx
-│   │   ├── ThemeToggle.jsx
-│   │   └── UnderlineEffects.jsx
+│   ├── react/          # React Islands（交互式组件）
+│   │   ├── Contact.jsx        # EmailJS 联系表单
+│   │   ├── ErrorBoundary.jsx  # React 错误边界
+│   │   ├── HeaderBar.jsx      # 带语言切换的导航头部
+│   │   ├── LanguageSwitcher.jsx # 语言选择器组件
+│   │   ├── PrimaryNav.jsx     # 主导航菜单
+│   │   ├── ThemeToggle.jsx    # 深色/浅色模式切换
+│   │   └── UnderlineEffects.jsx # 下划线悬停效果
 │   │
-│   └── ui/             # Astro 组件
-│       ├── Hero.astro
-│       ├── Footer.astro
-│       ├── WebsiteItem.astro
-│       ├── WebsitesSection.astro
-│       ├── FeaturedPostItem.astro
-│       └── FeaturedPostsSection.astro
+│   └── ui/             # Astro 组件（静态组件）
+│       ├── Hero.astro              # 主页横幅区域
+│       ├── Footer.astro            # 站点页脚
+│       ├── WebsiteItem.astro       # 网站展示项
+│       ├── WebsitesSection.astro   # 网站展示区域
+│       ├── FeaturedPostItem.astro  # 特色文章项
+│       └── FeaturedPostsSection.astro # 特色文章区域
 │
 ├── layouts/
-│   └── BaseLayout.astro  # 全局布局
+│   └── BaseLayout.astro  # 全局布局，包含 SEO 和元标签
 │
 ├── lib/
-│   ├── i18n.ts           # i18n 工具函数
-│   └── utils.ts          # 公共工具函数
+│   ├── i18n.ts           # 国际化工具函数
+│   ├── utils.ts          # 公共工具函数
+│   ├── localImages.ts    # 本地图片处理工具
+│   └── websiteImages.ts  # 网站图片处理工具
 │
 ├── pages/
-│   ├── index.astro       # 根首页
-│   ├── 404.astro         # 根 404
-│   └── [lang]/           # 动态路由
-│       ├── index.astro
-│       ├── about.astro
-│       ├── contact.astro
-│       └── 404.astro
+│   ├── index.astro       # 根首页（渲染中文版本）
+│   ├── 404.astro         # 根 404 页面
+│   └── [lang]/           # 动态语言路由
+│       ├── index.astro   # 语言特定首页
+│       ├── about.astro   # 关于页面
+│       ├── contact.astro # 联系页面
+│       └── 404.astro     # 语言特定 404 页面
+│
+├── data/
+│   └── rss-posts.json    # RSS 聚合文章数据（自动生成）
 │
 └── styles/
-    └── global.css        # 全局样式
+    └── global.css        # 全局样式和自定义 CSS
+
+i18n/                     # 国际化内容
+├── zh_CN.json           # 中文内容
+└── en_US.json           # 英文内容
+
+scripts/
+└── fetch-rss.bun.js     # RSS 抓取脚本，包含高级解析功能
+
+src/
+├── content.config.ts     # 内容集合模式和验证
+└── middleware.ts         # 国际化路由中间件
 ```
 
 ## 配置
@@ -196,9 +223,32 @@ export default defineConfig({
     mdx(),        // MDX 支持
     tailwind(),   // Tailwind CSS
     icon(),       // 图标支持
-    sitemap(),    // 自动生成 sitemap.xml
+    sitemap({     // 自动生成支持 i18n 的 sitemap.xml
+      i18n: {
+        defaultLocale: 'zh_CN',
+        locales: {
+          zh_CN: 'zh-CN',
+          en_US: 'en-US',
+        },
+      },
+    }),
     robotsTxt(),  // 自动生成 robots.txt
   ],
+  
+  // 6. 图片优化配置
+  image: {
+    domains: ['images.unsplash.com', 'unsplash.com', 'picsum.photos'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+  },
 });
 ```
 
@@ -215,7 +265,7 @@ export default defineConfig({
    - 调整 `routing` 选项控制 URL 结构
 
 3. **SEO 优化**：
-   - `sitemap` 集成会自动生成 sitemap.xml
+   - `sitemap` 集成会自动生成支持 i18n 的 sitemap.xml
    - `robotsTxt` 集成会自动生成 robots.txt
    - 这些都依赖于正确的 `site` 配置
 
@@ -264,14 +314,14 @@ const fullOgImage = ogImage.startsWith('http')
 
 ### 内容管理
 
-所有站点内容通过 `src/content/i18n/` 中的 JSON 文件管理：
+所有站点内容通过 `i18n/` 中的 JSON 文件管理：
 
 | 文件 | 说明 |
 |------|------|
 | `zh_CN.json` | 中文内容 |
 | `en_US.json` | 英文内容 |
 
-文件结构：
+文件结构遵循 `src/content.config.ts` 中定义的严格模式，使用 Zod 进行验证：
 
 ```json
 {
@@ -297,12 +347,35 @@ const fullOgImage = ogImage.startsWith('http')
     "rss": {
       "enabled": true,
       "feeds": [
-        { "url": "https://blog.example.com/feed.xml", "parser": "default" }
+        { "url": "https://blog.example.com/feed.xml", "parser": "default" },
+        { "url": "https://astro-paper.vercel.app/rss.xml", "parser": "astroPaper" }
       ],
       "limit": 6
     }
   }
 }
+```
+
+#### 支持的 RSS 解析器
+
+| 解析器 | 说明 | 使用场景 |
+|--------|------|----------|
+| `default` | 标准 RSS/Atom 解析器 | 大多数 RSS 源 |
+| `astroPaper` | Astro Paper 主题解析器 | 使用 Astro Paper 主题的博客 |
+| `jekyllFeed` | Jekyll feed 解析器 | 基于 Jekyll 的博客 |
+
+#### RSS 功能特性
+
+- **多解析器支持**：不同格式的 feed 使用不同解析器
+- **自动图片生成**：基于确定性哈希从 Picsum 生成图片
+- **重试逻辑**：失败请求的指数退避重试
+- **内容验证**：类型安全的内容处理
+- **预构建抓取**：构建前自动运行
+
+手动抓取 RSS 源：
+
+```bash
+bun run fetch:rss
 ```
 
 ## 自定义
@@ -323,18 +396,14 @@ const fullOgImage = ogImage.startsWith('http')
        redirectToDefaultLocale: false,
      },
    },
-   ```
-
-   同时更新站点地图的 i18n 配置：
-
-   ```js
+   
+   // 同时更新站点地图的 i18n 配置
    sitemap({
      i18n: {
        defaultLocale: 'zh_CN',
        locales: {
          zh_CN: 'zh-CN',
          en_US: 'en-US',
-         // ... 现有语言
          NEW_LOCALE: 'new-locale', // 添加新的语言映射
        },
      },
@@ -376,7 +445,7 @@ const fullOgImage = ogImage.startsWith('http')
      ],
      "header": {
        "name": "您的姓名",
-       "avatar": "/assets/img/prof_pic.png"
+       "avatar": "/img/prof_pic.png"
      },
      "hero": {
        "title": "欢迎访问我的网站",
@@ -402,6 +471,7 @@ const fullOgImage = ogImage.startsWith('http')
 - **颜色与主题**：编辑 `tailwind.config.mjs`
 - **全局样式**：编辑 `src/styles/global.css`
 - **深色模式**：使用 Tailwind 的 `dark:` 前缀
+- **自定义图标**：添加到 `public/assets/css/custom-icons.css`
 
 ### 组件说明
 
@@ -417,23 +487,65 @@ const fullOgImage = ogImage.startsWith('http')
 | `ThemeToggle.jsx` | 深色/浅色模式切换 |
 | `UnderlineEffects.jsx` | 下划线悬停效果 |
 
+## 部署
+
+### 生产环境变量
+
+在您的托管平台上设置这些环境变量：
+
+```env
+# EmailJS（联系表单必需）
+PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+
+# Google Analytics（可选）
+PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
 ## 脚本命令
 
 | 命令 | 说明 |
 |------|------|
-| `bun run dev` | 启动开发服务器 |
-| `bun run build` | 构建生产版本 |
+| `bun run dev` | 启动开发服务器（Bun 运行时） |
+| `bun run dev:node` | 启动开发服务器（Node.js 运行时） |
+| `bun run build` | 构建生产版本（Bun 运行时） |
+| `bun run build:node` | 构建生产版本（Node.js 运行时） |
 | `bun run preview` | 预览生产构建 |
-| `bun run fetch:rss` | 抓取 RSS 订阅 |
+| `bun run fetch:rss` | 手动抓取 RSS 订阅 |
+| `bun run prebuild` | 预构建 RSS 抓取（构建前自动运行） |
 | `bun run format` | 使用 Prettier 格式化代码 |
+| `bun run format:check` | 检查代码格式 |
+| `bun run type-check` | TypeScript 类型检查 |
+| `bun run lint` | Astro 代码检查 |
+| `bun run clean` | 清理构建产物 |
+| `bun run reinstall` | 清理并重新安装依赖 |
 
 ## 技术栈
 
 - **框架**：[Astro](https://astro.build/) 5.x
 - **UI**：[React](https://react.dev/) 19.x
 - **样式**：[Tailwind CSS](https://tailwindcss.com/) 3.x
-- **运行时**：[Bun](https://bun.sh/) 1.x
+- **运行时**：[Bun](https://bun.sh/) 1.x（推荐）或 Node.js 18+
 - **邮件**：[EmailJS](https://www.emailjs.com/)
+- **图标**：[Iconify](https://iconify.design/)（Material Design Icons）
+- **内容**：Astro Content Collections with TypeScript validation
+- **SEO**：自动生成支持 i18n 的 sitemap.xml 和 robots.txt
+- **图片**：Astro Image API with 响应式优化
+
+## 性能
+
+### PageSpeed Insights 结果
+
+<p align="center">
+  <strong>桌面版性能</strong><br>
+  <img src="public/assets/img/desktop_pagespeed.png" alt="桌面版 PageSpeed Insights" width="600" />
+</p>
+
+<p align="center">
+  <strong>移动版性能</strong><br>
+  <img src="public/assets/img/mobile_pagespeed.png" alt="移动版 PageSpeed Insights" width="600" />
+</p>
 
 ## 贡献指南
 

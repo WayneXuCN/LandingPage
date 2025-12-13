@@ -2,51 +2,92 @@
 /**
  * HeaderBar.astro
  * 顶部栏组件（静态版本）：包含头像、名称和导航
- * 仅将需要交互的按钮（主题切换和语言切换）作为小型 React Islands 加载。
+ *
+ * 用于展示网站顶部导航栏的组件，包含用户头像、名称和导航菜单。
+ * 仅将需要交互的按钮（主题切换和语言切换）作为小型 React Islands 加载，
+ * 其余部分保持静态渲染以提高性能。
+ *
+ * @component
  */
 import ThemeToggle from '@components/react/ThemeToggle.jsx';
 import LanguageSwitcher from '@components/react/LanguageSwitcher.jsx';
 import { Image } from 'astro:assets';
 import { getLocalImage } from '@lib/localImages';
 
+/**
+ * 导航项数据接口
+ */
 interface NavItem {
+  /** 导航项显示文本 */
   label: string;
+  /** 导航项链接地址 */
   href: string;
+  /** 是否隐藏该导航项 */
   hidden?: boolean;
 }
 
+/**
+ * 头部数据接口
+ */
 interface HeaderData {
+  /** 用户头像图片路径 */
   avatar?: string;
+  /** 用户名称 */
   name?: string;
 }
 
+/**
+ * 组件属性接口
+ */
 interface Props {
+  /** 头部数据对象 */
   header?: HeaderData;
+  /** 导航项列表 */
   nav?: NavItem[];
+  /** 当前页面路径，用于高亮当前导航项 */
   currentPath?: string;
+  /** 当前语言代码 */
   lang?: string;
 }
 
+// 解构组件属性，设置默认值
 const { header, nav = [], currentPath = '/', lang = 'en_US' } = Astro.props as Props;
 
+// 获取头像引用，默认为预设路径
 const avatarRef = header?.avatar || '/img/prof_pic.png';
+// 获取本地优化后的头像图片
 const localAvatar = getLocalImage(avatarRef);
+// 获取用户名称，默认为空字符串
 const name = header?.name || '';
 
+/**
+ * 标准化路径处理
+ * @param href 原始路径
+ * @returns 标准化后的路径
+ */
 const normalizePath = (href?: string) => {
   if (!href) return '/';
+  // 外部链接、邮件链接和锚点直接返回
   if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return href;
 
+  // 移除.html后缀
   let normalized = href.replace(/\.html$/i, '');
+  // 处理index路径
   if (normalized === 'index' || normalized === '/index') normalized = '/';
+  // 确保路径以/开头
   if (!normalized.startsWith('/')) normalized = '/' + normalized;
   return normalized;
 };
 
+/**
+ * 解析完整链接地址
+ * @param href 原始路径
+ * @returns 完整的链接地址
+ */
 const resolveHref = (href: string) => {
   const normalized = normalizePath(href);
 
-  // 外部链接和锚点
+  // 外部链接和锚点直接返回
   if (
     normalized.startsWith('http') ||
     normalized.startsWith('mailto:') ||
@@ -55,7 +96,7 @@ const resolveHref = (href: string) => {
     return normalized;
   }
 
-  // 首页
+  // 首页特殊处理
   if (normalized === '/' || normalized === '/index') {
     return `/${lang}/`;
   }
@@ -64,13 +105,19 @@ const resolveHref = (href: string) => {
   return `/${lang}${normalized}/`;
 };
 
+/**
+ * 判断链接是否为当前活动链接
+ * @param href 链接地址
+ * @returns 是否为当前活动链接
+ */
 const isActiveLink = (href: string) => {
   const normalizedHref = normalizePath(href);
   const normalizedCurrent = normalizePath(currentPath);
 
+  // 外部链接和邮件链接不作为活动链接
   if (normalizedHref.startsWith('http') || normalizedHref.startsWith('mailto:')) return false;
 
-  // 首页
+  // 首页特殊判断
   if (normalizedHref === '/' || normalizedHref === '/index') {
     return (
       normalizedCurrent === '/' ||
@@ -79,16 +126,25 @@ const isActiveLink = (href: string) => {
     );
   }
 
-  return normalizedCurrent.endsWith(normalizedHref) || normalizedCurrent === `/${lang}${normalizedHref}`;
+  // 其他页面判断
+  return (
+    normalizedCurrent.endsWith(normalizedHref) || normalizedCurrent === `/${lang}${normalizedHref}`
+  );
 };
 
+// 过滤有效的导航项：有链接地址且未隐藏
 const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hidden) : [];
 ---
 
-<header class='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12 sm:mb-16 md:mb-20 animate-fade-in'>
+{/* 头部导航栏容器 */}
+<header
+  class='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12 sm:mb-16 md:mb-20 animate-fade-in'
+>
+  {/* 左侧区域：用户头像和名称 */}
   <div class='flex items-center'>
     {
       localAvatar ? (
+        /* 优化后的本地头像图片 */
         <Image
           src={localAvatar}
           alt={name}
@@ -104,6 +160,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
           quality={80}
         />
       ) : (
+        /* 备用头像图片 */
         <img
           src={avatarRef}
           alt={name}
@@ -116,13 +173,18 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
         />
       )
     }
+    {/* 用户名称 */}
     <span class='font-medium text-gray-900 dark:text-white text-lg tracking-tight'>
       {name}
     </span>
   </div>
 
+  {/* 右侧区域：导航菜单和控制按钮 */}
   <div class='flex flex-wrap justify-center items-center gap-y-4 gap-x-4 sm:gap-8'>
-    <nav class='flex flex-wrap items-center gap-3 sm:gap-8 text-base font-medium text-gray-600 dark:text-gray-300'>
+    {/* 导航菜单 */}
+    <nav
+      class='flex flex-wrap items-center gap-3 sm:gap-8 text-base font-medium text-gray-600 dark:text-gray-300'
+    >
       {
         navLinks.map((link, index) => {
           const resolvedHref = resolveHref(link.href);
@@ -131,9 +193,13 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
 
           return (
             <>
+              {/* 导航项分隔符：除第一项外显示 */}
               {index > 0 && (
-                <span class='text-gray-300 dark:text-gray-600 select-none text-sm sm:text-base'>/</span>
+                <span class='text-gray-300 dark:text-gray-600 select-none text-sm sm:text-base'>
+                  /
+                </span>
               )}
+              {/* 导航链接 */}
               <a
                 href={resolvedHref}
                 aria-current={active ? 'page' : undefined}
@@ -146,6 +212,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
                 ]}
               >
                 {link.label}
+                {/* 活动状态指示器：底部下划线 */}
                 <span
                   class:list={[
                     'absolute bottom-0 left-0 h-[2px] bg-black dark:bg-white transition-all duration-300 ease-out',
@@ -159,6 +226,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
       }
     </nav>
 
+    {/* 控制按钮区域：主题切换和语言切换 */}
     <div class='flex items-center gap-2'>
       <ThemeToggle client:idle />
       <LanguageSwitcher client:idle currentLang={lang} />

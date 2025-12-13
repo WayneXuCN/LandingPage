@@ -46,7 +46,6 @@ const ThemeToggle = () => {
       title={themeLabel}
     >
       {theme === 'light' ? (
-        // Moon icon for light mode (switch to dark)
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className='h-5 w-5 text-gray-600 dark:text-gray-300'
@@ -62,7 +61,6 @@ const ThemeToggle = () => {
           />
         </svg>
       ) : (
-        // Sun icon for dark mode (switch to light)
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className='h-5 w-5 text-yellow-400'

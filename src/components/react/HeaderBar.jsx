@@ -1,12 +1,26 @@
 /**
- * HeaderBar.jsx
- * 头部组件，包含 avatar、name、导航、主题切换和语言切换
+ * @fileoverview HeaderBar.jsx
+ * @description 头部组件，包含头像、名称、导航、主题切换和语言切换功能
+ * @author Wenjie
+ * @version 1.0.0
  */
 
 import PrimaryNav from './PrimaryNav.jsx';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 
+/**
+ * HeaderBar 组件
+ * @description 页面头部组件，展示用户头像、名称和导航菜单
+ * @param {Object} props - 组件属性
+ * @param {Object} props.header - 头部信息
+ * @param {string} [props.header.avatar='/assets/img/prof_pic.png'] - 头像图片URL
+ * @param {string} [props.header.name=''] - 用户名称
+ * @param {Array} props.nav - 导航菜单项数组
+ * @param {string} [props.currentPath='/'] - 当前页面路径
+ * @param {string} [props.lang='en_US'] - 当前语言代码
+ * @returns {JSX.Element} 头部组件
+ */
 const HeaderBar = ({ header, nav, currentPath = '/', lang = 'en_US' }) => {
   const avatarUrl = header?.avatar || '/assets/img/prof_pic.png';
   const name = header?.name || '';

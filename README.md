@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="public/assets/img/website.png" alt="Starter Theme Preview" width="800" />
+  <img src="public/assets/img/website.png" alt="LandingPage Preview" width="800" />
 </p>
 
-<h1 align="center">Starter Theme</h1>
+<h1 align="center">LandingPage</h1>
 
 <p align="center">
   <strong>A modern, minimalist personal landing page theme built with Astro 5, React 19 and Tailwind CSS</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/WayneXuCN/starter-theme/blob/main/LICENSE">
+  <a href="https://github.com/WayneXuCN/LandingPage/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   </a>
   <a href="https://astro.build/">
@@ -45,15 +45,18 @@
 
 | Feature | Description |
 |---------|-------------|
-| **🌐 Internationalization** | Built-in i18n with Astro's native routing and Content Collections |
-| **🌙 Dark Mode** | Automatic theme switching with system preference detection |
+| **🌐 Internationalization** | Built-in i18n with Astro's native routing and Content Collections with TypeScript validation |
+| **🌙 Dark Mode** | Automatic theme switching with system preference detection and localStorage persistence |
 | **📱 Responsive Design** | Mobile-first design optimized for all devices |
-| **📰 RSS Aggregation** | Fetch and display posts from external RSS/Atom feeds |
+| **📰 RSS Aggregation** | Advanced RSS/Atom feed system with multiple parsers, automatic image generation, and pre-build fetching |
 | **📧 Contact Form** | Pre-configured EmailJS integration with form validation |
 | **📊 Analytics** | Optional Google Analytics 4 integration |
 | **🏝️ Islands Architecture** | React components loaded on demand, minimizing JS bundle size |
-| **🔍 SEO Optimized** | Auto-generated sitemap.xml and robots.txt |
-| **⚡ Fast Performance** | Static site generation with optimized assets |
+| **🔍 SEO Optimized** | Auto-generated sitemap.xml and robots.txt with i18n support |
+| **⚡ Fast Performance** | Static site generation with optimized assets and image processing |
+| **🖼️ Image Optimization** | Astro's Image API integration with responsive image generation |
+| **📝 Content Validation** | Zod schema validation for all content with TypeScript type safety |
+| **🔄 Automated RSS Fetching** | Pre-build RSS fetching with retry logic and error handling |
 
 ## 🚀 Quick Start
 
@@ -80,7 +83,7 @@ Open [http://localhost:4321](http://localhost:4321) to see your site.
 ### Build for Production
 
 ```bash
-# Build the site
+# Build the site (RSS feeds are automatically fetched)
 bun run build
 
 # Preview the production build
@@ -116,7 +119,9 @@ src/
 │
 ├── lib/
 │   ├── i18n.ts           # Internationalization utilities
-│   └── utils.ts          # Common utility functions
+│   ├── utils.ts          # Common utility functions
+│   ├── localImages.ts    # Local image processing utilities
+│   └── websiteImages.ts  # Website image processing utilities
 │
 ├── pages/
 │   ├── index.astro       # Root homepage (renders Chinese version)
@@ -127,16 +132,22 @@ src/
 │       ├── contact.astro # Contact page
 │       └── 404.astro     # Language-specific 404 page
 │
-├── content/
-│   └── i18n/             # Internationalization content
-│       ├── zh_CN.json    # Chinese content
-│       └── en_US.json    # English content
-│
 ├── data/
-│   └── rss-posts.json    # RSS aggregated posts data
+│   └── rss-posts.json    # RSS aggregated posts data (auto-generated)
 │
 └── styles/
     └── global.css        # Global styles and custom CSS
+
+i18n/                     # Internationalization content
+├── zh_CN.json           # Chinese content
+└── en_US.json           # English content
+
+scripts/
+└── fetch-rss.bun.js     # RSS fetching script with advanced parsing
+
+src/
+├── content.config.ts     # Content collections schema and validation
+└── middleware.ts         # Internationalization routing middleware
 ```
 
 ## ⚙️ Configuration
@@ -183,22 +194,45 @@ export default defineConfig({
     mdx(),        // MDX support
     tailwind(),   // Tailwind CSS
     icon(),       // Iconify icons
-    sitemap(),    // Auto-generate sitemap.xml
+    sitemap({     // Auto-generate sitemap.xml with i18n support
+      i18n: {
+        defaultLocale: 'zh_CN',
+        locales: {
+          zh_CN: 'zh-CN',
+          en_US: 'en-US',
+        },
+      },
+    }),
     robotsTxt(),  // Auto-generate robots.txt
   ],
+  
+  // Image optimization
+  image: {
+    domains: ['images.unsplash.com', 'unsplash.com', 'picsum.photos'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+  },
 });
 ```
 
 ### Content Management
 
-All site content is managed through JSON files in `src/content/i18n/`:
+All site content is managed through JSON files in `i18n/`:
 
 | File | Description |
 |------|-------------|
 | `zh_CN.json` | Chinese content |
 | `en_US.json` | English content |
 
-Content structure follows a strict schema defined in `src/content.config.ts`:
+Content structure follows a strict schema defined in `src/content.config.ts` with Zod validation:
 
 ```json
 {
@@ -214,7 +248,7 @@ Content structure follows a strict schema defined in `src/content.config.ts`:
     { "label": "Contact", "href": "contact.html" }
   ],
   "header": {
-    "avatar": "/assets/img/prof_pic.png",
+    "avatar": "/img/prof_pic.png",
     "name": "Your Name"
   },
   "hero": {
@@ -228,7 +262,7 @@ Content structure follows a strict schema defined in `src/content.config.ts`:
       {
         "id": "website-1",
         "title": "Website Title",
-        "image": "/assets/img/website.png",
+        "image": "/websites/website.png",
         "url": "https://example.com",
         "description": "Website description"
       }
@@ -389,13 +423,30 @@ Configure RSS aggregation in your locale JSON:
     "rss": {
       "enabled": true,
       "feeds": [
-        { "url": "https://blog.example.com/feed.xml", "parser": "default" }
+        { "url": "https://blog.example.com/feed.xml", "parser": "default" },
+        { "url": "https://astro-paper.vercel.app/rss.xml", "parser": "astroPaper" }
       ],
       "limit": 6
     }
   }
 }
 ```
+
+#### Supported RSS Parsers
+
+| Parser | Description | Use Case |
+|--------|-------------|----------|
+| `default` | Standard RSS/Atom parser | Most RSS feeds |
+| `astroPaper` | Astro Paper theme parser | Blogs using Astro Paper theme |
+| `jekyllFeed` | Jekyll feed parser | Jekyll-based blogs |
+
+#### RSS Features
+
+- **Multi-parser support**: Different parsers for different feed formats
+- **Automatic image generation**: Deterministic hash-based images from Picsum
+- **Retry logic**: Exponential backoff for failed requests
+- **Content validation**: Type-safe content processing
+- **Pre-build fetching**: Automatically runs before build
 
 Fetch RSS feeds manually:
 
@@ -414,6 +465,18 @@ bun run fetch:rss
      defaultLocale: 'zh_CN',
      locales: ['zh_CN', 'en_US', 'NEW_LOCALE'],
    },
+   
+   // Update sitemap i18n config
+   sitemap({
+     i18n: {
+       defaultLocale: 'zh_CN',
+       locales: {
+         zh_CN: 'zh-CN',
+         en_US: 'en-US',
+         NEW_LOCALE: 'new-locale',
+       },
+     },
+   }),
    ```
 
 2. **Update i18n utilities** (`src/lib/i18n.ts`):
@@ -456,33 +519,19 @@ bun run fetch:rss
 
 ## 🚀 Deployment
 
-### Vercel
+### Environment Variables for Production
 
-```bash
-npx vercel
+Set these environment variables in your hosting platform:
+
+```env
+# EmailJS (required for contact form)
+PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+
+# Google Analytics (optional)
+PUBLIC_GA_ID=G-XXXXXXXXXX
 ```
-
-### Netlify
-
-```bash
-npx netlify deploy --prod --dir=dist
-```
-
-### GitHub Pages
-
-Use the included GitHub Actions workflow (`.github/workflows/deploy.yml`) or deploy manually:
-
-```bash
-bun run build
-# Upload dist/ to gh-pages branch
-```
-
-### Cloudflare Pages
-
-Connect your repository and set:
-
-- **Build command**: `bun run build`
-- **Output directory**: `dist`
 
 ## 📦 Scripts
 
@@ -493,7 +542,8 @@ Connect your repository and set:
 | `bun run build` | Build for production (Bun runtime) |
 | `bun run build:node` | Build for production (Node.js runtime) |
 | `bun run preview` | Preview production build |
-| `bun run fetch:rss` | Fetch RSS feeds |
+| `bun run fetch:rss` | Fetch RSS feeds manually |
+| `bun run prebuild` | Pre-build RSS fetching (runs automatically before build) |
 | `bun run format` | Format code with Prettier |
 | `bun run format:check` | Check code formatting |
 | `bun run type-check` | TypeScript type checking |
@@ -510,7 +560,22 @@ Connect your repository and set:
 - **Email**: [EmailJS](https://www.emailjs.com/)
 - **Icons**: [Iconify](https://iconify.design/) (Material Design Icons)
 - **Content**: Astro Content Collections with TypeScript validation
-- **SEO**: Auto-generated sitemap.xml and robots.txt
+- **SEO**: Auto-generated sitemap.xml and robots.txt with i18n support
+- **Images**: Astro Image API with responsive optimization
+
+## 📊 Performance
+
+### PageSpeed Insights Results
+
+<p align="center">
+  <strong>Desktop Performance</strong><br>
+  <img src="public/assets/img/desktop_pagespeed.png" alt="Desktop PageSpeed Insights" width="600" />
+</p>
+
+<p align="center">
+  <strong>Mobile Performance</strong><br>
+  <img src="public/assets/img/mobile_pagespeed.png" alt="Mobile PageSpeed Insights" width="600" />
+</p>
 
 ## 🤝 Contributing
 

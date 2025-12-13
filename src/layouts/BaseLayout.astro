@@ -2,6 +2,11 @@
 /**
  * BaseLayout.astro
  * 全局布局组件，包含 meta、manifest、GA 条件脚本、主题初始化
+ *
+ * 提供网站全局布局的基础组件，包含完整的HTML结构、SEO优化、
+ * 社交媒体元数据、主题初始化和Google Analytics集成。
+ *
+ * @component
  */
 import '../styles/global.css';
 import { SEO } from 'astro-seo';
@@ -9,18 +14,31 @@ import { getImage } from 'astro:assets';
 import { getLocalImage } from '@lib/localImages';
 import { getHrefLang, type Locale } from '@lib/i18n';
 
+/**
+ * 组件属性接口
+ */
 interface Props {
+  /** 页面标题 */
   title?: string;
+  /** 页面描述 */
   description?: string;
+  /** 页面作者 */
   author?: string;
+  /** 页面关键词 */
   keywords?: string;
+  /** 页面语言代码 */
   lang?: string;
+  /** Open Graph 图片路径 */
   ogImage?: string;
+  /** 规范URL */
   canonicalUrl?: string;
+  /** 是否禁止搜索引擎索引 */
   noindex?: boolean;
+  /** 是否禁止搜索引擎跟踪链接 */
   nofollow?: boolean;
 }
 
+// 解构组件属性，设置默认值
 const {
   title = 'Wenjie Xu',
   description = 'My personal landing page.',
@@ -33,8 +51,11 @@ const {
   nofollow = false,
 } = Astro.props;
 
-// HTML lang 必须是有效的 BCP47（例如 zh-CN / en-US）。
-// 项目内部 locale 使用 zh_CN / en_US，这里做一次安全转换并提供回退。
+/**
+ * 获取符合BCP47标准的HTML语言代码
+ * HTML lang必须是有效的BCP47格式（例如zh-CN/en-US）
+ * 项目内部locale使用zh_CN/en_US，这里做一次安全转换并提供回退
+ */
 const htmlLang = (() => {
   if (typeof lang !== 'string' || !lang.trim()) return 'zh-CN';
 
@@ -43,24 +64,29 @@ const htmlLang = (() => {
     return getHrefLang(lang as Locale) || lang.replace('_', '-');
   }
 
-  // 已经是 BCP47（或其他合法值），直接返回
+  // 已经是BCP47（或其他合法值），直接返回
   return lang;
 })();
 
-// 构建完整的 OG 图片 URL
-// 从 astro.config.mjs 读取 site 配置
-// 如果未设置 site，在开发环境使用 localhost，生产环境使用相对路径
+/**
+ * 获取网站基础URL
+ * 从astro.config.mjs读取site配置
+ * 如果未设置site，在开发环境使用localhost，生产环境使用相对路径
+ */
 const getSiteUrl = () => {
   if (Astro.site?.origin) {
     return Astro.site.origin;
   }
 
-  // 开发环境使用 localhost，生产环境使用相对路径
+  // 开发环境使用localhost，生产环境使用相对路径
   return import.meta.env.DEV ? 'http://localhost:4321' : '';
 };
 const siteUrl = getSiteUrl();
 
-// 如果传入的 ogImage 指向 src/assets/img 下的本地图片，则在构建期生成标准的 OG 尺寸图
+/**
+ * 处理Open Graph图片
+ * 如果传入的ogImage指向src/assets/img下的本地图片，则在构建期生成标准的OG尺寸图
+ */
 const localOgSource = getLocalImage(ogImage);
 const ogTransform = localOgSource
   ? await getImage({
@@ -74,7 +100,10 @@ const ogTransform = localOgSource
 
 const resolvedOgImage = ogTransform?.src ?? ogImage;
 
-// Apple touch icon：同样可以用 getImage() 生成更轻量的 180x180 png
+/**
+ * 处理Apple Touch Icon
+ * 同样可以用getImage()生成更轻量的180x180 png
+ */
 const localAppleTouchSource =
   getLocalImage('/img/apple-touch-icon.png') || getLocalImage('/assets/img/apple-touch-icon.png');
 const appleTouchTransform = localAppleTouchSource
@@ -87,7 +116,7 @@ const appleTouchTransform = localAppleTouchSource
   : null;
 const appleTouchIconHref = appleTouchTransform?.src ?? '/assets/img/apple-touch-icon.png';
 
-// 处理 OG 图片 URL 和 Canonical URL
+// 处理完整的OG图片URL和规范URL
 const fullOgImage = resolvedOgImage.startsWith('http')
   ? resolvedOgImage
   : siteUrl
@@ -95,18 +124,19 @@ const fullOgImage = resolvedOgImage.startsWith('http')
     : resolvedOgImage;
 const fullCanonicalUrl = canonicalUrl || Astro.url.href;
 
-// GA ID 从环境变量获取（PUBLIC_ 前缀表示客户端可用）
+// Google Analytics ID从环境变量获取（PUBLIC_前缀表示客户端可用）
 const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
-<!doctype html>
+<!-- HTML文档根元素 --><!doctype html>
 <html lang={htmlLang} class='scroll-smooth'>
   <head>
+    <!-- 基础元标签 -->
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <meta name='generator' content={Astro.generator} />
 
-    <!-- astro-seo：自动生成 SEO meta 标签 -->
+    <!-- SEO优化：使用astro-seo自动生成SEO meta标签 -->
     <SEO
       title={title}
       description={description}
@@ -121,10 +151,12 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
         },
         optional: {
           description: description,
-          // Open Graph locale 习惯使用下划线格式（en_US / zh_CN）
+          // Open Graph locale习惯使用下划线格式（en_US / zh_CN）
           locale:
             typeof lang === 'string'
-              ? (lang.includes('_') ? lang : lang.replace('-', '_'))
+              ? lang.includes('_')
+                ? lang
+                : lang.replace('-', '_')
               : 'en_US',
           siteName: 'Wenjie Xu',
         },
@@ -149,22 +181,20 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       }}
     />
 
-    <!-- Favicon -->
+    <!-- 网站图标 -->
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
     <link rel='apple-touch-icon' href={appleTouchIconHref} />
 
-    <!-- Web Manifest -->
+    <!-- Web应用清单 -->
     <link rel='manifest' href='/site.webmanifest' />
 
-    <!-- Fonts: use system font stack (avoid render-blocking + third-party font CSS) -->
+    <!-- 字体：使用系统字体栈（避免渲染阻塞和第三方字体CSS） -->
 
-    <!-- Icons use inline SVG; no external icon font CSS required -->
+    <!-- 图标：使用内联SVG，无需外部图标字体CSS -->
 
-    <!-- View Transitions 已移除：减少首屏 JS 与潜在阻塞 -->
+    <!-- View Transitions已移除：减少首屏JS与潜在阻塞 -->
 
-    <!-- 
-      主题初始化脚本
-    -->
+    <!-- 主题初始化脚本 -->
     <script is:inline>
       (function () {
         function getTheme() {
@@ -191,12 +221,12 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
         });
 
         // View Transitions：页面切换后重新应用主题
-        // astro:after-swap 事件在 DOM 交换完成后触发
+        // astro:after-swap事件在DOM交换完成后触发
         document.addEventListener('astro:after-swap', applyTheme);
       })();
     </script>
 
-    <!-- Google Analytics -->
+    <!-- Google Analytics：条件渲染 -->
     {
       gaId && (
         <>
@@ -210,16 +240,16 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     }
   </head>
 
+  <!-- 页面主体 -->
   <body
     class='min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300'
   >
-    <!-- 
-      主内容区域使用 fade 过渡动画
-    -->
+    <!-- 主内容区域：使用fade过渡动画 -->
     <main
       class='container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-16 max-w-8xl'
       transition:animate='fade'
     >
+      <!-- 插槽：插入页面内容 -->
       <slot />
     </main>
   </body>

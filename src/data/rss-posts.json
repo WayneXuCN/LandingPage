@@ -1,258 +1,174 @@
 {
-  "zh_CN": [
-    {
-      "id": "rss-zh_CN-0-0c9b0aba",
-      "title": "低性能云服务器实用配置记录",
-      "description": "配置云服务器记录",
-      "url": "https://blog.wenjiexu.site/zh/posts/low-spec-cloud-server-setup/",
-      "image": "https://picsum.photos/seed/6e12e1b1/600/350.jpg",
-      "pubDate": "2025-05-31T12:12:12.000Z",
-      "categories": [
-        "Tools",
-        "Server",
-        "Configuration"
-      ],
-      "category": "Tools",
-      "tags": [
-        "Server",
-        "Configuration"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-zh_CN-1-b2c205f7",
-      "title": "macOS 系统配置记录",
-      "description": "macOS 系统软件配置和常见错误解决方案的记录",
-      "url": "https://blog.wenjiexu.site/zh/posts/mac-system-setup/",
-      "image": "https://picsum.photos/seed/f28529b4/600/350.jpg",
-      "pubDate": "2025-05-05T23:03:53.000Z",
-      "categories": [
-        "Tools",
-        "macOS",
-        "Configuration"
-      ],
-      "category": "Tools",
-      "tags": [
-        "macOS",
-        "Configuration"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-zh_CN-2-4c9101b8",
-      "title": "「随笔」旧居记忆",
-      "description": "闲言碎语",
-      "url": "https://blog.wenjiexu.site/zh/posts/revisit-old-home/",
-      "image": "https://picsum.photos/seed/47694cd5/600/350.jpg",
-      "pubDate": "2025-01-27T23:40:15.000Z",
-      "categories": [
-        "Life",
-        "Thoughts",
-        "Discussion"
-      ],
-      "category": "Life",
-      "tags": [
-        "Thoughts",
-        "Discussion"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-zh_CN-3-d6761615",
-      "title": "「随笔」2025 年的第一天，说点什么吧",
-      "description": "闲言碎语",
-      "url": "https://blog.wenjiexu.site/zh/posts/first-day-at-25/",
-      "image": "https://picsum.photos/seed/a39fb7e4/600/350.jpg",
-      "pubDate": "2025-01-01T18:00:00.000Z",
-      "categories": [
-        "Life",
-        "Thoughts",
-        "Discussion"
-      ],
-      "category": "Life",
-      "tags": [
-        "Thoughts",
-        "Discussion"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-zh_CN-4-aa55b33d",
-      "title": "2024 年工作总结",
-      "description": "2024年",
-      "url": "https://blog.wenjiexu.site/zh/posts/2024-research-summary/",
-      "image": "https://picsum.photos/seed/6fa62b97/600/350.jpg",
-      "pubDate": "2024-12-15T22:30:35.000Z",
-      "categories": [
-        "Life",
-        "Blogging"
-      ],
-      "category": "Life",
-      "tags": [
-        "Blogging"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-zh_CN-5-b8350d56",
-      "title": "使用 Conda 和 uv 实现灵活高效的 Python 环境管理",
-      "description": "不同需求下的 Python 环境管理方法",
-      "url": "https://blog.wenjiexu.site/zh/posts/python-env-conda-venv/",
-      "image": "https://picsum.photos/seed/96f9bce8/600/350.jpg",
-      "pubDate": "2024-12-05T17:20:03.000Z",
-      "categories": [
-        "Productivity",
-        "Python",
-        "Ubuntu",
-        "Windows"
-      ],
-      "category": "Productivity",
-      "tags": [
-        "Python",
-        "Ubuntu",
-        "Windows"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    }
-  ],
-  "en_US": [
-    {
-      "id": "rss-en_US-0-ae48171c",
-      "title": "Practical Configuration Guide for Low-Spec Cloud Servers",
-      "description": "Record of Cloud Server Configuration",
-      "url": "https://blog.wenjiexu.site/en/posts/low-spec-cloud-server-setup/",
-      "image": "https://picsum.photos/seed/3b78d706/600/350.jpg",
-      "pubDate": "2025-05-31T12:12:12.000Z",
-      "categories": [
-        "Tools",
-        "Server",
-        "Configuration"
-      ],
-      "category": "Tools",
-      "tags": [
-        "Server",
-        "Configuration"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-en_US-1-27dce557",
-      "title": "macOS System Configuration Record",
-      "description": "Record of macOS system software configuration and common error solutions",
-      "url": "https://blog.wenjiexu.site/en/posts/mac-system-setup/",
-      "image": "https://picsum.photos/seed/310267f3/600/350.jpg",
-      "pubDate": "2025-05-05T23:03:53.000Z",
-      "categories": [
-        "Tools",
-        "macOS",
-        "Configuration"
-      ],
-      "category": "Tools",
-      "tags": [
-        "macOS",
-        "Configuration"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-en_US-2-8c9c27e0",
-      "title": "Essay: Memories of the Old Home",
-      "description": "Idle Chatter",
-      "url": "https://blog.wenjiexu.site/en/posts/revisit-old-home/",
-      "image": "https://picsum.photos/seed/d90e778a/600/350.jpg",
-      "pubDate": "2025-01-27T23:40:15.000Z",
-      "categories": [
-        "Life",
-        "Thoughts",
-        "Discussion"
-      ],
-      "category": "Life",
-      "tags": [
-        "Thoughts",
-        "Discussion"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-en_US-3-3e0ac50d",
-      "title": "Essay: The First Day of 2025 at 25, Say Something",
-      "description": "Idle Chatter",
-      "url": "https://blog.wenjiexu.site/en/posts/first-day-at-25/",
-      "image": "https://picsum.photos/seed/b3f713e3/600/350.jpg",
-      "pubDate": "2025-01-01T18:00:00.000Z",
-      "categories": [
-        "Life",
-        "Thoughts",
-        "Discussion"
-      ],
-      "category": "Life",
-      "tags": [
-        "Thoughts",
-        "Discussion"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-en_US-4-9cd16f19",
-      "title": "2024 Work Summary",
-      "description": "2024",
-      "url": "https://blog.wenjiexu.site/en/posts/2024-research-summary/",
-      "image": "https://picsum.photos/seed/71b9782b/600/350.jpg",
-      "pubDate": "2024-12-15T22:30:35.000Z",
-      "categories": [
-        "Life",
-        "Blogging"
-      ],
-      "category": "Life",
-      "tags": [
-        "Blogging"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    },
-    {
-      "id": "rss-en_US-5-0cddbdc6",
-      "title": "Flexible and Efficient Python Environment Management with Conda and uv",
-      "description": "Python environment management methods for different needs",
-      "url": "https://blog.wenjiexu.site/en/posts/python-env-conda-venv/",
-      "image": "https://picsum.photos/seed/0d2afab6/600/350.jpg",
-      "pubDate": "2024-12-05T17:20:03.000Z",
-      "categories": [
-        "Productivity",
-        "Python",
-        "Ubuntu",
-        "Windows"
-      ],
-      "category": "Productivity",
-      "tags": [
-        "Python",
-        "Ubuntu",
-        "Windows"
-      ],
-      "overlayColor": "bg-black",
-      "overlayOpacity": "bg-opacity-70",
-      "isRSS": true
-    }
-  ]
+    "zh_CN": [
+        {
+            "id": "rss-zh_CN-0-0c9b0aba",
+            "title": "低性能云服务器实用配置记录",
+            "description": "配置云服务器记录",
+            "url": "https://blog.wenjiexu.site/zh/posts/low-spec-cloud-server-setup/",
+            "image": "https://picsum.photos/seed/6e12e1b1/600/350.jpg",
+            "pubDate": "2025-05-31T12:12:12.000Z",
+            "categories": ["Tools", "Server", "Configuration"],
+            "category": "Tools",
+            "tags": ["Server", "Configuration"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-zh_CN-1-b2c205f7",
+            "title": "macOS 系统配置记录",
+            "description": "macOS 系统软件配置和常见错误解决方案的记录",
+            "url": "https://blog.wenjiexu.site/zh/posts/mac-system-setup/",
+            "image": "https://picsum.photos/seed/f28529b4/600/350.jpg",
+            "pubDate": "2025-05-05T23:03:53.000Z",
+            "categories": ["Tools", "macOS", "Configuration"],
+            "category": "Tools",
+            "tags": ["macOS", "Configuration"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-zh_CN-2-4c9101b8",
+            "title": "「随笔」旧居记忆",
+            "description": "闲言碎语",
+            "url": "https://blog.wenjiexu.site/zh/posts/revisit-old-home/",
+            "image": "https://picsum.photos/seed/47694cd5/600/350.jpg",
+            "pubDate": "2025-01-27T23:40:15.000Z",
+            "categories": ["Life", "Thoughts", "Discussion"],
+            "category": "Life",
+            "tags": ["Thoughts", "Discussion"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-zh_CN-3-d6761615",
+            "title": "「随笔」2025 年的第一天，说点什么吧",
+            "description": "闲言碎语",
+            "url": "https://blog.wenjiexu.site/zh/posts/first-day-at-25/",
+            "image": "https://picsum.photos/seed/a39fb7e4/600/350.jpg",
+            "pubDate": "2025-01-01T18:00:00.000Z",
+            "categories": ["Life", "Thoughts", "Discussion"],
+            "category": "Life",
+            "tags": ["Thoughts", "Discussion"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-zh_CN-4-aa55b33d",
+            "title": "2024 年工作总结",
+            "description": "2024年",
+            "url": "https://blog.wenjiexu.site/zh/posts/2024-research-summary/",
+            "image": "https://picsum.photos/seed/6fa62b97/600/350.jpg",
+            "pubDate": "2024-12-15T22:30:35.000Z",
+            "categories": ["Life", "Blogging"],
+            "category": "Life",
+            "tags": ["Blogging"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-zh_CN-5-b8350d56",
+            "title": "使用 Conda 和 uv 实现灵活高效的 Python 环境管理",
+            "description": "不同需求下的 Python 环境管理方法",
+            "url": "https://blog.wenjiexu.site/zh/posts/python-env-conda-venv/",
+            "image": "https://picsum.photos/seed/96f9bce8/600/350.jpg",
+            "pubDate": "2024-12-05T17:20:03.000Z",
+            "categories": ["Productivity", "Python", "Ubuntu", "Windows"],
+            "category": "Productivity",
+            "tags": ["Python", "Ubuntu", "Windows"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        }
+    ],
+    "en_US": [
+        {
+            "id": "rss-en_US-0-ae48171c",
+            "title": "Practical Configuration Guide for Low-Spec Cloud Servers",
+            "description": "Record of Cloud Server Configuration",
+            "url": "https://blog.wenjiexu.site/en/posts/low-spec-cloud-server-setup/",
+            "image": "https://picsum.photos/seed/3b78d706/600/350.jpg",
+            "pubDate": "2025-05-31T12:12:12.000Z",
+            "categories": ["Tools", "Server", "Configuration"],
+            "category": "Tools",
+            "tags": ["Server", "Configuration"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en_US-1-27dce557",
+            "title": "macOS System Configuration Record",
+            "description": "Record of macOS system software configuration and common error solutions",
+            "url": "https://blog.wenjiexu.site/en/posts/mac-system-setup/",
+            "image": "https://picsum.photos/seed/310267f3/600/350.jpg",
+            "pubDate": "2025-05-05T23:03:53.000Z",
+            "categories": ["Tools", "macOS", "Configuration"],
+            "category": "Tools",
+            "tags": ["macOS", "Configuration"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en_US-2-8c9c27e0",
+            "title": "Essay: Memories of the Old Home",
+            "description": "Idle Chatter",
+            "url": "https://blog.wenjiexu.site/en/posts/revisit-old-home/",
+            "image": "https://picsum.photos/seed/d90e778a/600/350.jpg",
+            "pubDate": "2025-01-27T23:40:15.000Z",
+            "categories": ["Life", "Thoughts", "Discussion"],
+            "category": "Life",
+            "tags": ["Thoughts", "Discussion"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en_US-3-3e0ac50d",
+            "title": "Essay: The First Day of 2025 at 25, Say Something",
+            "description": "Idle Chatter",
+            "url": "https://blog.wenjiexu.site/en/posts/first-day-at-25/",
+            "image": "https://picsum.photos/seed/b3f713e3/600/350.jpg",
+            "pubDate": "2025-01-01T18:00:00.000Z",
+            "categories": ["Life", "Thoughts", "Discussion"],
+            "category": "Life",
+            "tags": ["Thoughts", "Discussion"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en_US-4-9cd16f19",
+            "title": "2024 Work Summary",
+            "description": "2024",
+            "url": "https://blog.wenjiexu.site/en/posts/2024-research-summary/",
+            "image": "https://picsum.photos/seed/71b9782b/600/350.jpg",
+            "pubDate": "2024-12-15T22:30:35.000Z",
+            "categories": ["Life", "Blogging"],
+            "category": "Life",
+            "tags": ["Blogging"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        },
+        {
+            "id": "rss-en_US-5-0cddbdc6",
+            "title": "Flexible and Efficient Python Environment Management with Conda and uv",
+            "description": "Python environment management methods for different needs",
+            "url": "https://blog.wenjiexu.site/en/posts/python-env-conda-venv/",
+            "image": "https://picsum.photos/seed/0d2afab6/600/350.jpg",
+            "pubDate": "2024-12-05T17:20:03.000Z",
+            "categories": ["Productivity", "Python", "Ubuntu", "Windows"],
+            "category": "Productivity",
+            "tags": ["Python", "Ubuntu", "Windows"],
+            "overlayColor": "bg-black",
+            "overlayOpacity": "bg-opacity-70",
+            "isRSS": true
+        }
+    ]
 }

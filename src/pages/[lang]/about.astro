@@ -1,6 +1,12 @@
 ---
 /**
  * /[lang]/about.astro
+ * 关于页面
+ *
+ * 多语言关于页面，展示个人信息、经历时间线、价值观和理念。
+ * 支持多语言内容展示和响应式布局。
+ *
+ * @page
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/ui/Hero.astro';
@@ -9,14 +15,17 @@ import HeaderBar from '@components/ui/HeaderBar.astro';
 import { getI18n, locales, type Locale } from '@lib/i18n';
 import { resolveContentHref } from '@lib/utils';
 
-// 生成静态路径
+/**
+ * 生成静态路径
+ * 为每个支持的语言生成静态路径
+ */
 export function getStaticPaths() {
   return locales.map(lang => ({
     params: { lang },
   }));
 }
 
-// 获取当前语言
+// 获取当前语言参数
 const { lang } = Astro.params as { lang: Locale };
 
 // 从内容集合获取翻译数据
@@ -110,8 +119,8 @@ const currentPath = Astro.url.pathname;
             stroke-linejoin='round'
             aria-hidden='true'
           >
-            <path d='M5 12h14' />
-            <path d='M13 5l7 7-7 7' />
+            <path d='M5 12h14'></path>
+            <path d='M13 5l7 7-7 7'></path>
           </svg>
         </a>
       </div>
@@ -141,13 +150,12 @@ const currentPath = Astro.url.pathname;
           stroke-linejoin='round'
           aria-hidden='true'
         >
-          <path d='M5 12h14' />
-          <path d='M13 5l7 7-7 7' />
+          <path d='M5 12h14'></path>
+          <path d='M13 5l7 7-7 7'></path>
         </svg>
       </a>
     </div>
   </section>
 
   <Footer footer={footer} />
-
 </BaseLayout>

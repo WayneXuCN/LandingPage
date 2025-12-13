@@ -2,55 +2,91 @@
 /**
  * FeaturedPostItem.astro
  * 精选文章卡片组件
+ *
+ * 用于展示精选文章的卡片组件，支持图片、标题、描述、分类标签和发布日期。
+ * 支持内部链接和外部链接，并提供悬停效果和响应式布局。
+ *
+ * @component
  */
 import { Image } from 'astro:assets';
 import { resolveContentHref, formatDate } from '@lib/utils';
 import type { Locale } from '@lib/i18n';
 
-// 定义特定卡片的样式映射
+/**
+ * 特定文章卡片的样式映射
+ * 为特定ID的文章提供自定义覆盖层样式
+ */
 const POST_STYLES: Record<string, string> = {
   'about-MyWork': 'bg-yellow-500 bg-opacity-80',
   'markdown-syntax': 'bg-blue-900 bg-opacity-80',
 };
 
+/**
+ * 文章数据接口
+ * 定义文章卡片所需的数据结构
+ */
 interface PostItem {
+  /** 文章唯一标识符，用于获取特定样式 */
   id?: string;
+  /** 文章标题 */
   title: string;
+  /** 文章封面图片路径 */
   image: string;
+  /** 文章链接地址 */
   url: string;
+  /** 文章描述文本 */
   description?: string;
+  /** 文章分类标签数组 */
   categories?: string[];
+  /** 单个分类标签（向后兼容） */
   category?: string;
+  /** 文章发布日期 */
   pubDate?: string;
+  /** 文章更新日期 */
   updated?: string;
+  /** 文章发布日期（备用字段） */
   published?: string;
+  /** 是否为RSS文章 */
   isRSS?: boolean;
 }
 
+/**
+ * 组件属性接口
+ */
 interface Props {
+  /** 文章数据对象 */
   item: PostItem;
+  /** 当前语言环境，默认为中文 */
   language?: Locale;
 }
 
+// 解构组件属性，设置默认语言为中文
 const { item, language = 'zh_CN' } = Astro.props;
 
+// 处理分类数据：优先使用categories数组，否则使用单个category
 const categories = item.categories || (item.category ? [item.category] : []);
+// 获取发布日期：优先使用pubDate，其次updated，最后published
 const pubDate = item.pubDate || item.updated || item.published || null;
+// 设置RSS文章标识
 const isRSS = item.isRSS || false;
 
-// 获取特定样式
+// 根据文章ID获取自定义覆盖层样式
 const customOverlayClass = item.id ? POST_STYLES[item.id] : null;
+// 判断是否使用默认黑色覆盖层
 const isBlackOverlay = !customOverlayClass;
 
-// 格式化日期
+// 根据语言环境格式化日期显示
 const formattedDate = pubDate ? formatDate(pubDate, language) : null;
 
-// 解析链接
+// 解析文章链接：外部链接直接使用，内部链接通过工具函数处理
 const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, language);
+// 判断是否为外部链接
 const isExternal = typeof href === 'string' && href.startsWith('http');
+// 验证链接有效性
 const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '#';
 ---
 
+<!-- 文章卡片容器：包含图片、标题、描述和元数据 -->
 <a
   href={isValidHref ? href : undefined}
   target={isExternal ? '_blank' : undefined}
@@ -58,6 +94,7 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
   aria-label={`阅读文章: ${item.title}`}
   class='relative block overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:focus:ring-white group'
 >
+  <!-- 文章封面图片区域 -->
   <div class='relative w-full h-64'>
     <Image
       src={item.image}
@@ -74,6 +111,7 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
     />
   </div>
 
+  <!-- 内容覆盖层：包含标题、描述和元数据 -->
   <div
     class:list={[
       'absolute inset-0 card-overlay transition-all duration-300 flex flex-col justify-between p-6',
@@ -82,20 +120,25 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
         : customOverlayClass,
     ]}
   >
+    <!-- 标题区域 -->
     <div>
       <h3 class='text-white text-xl font-bold mb-2 line-clamp-2 drop-shadow-md'>
         {item.title}
       </h3>
     </div>
 
+    <!-- 底部信息区域：描述、分类和日期 -->
     <div class='mt-auto'>
+      <!-- 文章描述：悬停时显示 -->
       <p
         class='text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 website-description-text transform translate-y-2 line-clamp-3 mb-4'
       >
         {item.description}
       </p>
 
+      <!-- 分类标签和日期信息 -->
       <div class='flex items-end justify-between gap-2'>
+        <!-- 分类标签列表 -->
         <div class='flex flex-wrap gap-1.5'>
           {
             categories.map((cat, index) => (
@@ -111,6 +154,7 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
           }
         </div>
 
+        <!-- 元数据：RSS标识和发布日期 -->
         <div class='flex flex-col items-end shrink-0'>
           {isRSS && <span class='text-[10px] text-white/60 mb-0.5'>RSS</span>}
           {formattedDate && <p class='text-white text-xs opacity-80'>{formattedDate}</p>}
