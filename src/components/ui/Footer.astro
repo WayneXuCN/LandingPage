@@ -3,6 +3,8 @@
  * Footer.astro
  * 页脚组件，包含版权信息、备案信息、社交链接
  */
+import { Icon } from 'astro-icon/components';
+
 interface SocialLink {
   url: string;
   title?: string;
@@ -48,6 +50,24 @@ const getIconKind = (iconClass?: string, title?: string) => {
   if (v.includes('envelope') || v.includes('mail')) return 'mail';
   if (v.includes('globe') || v.includes('web') || v.includes('site')) return 'globe';
   return 'link';
+};
+
+const getIconName = (kind: string) => {
+  switch (kind) {
+    case 'github':
+      return 'mdi:github';
+    case 'google':
+      // 用更贴近“Scholar/学术”的通用图标，避免品牌 Logo 引起的风格不一致
+      return 'mdi:school-outline';
+    case 'research':
+      return 'mdi:flask-outline';
+    case 'mail':
+      return 'mdi:email-outline';
+    case 'globe':
+      return 'mdi:web';
+    default:
+      return 'mdi:link-variant';
+  }
 };
 
 // 动态生成版权信息
@@ -124,7 +144,7 @@ const { icp, mps } = footer;
           socialLinks.map(link => (
             <a
               href={link.url}
-              class='text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors social-icon text-xl'
+              class='text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors social-icon'
               title={link.title || ''}
               aria-label={link.title || 'Social link'}
               target={link.url?.startsWith('http') ? '_blank' : undefined}
@@ -142,111 +162,13 @@ const { icp, mps } = footer;
                 (() => {
                   const kind = getIconKind(link.icon, link.title);
 
-                  if (kind === 'github') {
-                    return (
-                      <svg
-                        viewBox='0 0 24 24'
-                        class='w-5 h-5'
-                        fill='currentColor'
-                        aria-hidden='true'
-                      >
-                        <path d='M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.24 1.83 1.24 1.07 1.84 2.8 1.31 3.48 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016.01 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.82.58A12 12 0 0012 .5z' />
-                      </svg>
-                    );
-                  }
-
-                  if (kind === 'google') {
-                    return (
-                      <svg
-                        viewBox='0 0 24 24'
-                        class='w-5 h-5'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        aria-hidden='true'
-                      >
-                        <path d='M20.9 12.2c0-.6-.1-1.2-.2-1.7H12v3.2h5c-.2 1.1-.9 2.1-2 2.7v2.2h3.2c1.9-1.7 2.7-4.1 2.7-6.4z' />
-                        <path d='M12 22c2.7 0 5-0.9 6.7-2.4l-3.2-2.2c-.9.6-2 .9-3.5.9-2.7 0-5-1.8-5.8-4.2H3v2.3C4.7 19.6 8.1 22 12 22z' />
-                        <path d='M6.2 12c0-.7.1-1.4.4-2.1V7.6H3C2.3 9 2 10.5 2 12s.3 3 .9 4.4l3.6-2.3c-.2-.7-.3-1.4-.3-2.1z' />
-                        <path d='M12 5.7c1.5 0 2.9.5 3.9 1.5l2.9-2.9C17 2.6 14.7 1.5 12 1.5 8.1 1.5 4.7 3.9 3 7.6l3.6 2.3c.8-2.4 3.1-4.2 5.4-4.2z' />
-                      </svg>
-                    );
-                  }
-
-                  if (kind === 'mail') {
-                    return (
-                      <svg
-                        viewBox='0 0 24 24'
-                        class='w-5 h-5'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        aria-hidden='true'
-                      >
-                        <path d='M4 4h16v16H4z' />
-                        <path d='M22 6l-10 7L2 6' />
-                      </svg>
-                    );
-                  }
-
-                  if (kind === 'globe') {
-                    return (
-                      <svg
-                        viewBox='0 0 24 24'
-                        class='w-5 h-5'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        aria-hidden='true'
-                      >
-                        <circle cx='12' cy='12' r='10' />
-                        <path d='M2 12h20' />
-                        <path d='M12 2a15 15 0 010 20' />
-                        <path d='M12 2a15 15 0 000 20' />
-                      </svg>
-                    );
-                  }
-
-                  if (kind === 'research') {
-                    return (
-                      <svg
-                        viewBox='0 0 24 24'
-                        class='w-5 h-5'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        aria-hidden='true'
-                      >
-                        <path d='M4 19V5' />
-                        <path d='M4 5h10l2 2h4v12H4' />
-                        <path d='M8 13h8' />
-                        <path d='M8 9h6' />
-                      </svg>
-                    );
-                  }
-
                   return (
-                    <svg
-                      viewBox='0 0 24 24'
+                    <Icon
+                      name={getIconName(kind)}
                       class='w-5 h-5'
-                      fill='none'
-                      stroke='currentColor'
-                      stroke-width='2'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
                       aria-hidden='true'
-                    >
-                      <path d='M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 000-7.07 5 5 0 00-7.07 0L10 5.86' />
-                      <path d='M14 11a5 5 0 00-7.07 0L5.52 12.4a5 5 0 000 7.07 5 5 0 007.07 0L14 18.14' />
-                    </svg>
+                      focusable='false'
+                    />
                   );
                 })()
               )}

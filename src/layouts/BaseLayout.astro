@@ -13,6 +13,7 @@ import { SEO } from 'astro-seo';
 import { getImage } from 'astro:assets';
 import { getLocalImage } from '@lib/localImages';
 import { getHrefLang, type Locale } from '@lib/i18n';
+import UnderlineEffects from '@components/react/UnderlineEffects.jsx';
 
 /**
  * 组件属性接口
@@ -252,5 +253,8 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       <!-- 插槽：插入页面内容 -->
       <slot />
     </main>
+
+    <!-- 交互增强：为 .underline 元素提供悬停随机变色（不渲染 DOM） -->
+    <UnderlineEffects client:idle />
   </body>
 </html>

@@ -60,6 +60,12 @@
    * 特殊效果变量
    */
   --underline-base-color: #e5e7eb; /* 下划线基础颜色 */
+
+  /**
+   * 下划线悬停颜色（UnderlineEffects.jsx 会在 hover 时动态写入）
+   * 这里提供一个安全回退，避免未挂载脚本时 hover 无反馈。
+   */
+  --underline-hover-color: var(--accent-color);
 }
 
 /**
@@ -170,12 +176,19 @@ body {
 }
 
 /**
- * @section 悬停时的彩虹渐变下划线效果
+ * @section 悬停时的随机强调色下划线效果
+ * @description
+ * - 颜色来源：UnderlineEffects.jsx 在 mouseenter 时写入 --underline-hover-color
+ * - 回退：若脚本未运行，使用 --underline-hover-color 的默认值（--accent-color）
  */
 :is(p span.underline, .rich-text span.underline, .underline):hover::after {
-  background-image: linear-gradient(90deg, #10b981, #3b82f6, #f97316, #8b5cf6, #ec4899, #10b981) !important;
-  background-size: 300% 100% !important;
-  animation: underlineGradientShift 1.2s ease-in-out infinite !important;
+  background-image: linear-gradient(
+    90deg,
+    var(--underline-hover-color, var(--accent-color)),
+    var(--underline-hover-color, var(--accent-color))
+  ) !important;
+  background-size: 100% 100% !important;
+  animation: none !important;
 }
 
 /**
@@ -317,5 +330,14 @@ body {
   justify-content: center;
   width: 1.25rem;
   height: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
   transition: all 0.2s ease; /* 所有属性过渡效果 */
+}
+
+.social-icon > svg,
+.social-icon > img {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
