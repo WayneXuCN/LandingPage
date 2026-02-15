@@ -6,15 +6,12 @@
 import { useState, useEffect, useCallback } from 'react';
 
 const ThemeToggle = () => {
-  // 初始状态从 DOM 读取
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-    }
-    return 'light';
-  });
+  // 初始状态设为 null，避免 SSR hydration mismatch
+  // BaseLayout.astro 中的内联脚本会在 HTML 解析时设置正确的主题类
+  // 但服务端渲染时无法知道客户端的主题状态
+  const [theme, setTheme] = useState(null);
 
-  // 同步主题状态（处理 SSR hydration）
+  // 客户端挂载后同步主题状态
   useEffect(() => {
     const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     setTheme(currentTheme);
@@ -45,7 +42,10 @@ const ThemeToggle = () => {
       aria-label={themeLabel}
       title={themeLabel}
     >
-      {theme === 'light' ? (
+      {/* 在客户端挂载前渲染占位符，避免 hydration mismatch */}
+      {theme === null ? (
+        <div className='h-5 w-5' />
+      ) : theme === 'light' ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className='h-5 w-5 text-gray-600 dark:text-gray-300'

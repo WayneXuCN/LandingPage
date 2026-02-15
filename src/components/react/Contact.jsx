@@ -255,16 +255,12 @@ const Contact = ({ content }) => {
       selection?.addRange(range);
       textarea.setSelectionRange(0, text.length);
 
-      // 尝试使用 Clipboard API 作为最后的 fallback
+      // 使用旧式 copy 命令作为最后的 fallback
       let successful = false;
       try {
-        successful = await navigator.clipboard
-          .writeText(text)
-          .then(() => true)
-          .catch(() => false);
-      } catch {
-        // 如果都不支持，则静默失败
-        console.warn('Clipboard API not supported in this browser');
+        successful = document.execCommand('copy');
+      } catch (copyError) {
+        console.warn('Clipboard copy failed:', copyError);
       }
 
       document.body.removeChild(textarea);

@@ -46,13 +46,14 @@ const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
   /**
    * 处理语言切换
    * @description 点击按钮时切换到下一个语言，保持当前页面路径
-   * @returns {Promise<void>}
    */
-  const handleSwitch = useCallback(async () => {
+  const handleSwitch = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
     // 获取当前路径并替换语言前缀
     const currentPath = window.location.pathname;
-    const pathWithoutLang = currentPath.replace(/^\/(en_US|zh_CN)\//, '/');
-    const newPath = `/${nextLang}${pathWithoutLang}`;
+    const pathWithoutLang = currentPath.replace(/^\/(en_US|zh_CN)(?=\/|$)/, '');
+    const newPath = `/${nextLang}${pathWithoutLang || '/'}`;
 
     // 普通导航（更轻量，避免为 View Transitions 引入额外 JS）
     window.location.href = newPath;
