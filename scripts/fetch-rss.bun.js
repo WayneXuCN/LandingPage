@@ -51,6 +51,16 @@
  * @copyright 2023 LandingPage Team
  */
 
+// 检测是否在 Bun 环境下运行
+if (typeof Bun === 'undefined') {
+  console.error('❌ 此脚本需要使用 Bun 运行时环境。');
+  console.error('请使用以下命令运行：');
+  console.error('  bun run scripts/fetch-rss.bun.js');
+  console.error('');
+  console.error('如果没有安装 Bun，请参考 https://bun.sh 安装。');
+  process.exit(1);
+}
+
 import { file, write } from 'bun';
 import { resolve, join } from 'path';
 
@@ -472,6 +482,9 @@ async function main() {
       const category = item.category || (item.categories?.[0] ?? null);
       const tags = item.tags || (item.categories ? item.categories.slice(1) : []);
       const categories = [category, ...tags].filter(Boolean);
+      const parsedDate = item.pubDate ? new Date(item.pubDate) : null;
+      const pubDate =
+        parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate.toISOString() : null;
 
       return {
         id: `rss-${lang}-${index}-${getHash(item.url)}`,
@@ -479,7 +492,7 @@ async function main() {
         description,
         url: item.url,
         image: `https://picsum.photos/seed/${seed}/600/350.jpg`,
-        pubDate: item.pubDate ? new Date(item.pubDate).toISOString() : null,
+        pubDate,
         categories,
         category,
         tags,
