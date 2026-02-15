@@ -70,18 +70,10 @@ export default defineConfig({
       i18n: {
         /** 默认语言环境 */
         defaultLocale: 'zh_CN',
-        /** 支持的语言环境映射 */
+        /** 启用的语言环境映射 */
         locales: {
           zh_CN: 'zh-CN',
           en_US: 'en-US',
-          ja_JP: 'ja-JP',
-          ko_KR: 'ko-KR',
-          es_ES: 'es-ES',
-          fr_FR: 'fr-FR',
-          de_DE: 'de-DE',
-          ru_RU: 'ru-RU',
-          pt_BR: 'pt-BR',
-          ar_SA: 'ar-SA',
         },
       },
       /** 内容更新频率：'always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never' */
