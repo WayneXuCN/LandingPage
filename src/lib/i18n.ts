@@ -11,6 +11,7 @@
 
 import { getCollection } from 'astro:content';
 import type { I18nSchema } from '../content.config';
+import type { CollectionEntry } from 'astro:content';
 
 /**
  * 支持的语言列表
@@ -78,7 +79,7 @@ export async function getI18n(locale: Locale): Promise<I18nSchema> {
 
   // 获取 i18n 内容集合
   const collection = await getCollection('i18n');
-  const entry = collection.find((e: { id: string }) => e.id === contentId);
+  const entry = collection.find((e: CollectionEntry<'i18n'>) => e.id === contentId);
 
   if (!entry) {
     // 如果指定语言的 i18n 数据不存在，则使用默认语言作为回退
@@ -109,7 +110,7 @@ export async function getAllI18n(): Promise<Record<string, I18nSchema>> {
   // 获取 i18n 内容集合
   const collection = await getCollection('i18n');
   return Object.fromEntries(
-    collection.map((entry: { id: string; data: unknown }) => [entry.id, entry.data])
+    collection.map((entry: CollectionEntry<'i18n'>) => [entry.id, entry.data])
   ) as Record<string, I18nSchema>;
 }
 
