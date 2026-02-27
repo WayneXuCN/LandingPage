@@ -1,10 +1,12 @@
 # Contributing to Starter Theme
 
-Thank you for considering contributing to Starter Theme! This document outlines the guidelines for contributing to this project.
+Thank you for considering contributing to Starter Theme! This document outlines
+the guidelines for contributing to this project.
 
 ## Code of Conduct
 
-By participating in this project, you agree to abide by our Code of Conduct. Please be respectful and constructive in all interactions.
+By participating in this project, you agree to abide by our Code of Conduct.
+Please be respectful and constructive in all interactions.
 
 ## How to Contribute
 

@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/WayneXuCN/LandingPage/blob/main/LICENSE">
+  <a href="https://github.com/Vncntvx/LandingPage/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   </a>
   <a href="https://astro.build/">
@@ -43,32 +43,33 @@
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| **🌐 Internationalization** | Built-in i18n with Astro's native routing and Content Collections with TypeScript validation |
-| **🌙 Dark Mode** | Automatic theme switching with system preference detection and localStorage persistence |
-| **📱 Responsive Design** | Mobile-first design optimized for all devices |
-| **📰 RSS Aggregation** | Advanced RSS/Atom feed system with multiple parsers, automatic image generation, and pre-build fetching |
-| **📧 Contact Form** | Pre-configured EmailJS integration with form validation |
-| **📊 Analytics** | Optional Google Analytics 4 integration |
-| **🏝️ Islands Architecture** | React components loaded on demand, minimizing JS bundle size |
-| **🔍 SEO Optimized** | Auto-generated sitemap.xml and robots.txt with i18n support |
-| **⚡ Fast Performance** | Static site generation with optimized assets and image processing |
-| **🖼️ Image Optimization** | Astro's Image API integration with responsive image generation |
-| **📝 Content Validation** | Zod schema validation for all content with TypeScript type safety |
-| **🔄 Automated RSS Fetching** | Pre-build RSS fetching with retry logic and error handling |
+| Feature                       | Description                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **🌐 Internationalization**   | Built-in i18n with Astro's native routing and Content Collections with TypeScript validation            |
+| **🌙 Dark Mode**              | Automatic theme switching with system preference detection and localStorage persistence                 |
+| **📱 Responsive Design**      | Mobile-first design optimized for all devices                                                           |
+| **📰 RSS Aggregation**        | Advanced RSS/Atom feed system with multiple parsers, automatic image generation, and pre-build fetching |
+| **📧 Contact Form**           | Pre-configured EmailJS integration with form validation                                                 |
+| **📊 Analytics**              | Optional Google Analytics 4 integration                                                                 |
+| **🏝️ Islands Architecture**   | React components loaded on demand, minimizing JS bundle size                                            |
+| **🔍 SEO Optimized**          | Auto-generated sitemap.xml and robots.txt with i18n support                                             |
+| **⚡ Fast Performance**       | Static site generation with optimized assets and image processing                                       |
+| **🖼️ Image Optimization**     | Astro's Image API integration with responsive image generation                                          |
+| **📝 Content Validation**     | Zod schema validation for all content with TypeScript type safety                                       |
+| **🔄 Automated RSS Fetching** | Pre-build RSS fetching with retry logic and error handling                                              |
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) 1.0+ (recommended) or [Node.js](https://nodejs.org/) 18+
+- [Bun](https://bun.sh/) 1.0+ (recommended) or [Node.js](https://nodejs.org/)
+  18+
 
 ### Create Your Site
 
 ```bash
 # Clone the repository
-git clone https://github.com/WayneXuCN/LandingPage.git my-site
+git clone https://github.com/Vncntvx/LandingPage.git my-site
 cd my-site
 
 # Install dependencies
@@ -174,10 +175,10 @@ Main configuration is in `astro.config.mjs`:
 export default defineConfig({
   // Site URL for production
   site: 'https://your-domain.com',
-  
+
   // Static site generation
   output: 'static',
-  
+
   // Internationalization
   i18n: {
     defaultLocale: 'zh_CN',
@@ -187,14 +188,15 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
-  
+
   // Integrations
   integrations: [
-    react(),      // React support
-    mdx(),        // MDX support
-    tailwind(),   // Tailwind CSS
-    icon(),       // Iconify icons
-    sitemap({     // Auto-generate sitemap.xml with i18n support
+    react(), // React support
+    mdx(), // MDX support
+    tailwind(), // Tailwind CSS
+    icon(), // Iconify icons
+    sitemap({
+      // Auto-generate sitemap.xml with i18n support
       i18n: {
         defaultLocale: 'zh_CN',
         locales: {
@@ -203,9 +205,9 @@ export default defineConfig({
         },
       },
     }),
-    robotsTxt(),  // Auto-generate robots.txt
+    robotsTxt(), // Auto-generate robots.txt
   ],
-  
+
   // Image optimization
   image: {
     domains: ['images.unsplash.com', 'unsplash.com', 'picsum.photos'],
@@ -227,12 +229,13 @@ export default defineConfig({
 
 All site content is managed through JSON files in `i18n/`:
 
-| File | Description |
-|------|-------------|
+| File         | Description     |
+| ------------ | --------------- |
 | `zh_CN.json` | Chinese content |
 | `en_US.json` | English content |
 
-Content structure follows a strict schema defined in `src/content.config.ts` with Zod validation:
+Content structure follows a strict schema defined in `src/content.config.ts`
+with Zod validation:
 
 ```json
 {
@@ -424,7 +427,10 @@ Configure RSS aggregation in your locale JSON:
       "enabled": true,
       "feeds": [
         { "url": "https://blog.example.com/feed.xml", "parser": "default" },
-        { "url": "https://astro-paper.vercel.app/rss.xml", "parser": "astroPaper" }
+        {
+          "url": "https://astro-paper.vercel.app/rss.xml",
+          "parser": "astroPaper"
+        }
       ],
       "limit": 6
     }
@@ -434,11 +440,11 @@ Configure RSS aggregation in your locale JSON:
 
 #### Supported RSS Parsers
 
-| Parser | Description | Use Case |
-|--------|-------------|----------|
-| `default` | Standard RSS/Atom parser | Most RSS feeds |
+| Parser       | Description              | Use Case                      |
+| ------------ | ------------------------ | ----------------------------- |
+| `default`    | Standard RSS/Atom parser | Most RSS feeds                |
 | `astroPaper` | Astro Paper theme parser | Blogs using Astro Paper theme |
-| `jekyllFeed` | Jekyll feed parser | Jekyll-based blogs |
+| `jekyllFeed` | Jekyll feed parser       | Jekyll-based blogs            |
 
 #### RSS Features
 
@@ -465,7 +471,7 @@ bun run fetch:rss
      defaultLocale: 'zh_CN',
      locales: ['zh_CN', 'en_US', 'NEW_LOCALE'],
    },
-   
+
    // Update sitemap i18n config
    sitemap({
      i18n: {
@@ -483,7 +489,10 @@ bun run fetch:rss
 
    ```ts
    export const locales = ['zh_CN', 'en_US', 'NEW_LOCALE'] as const;
-   export const localeConfig: Record<Locale, { label: string; name: string; hrefLang: string }> = {
+   export const localeConfig: Record<
+     Locale,
+     { label: string; name: string; hrefLang: string }
+   > = {
      NEW_LOCALE: {
        label: 'XX',
        name: 'Language Name',
@@ -492,11 +501,11 @@ bun run fetch:rss
    };
    ```
 
-3. **Create translation file** (`i18n/NEW_LOCALE.json`):
-   Copy `en_US.json` and translate all content.
+3. **Create translation file** (`i18n/NEW_LOCALE.json`): Copy `en_US.json` and
+   translate all content.
 
-4. **Create page routes** (`src/pages/[lang]/`):
-   Copy existing language pages and update content references.
+4. **Create page routes** (`src/pages/[lang]/`): Copy existing language pages
+   and update content references.
 
 ### Styling
 
@@ -507,15 +516,15 @@ bun run fetch:rss
 
 ### Components
 
-| Component | Purpose | Client Directive |
-|-----------|---------|------------------|
-| `HeaderBar.jsx` | Navigation with language switcher | `client:load` |
-| `Contact.jsx` | Contact form with EmailJS | `client:load` |
-| `ErrorBoundary.jsx` | React error boundary | - |
-| `LanguageSwitcher.jsx` | Language selector | `client:load` |
-| `PrimaryNav.jsx` | Primary navigation | `client:load` |
-| `ThemeToggle.jsx` | Dark/light mode toggle | `client:load` |
-| `UnderlineEffects.jsx` | Underline hover effects | `client:idle` |
+| Component              | Purpose                           | Client Directive |
+| ---------------------- | --------------------------------- | ---------------- |
+| `HeaderBar.jsx`        | Navigation with language switcher | `client:load`    |
+| `Contact.jsx`          | Contact form with EmailJS         | `client:load`    |
+| `ErrorBoundary.jsx`    | React error boundary              | -                |
+| `LanguageSwitcher.jsx` | Language selector                 | `client:load`    |
+| `PrimaryNav.jsx`       | Primary navigation                | `client:load`    |
+| `ThemeToggle.jsx`      | Dark/light mode toggle            | `client:load`    |
+| `UnderlineEffects.jsx` | Underline hover effects           | `client:idle`    |
 
 ## 🚀 Deployment
 
@@ -535,21 +544,21 @@ PUBLIC_GA_ID=G-XXXXXXXXXX
 
 ## 📦 Scripts
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start development server (Bun runtime) |
-| `bun run dev:node` | Start development server (Node.js runtime) |
-| `bun run build` | Build for production (Bun runtime) |
-| `bun run build:node` | Build for production (Node.js runtime) |
-| `bun run preview` | Preview production build |
-| `bun run fetch:rss` | Fetch RSS feeds manually |
-| `bun run prebuild` | Pre-build RSS fetching (runs automatically before build) |
-| `bun run format` | Format code with Prettier |
-| `bun run format:check` | Check code formatting |
-| `bun run type-check` | TypeScript type checking |
-| `bun run lint` | Astro code linting |
-| `bun run clean` | Clean build artifacts |
-| `bun run reinstall` | Clean and reinstall dependencies |
+| Command                | Description                                              |
+| ---------------------- | -------------------------------------------------------- |
+| `bun run dev`          | Start development server (Bun runtime)                   |
+| `bun run dev:node`     | Start development server (Node.js runtime)               |
+| `bun run build`        | Build for production (Bun runtime)                       |
+| `bun run build:node`   | Build for production (Node.js runtime)                   |
+| `bun run preview`      | Preview production build                                 |
+| `bun run fetch:rss`    | Fetch RSS feeds manually                                 |
+| `bun run prebuild`     | Pre-build RSS fetching (runs automatically before build) |
+| `bun run format`       | Format code with Prettier                                |
+| `bun run format:check` | Check code formatting                                    |
+| `bun run type-check`   | TypeScript type checking                                 |
+| `bun run lint`         | Astro code linting                                       |
+| `bun run clean`        | Clean build artifacts                                    |
+| `bun run reinstall`    | Clean and reinstall dependencies                         |
 
 ## 🏗️ Tech Stack
 
@@ -579,7 +588,8 @@ PUBLIC_GA_ID=G-XXXXXXXXXX
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a PR.
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
+before submitting a PR.
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -594,5 +604,5 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/WayneXuCN">Wenjie Xu</a>
+  Made with ❤️ by <a href="https://github.com/Vncntvx">Wenjie Xu</a>
 </p>

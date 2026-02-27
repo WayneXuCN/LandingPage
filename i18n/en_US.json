@@ -135,7 +135,7 @@
         "socialLinks": [
             {
                 "icon": "fas fa-globe",
-                "url": "https://waynexucn.github.io/",
+                "url": "https://lab.wenjiexu.site/",
                 "title": "Personal Site"
             },
             {
@@ -145,7 +145,7 @@
             },
             {
                 "icon": "fab fa-github",
-                "url": "https://github.com/WayneXuCN",
+                "url": "https://github.com/Vncntvx",
                 "title": "GitHub"
             },
             {
@@ -238,21 +238,21 @@
                 "items": [
                     {
                         "label": "GitHub",
-                        "url": "https://github.com/WayneXuCN",
+                        "url": "https://github.com/Vncntvx",
                         "icon": "fab fa-github",
-                        "handle": "@WayneXuCN"
+                        "handle": "@Vncntvx"
                     },
                     {
                         "label": "Google Scholar",
                         "url": "https://scholar.google.com/citations?user=eWTidmsAAAAJ",
                         "icon": "fab fa-google",
-                        "handle": "@WayneXuCN"
+                        "handle": "@Vncntvx"
                     },
                     {
                         "label": "Personal Site",
-                        "url": "https://waynexucn.github.io/",
+                        "url": "https://lab.wenjiexu.site/",
                         "icon": "fas fa-globe",
-                        "handle": "waynexucn.github.io"
+                        "handle": "lab.wenjiexu.site"
                     }
                 ]
             }

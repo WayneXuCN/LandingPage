@@ -21,7 +21,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/WayneXuCN/LandingPage.git"
+        "url": "git+https://github.com/Vncntvx/LandingPage.git"
     },
     "keywords": [
         "astro",
@@ -38,9 +38,9 @@
     "author": "Wenjie Xu <wenjie.xu.cn@outlook.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/WayneXuCN/LandingPage/issues"
+        "url": "https://github.com/Vncntvx/LandingPage/issues"
     },
-    "homepage": "https://github.com/WayneXuCN/LandingPage#readme",
+    "homepage": "https://github.com/Vncntvx/LandingPage#readme",
     "devDependencies": {
         "@astrojs/react": "^4.4.2",
         "@astrojs/tailwind": "^6.0.2",

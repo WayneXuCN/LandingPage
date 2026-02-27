@@ -26,11 +26,11 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             set -e  # 遇到错误立即退出
-            cd /opt/1panel/apps/openresty/openresty/www/sites/wenjiexusite/LandingPage
+            cd /opt/1panel/www/sites/wenjiexusite/LandingPage
 
             # 设置代理加速
-            git remote set-url origin https://gh.xmly.dev/https://github.com/WayneXuCN/LandingPage
-            
+            git remote set-url origin https://gh.xmly.dev/https://github.com/Vncntvx/LandingPage
+
             # 拉取最新代码
             git config --global --add safe.directory "$(pwd)"
             git fetch --all --depth=1
@@ -39,20 +39,20 @@ jobs:
 
             # 设置 PATH 环境变量以包含 bun
             export PATH="/root/.bun/bin:$PATH"
-            
+
             # 验证 bun 是否可用
             which bun || echo "bun not found in PATH"
-            
+
             # 安装依赖并构建
             bun install
             bun run build
 
             # 将 dist 文件夹内容移动到 index 目录
-            rm -rf /opt/1panel/apps/openresty/openresty/www/sites/wenjiexusite/index/*
-            cp -r dist/* /opt/1panel/apps/openresty/openresty/www/sites/wenjiexusite/index/
+            rm -rf /opt/1panel/www/sites/wenjiexusite/index/*
+            cp -r dist/* /opt/1panel/www/sites/wenjiexusite/index/
 
             # 设置index文件权限为 PHP-FPM 用户
-            chown -R 1000:1000 /opt/1panel/apps/openresty/openresty/www/sites/wenjiexusite/index
+            chown -R 1000:1000 /opt/1panel/www/sites/wenjiexusite/index
 
             echo "✅ 构建文件已移动到 index 目录"
             echo "✅ index 目录文件权限已设置为 1000:1000"

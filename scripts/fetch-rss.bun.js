@@ -81,7 +81,7 @@ const I18N_DIR = join(PROJECT_ROOT, 'i18n');
 const OUTPUT_PATH = join(PROJECT_ROOT, 'src/data/rss-posts.json');
 
 /** HTTP 请求 User-Agent 标识 */
-const USER_AGENT = 'LandingPage-RSS-Fetcher/2.0 (Bun; +https://waynexucn.github.io)';
+const USER_AGENT = 'LandingPage-RSS-Fetcher/2.0 (Bun; +https://lab.wenjiexu.site)';
 
 /** 网络请求超时时间（毫秒） */
 const FETCH_TIMEOUT = 15000;

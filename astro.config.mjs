@@ -40,7 +40,7 @@ export default defineConfig({
   integrations: [
     /** React 集成：支持在 Astro 组件中使用 React 组件 */
     react(),
-    
+
     /** MDX 集成：支持在 Markdown 中使用 JSX 组件和交互式元素 */
     mdx({
       /** 继承 Astro 的 Markdown 配置，保持一致性 */
@@ -48,13 +48,13 @@ export default defineConfig({
       /** 启用 MDX 输出优化，提高构建性能 */
       optimize: true,
     }),
-    
+
     /** Tailwind CSS 集成：提供实用优先的 CSS 框架支持 */
     tailwind({
       /** 指定 Tailwind 配置文件路径 */
       configFile: './tailwind.config.mjs',
     }),
-    
+
     /** 图标集成：基于 Iconify 的图标系统支持 */
     icon({
       /** 可选配置：指定要包含的图标集，减少打包体积 */
@@ -63,7 +63,7 @@ export default defineConfig({
       //   lucide: ['*'],     // Lucide Icons
       // },
     }),
-    
+
     /** 站点地图集成：自动生成 sitemap.xml 文件供搜索引擎使用 */
     sitemap({
       /** 国际化配置：定义支持的语言和地区 */
@@ -83,7 +83,7 @@ export default defineConfig({
       /** 最后修改时间：用于搜索引擎判断内容新鲜度 */
       lastmod: new Date(),
     }),
-    
+
     /** robots.txt 集成：自动生成搜索引擎爬虫规则文件 */
     robotsTxt({
       /** 自动引用 sitemap 集成生成的站点地图文件 */
@@ -124,7 +124,7 @@ export default defineConfig({
     /** 是否预获取所有链接 */
     prefetchAll: false,
   },
-  
+
   /** Vite 构建工具配置 */
   vite: {
     /** 依赖优化配置 */
@@ -167,5 +167,4 @@ export default defineConfig({
     /** 启用响应式图片样式：确保图片在不同设备上自适应显示 */
     responsiveStyles: true,
   },
-
 });
