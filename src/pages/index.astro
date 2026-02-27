@@ -69,7 +69,7 @@ const canonicalUrl = new URL('/zh_CN/', Astro.site);
   <Hero subtitle={hero?.subtitle} title={hero?.title} description={hero?.description} />
 
   {/* Websites区块：静态内容，Astro组件 */}
-  <WebsitesSection title={websites?.title} items={websites?.items || []} />
+  <WebsitesSection title={websites?.title} items={websites?.items || []} language={lang} />
 
   {/* Featured Posts区块：静态内容，Astro组件 */}
   <FeaturedPostsSection config={featuredPosts} rssPosts={rssPosts} language={lang} />

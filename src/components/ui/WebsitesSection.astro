@@ -9,6 +9,7 @@
  * @component
  */
 import WebsiteItem from './WebsiteItem.astro';
+import type { Locale } from '@lib/i18n';
 
 /**
  * 网站项数据接口
@@ -34,10 +35,12 @@ interface Props {
   title?: string;
   /** 网站数据列表 */
   items: WebsiteItemData[];
+  /** 当前语言环境，用于解析内部链接 */
+  language?: Locale;
 }
 
 // 解构组件属性，设置默认值
-const { title = 'Websites', items = [] } = Astro.props;
+const { title = 'Websites', items = [], language = 'zh_CN' as Locale } = Astro.props;
 ---
 
 {/* 条件渲染：仅在有网站数据时显示区块 */}
@@ -55,7 +58,7 @@ const { title = 'Websites', items = [] } = Astro.props;
       <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'>
         {items.map((item, index) => (
           /* 网站卡片：前两个卡片设置优先加载 */
-          <WebsiteItem item={item} priority={index < 2} />
+          <WebsiteItem item={item} priority={index < 2} language={language} />
         ))}
       </div>
     </section>

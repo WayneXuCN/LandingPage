@@ -74,7 +74,7 @@ const rssPosts = ((rssData as Record<string, RssPost[]>)[lang] || []) as RssPost
   <Hero subtitle={hero?.subtitle} title={hero?.title} description={hero?.description} />
 
   {/* Websites 区块，静态内容，Astro 组件 */}
-  <WebsitesSection title={websites?.title} items={websites?.items || []} />
+  <WebsitesSection title={websites?.title} items={websites?.items || []} language={lang} />
 
   {/* Featured Posts 区块，静态内容，Astro 组件 */}
   <FeaturedPostsSection config={featuredPosts} rssPosts={rssPosts} language={lang} />

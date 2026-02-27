@@ -11,6 +11,7 @@
 import { resolveContentHref } from '@lib/utils';
 import { getWebsiteImage } from '@lib/websiteImages';
 import { Image } from 'astro:assets';
+import type { Locale } from '@lib/i18n';
 
 /**
  * 网站项数据接口
@@ -36,13 +37,15 @@ interface Props {
   item: WebsiteItemData;
   /** 是否优先加载图片，用于首屏重要内容 */
   priority?: boolean;
+  /** 当前语言环境，用于解析内部链接 */
+  language?: Locale;
 }
 
-// 解构组件属性，设置默认优先级为false
-const { item, priority = false } = Astro.props;
+// 解构组件属性，设置默认优先级为false，默认语言为中文
+const { item, priority = false, language = 'zh_CN' } = Astro.props;
 
 // 解析链接：外部链接直接使用，内部链接通过工具函数处理
-const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, 'zh_CN');
+const href = item.url?.startsWith('http') ? item.url : resolveContentHref(item.url, language);
 // 判断是否为外部链接
 const isExternal = typeof href === 'string' && href.startsWith('http');
 // 验证链接有效性
