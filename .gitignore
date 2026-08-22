@@ -48,3 +48,5 @@ dist/
 # Agent
 .omc/
 .claude/
+# Git worktrees
+.worktrees/
