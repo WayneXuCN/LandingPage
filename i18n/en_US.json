@@ -45,27 +45,6 @@
                 "description": "My self-hosted Glance work dashboard that aggregates information and common tools"
             },
             {
-                "id": "Gitea",
-                "title": "My Gitea",
-                "image": "/websites/gitea.png",
-                "url": "https://gitea.wenjiexu.site",
-                "description": "Self-hosted Gitea DevSecOps platform for managing personal projects and version control"
-            },
-            {
-                "id": "Overleaf",
-                "title": "My Overleaf",
-                "image": "/websites/overleaf.png",
-                "url": "https://overleaf.wenjiexu.site",
-                "description": "Self-hosted LaTeX online editor for academic paper writing and typesetting"
-            },
-            {
-                "id": "blinko",
-                "title": "Flash Notes",
-                "image": "/websites/Blinko.png",
-                "url": "https://blinko.wenjiexu.site",
-                "description": "Self-hosted Blinko flash notes for capturing ideas and thoughts instantly"
-            },
-            {
                 "id": "blog",
                 "title": "Personal Blog",
                 "image": "/websites/blogpage.png",
