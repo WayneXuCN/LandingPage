@@ -32,8 +32,8 @@ export default defineConfig({
 
   /** 构建优化配置 */
   build: {
-    /** 内联样式表策略：'always' 总是内联，'auto' 自动判断，'never' 从不内联 */
-    inlineStylesheets: 'always',
+    /** 内联样式表策略：'auto' 自动判断（字体分包 CSS 较大，走外链避免整段内联进每个页面） */
+    inlineStylesheets: 'auto',
   },
 
   /** 插件集成配置 */

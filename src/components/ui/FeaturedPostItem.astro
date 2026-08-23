@@ -92,7 +92,7 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
   target={isExternal ? '_blank' : undefined}
   rel={isExternal ? 'noopener noreferrer' : undefined}
   aria-label={`阅读文章: ${item.title}`}
-  class='relative block overflow-hidden rounded-lg shadow-md card-hover featured-post-item website-item focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:focus:ring-white group'
+  class='relative block overflow-hidden ring-1 ring-hairline card-hover featured-post-item website-item focus:outline-none group'
 >
   <!-- 文章封面图片区域 -->
   <div class='relative w-full h-64'>
@@ -111,27 +111,27 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
     />
   </div>
 
-  <!-- 内容覆盖层：包含标题、描述和元数据 -->
+  <!-- 内容覆盖层：包含标题、描述和元数据（白字压图属可读性例外，保留渐变） -->
   <div
     class:list={[
       'absolute inset-0 card-overlay transition-all duration-300 flex flex-col justify-between p-6',
       isBlackOverlay
-        ? 'bg-gradient-to-b from-black/80 via-black/20 to-black/90 dark:via-black/40'
+        ? 'bg-gradient-to-b from-black/75 via-black/20 to-black/85'
         : customOverlayClass,
     ]}
   >
     <!-- 标题区域 -->
     <div>
-      <h3 class='text-white text-xl font-bold mb-2 line-clamp-2 drop-shadow-md'>
+      <h3 class='text-white text-xl font-semibold mb-2 line-clamp-2 drop-shadow-sm'>
         {item.title}
       </h3>
     </div>
 
     <!-- 底部信息区域：描述、分类和日期 -->
     <div class='mt-auto'>
-      <!-- 文章描述：悬停时显示 -->
+      <!-- 文章描述：悬停时淡入，不做位移 -->
       <p
-        class='text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 website-description-text transform translate-y-2 line-clamp-3 mb-4'
+        class='text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 website-description-text line-clamp-3 mb-4'
       >
         {item.description}
       </p>
@@ -144,8 +144,8 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
             categories.map((cat, index) => (
               <span
                 class:list={[
-                  'inline-block text-[10px] font-medium px-2 py-0.5 rounded',
-                  index === 0 ? 'bg-white/90 text-black' : 'bg-white/20 text-white',
+                  'inline-block text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5',
+                  index === 0 ? 'bg-paper text-ink' : 'bg-white/15 text-white',
                 ]}
               >
                 {cat}
@@ -156,7 +156,7 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
 
         <!-- 元数据：RSS标识和发布日期 -->
         <div class='flex flex-col items-end shrink-0'>
-          {isRSS && <span class='text-[10px] text-white/60 mb-0.5'>RSS</span>}
+          {isRSS && <span class='text-[10px] font-mono uppercase tracking-wider text-white/60 mb-0.5'>RSS</span>}
           {formattedDate && <p class='text-white text-xs opacity-80'>{formattedDate}</p>}
         </div>
       </div>

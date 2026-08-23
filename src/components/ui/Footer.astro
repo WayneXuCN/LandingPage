@@ -81,28 +81,26 @@ const copyrightText =
 const { icp, mps } = footer;
 ---
 
-<footer
-  class='pt-8 sm:pt-12 pb-4 sm:pb-6 border-t border-gray-200 dark:border-gray-800 mt-12 sm:mt-16'
->
+<footer class='pt-8 sm:pt-12 pb-4 sm:pb-6 border-t border-hairline mt-12 sm:mt-16'>
   <div class='flex flex-col gap-4'>
     {/* 主要内容行：版权信息和社交链接 */}
     <div class='flex justify-between items-center flex-col md:flex-row gap-4 md:gap-0'>
       <div class='flex flex-col items-center md:items-start gap-2'>
-        <p class='text-gray-600 dark:text-gray-400 text-sm text-center md:text-left'>
+        <p class='text-inksoft text-sm text-center md:text-left'>
           {copyrightText}
         </p>
 
         {/* 备案信息 */}
         {
           (icp?.text || mps?.text) && (
-            <div class='flex flex-col sm:flex-row items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs text-gray-600 dark:text-gray-300'>
+            <div class='flex flex-col sm:flex-row items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs text-inksoft'>
               {/* ICP备案 */}
               {icp?.text && icp?.url && (
                 <a
                   href={icp.url}
                   target={icp.url.startsWith('http') ? '_blank' : undefined}
                   rel={icp.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  class='inline-flex items-center whitespace-nowrap rounded-md -mx-2 px-2 py-2 min-h-[44px] sm:min-h-0 sm:mx-0 sm:px-0 sm:py-0 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900'
+                  class='inline-flex items-center whitespace-nowrap rounded-md -mx-2 px-2 py-2 min-h-[44px] sm:min-h-0 sm:mx-0 sm:px-0 sm:py-0 hover:text-ink transition-colors duration-200 focus:outline-none'
                 >
                   {icp.text}
                 </a>
@@ -110,7 +108,7 @@ const { icp, mps } = footer;
 
               {/* 分隔符 - 仅在 sm 及以上屏幕显示 */}
               {icp?.text && mps?.text && (
-                <span class='hidden sm:inline text-gray-400 select-none'>|</span>
+                <span class='hidden sm:inline text-inksoft/50 select-none'>|</span>
               )}
 
               {/* 公安备案 */}
@@ -119,7 +117,7 @@ const { icp, mps } = footer;
                   href={mps.url}
                   target={mps.url.startsWith('http') ? '_blank' : undefined}
                   rel={mps.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  class='inline-flex items-center gap-1 whitespace-nowrap rounded-md -mx-2 px-2 py-2 min-h-[44px] sm:min-h-0 sm:mx-0 sm:px-0 sm:py-0 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900'
+                  class='inline-flex items-center gap-1 whitespace-nowrap rounded-md -mx-2 px-2 py-2 min-h-[44px] sm:min-h-0 sm:mx-0 sm:px-0 sm:py-0 hover:text-ink transition-colors duration-200 focus:outline-none'
                 >
                   {mps?.logo && (
                     <img
@@ -144,7 +142,7 @@ const { icp, mps } = footer;
           socialLinks.map(link => (
             <a
               href={link.url}
-              class='text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors social-icon'
+              class='text-inksoft hover:text-vermilion transition-colors social-icon'
               title={link.title || ''}
               aria-label={link.title || 'Social link'}
               target={link.url?.startsWith('http') ? '_blank' : undefined}
@@ -177,5 +175,10 @@ const { icp, mps } = footer;
         }
       </div>
     </div>
+
+    {/* 版权页彩蛋：出版物 colophon 微型题记 */}
+    <p class='mt-4 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-inksoft/70 select-none'>
+      Edition 2026 · Set in EB Garamond &amp; Noto Serif SC
+    </p>
   </div>
 </footer>

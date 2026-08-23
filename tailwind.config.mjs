@@ -33,6 +33,24 @@ export default {
   theme: {
     /** 扩展默认主题：添加自定义设计令牌而不覆盖现有配置 */
     extend: {
+      /**
+       * 颜色令牌：「纸张与油墨」语义色板
+       * 值来自 CSS 变量（RGB 三元组），.dark 下自动翻转，明暗共用同一套工具类
+       */
+      colors: {
+        /** 纸面底色：暖调纸白 / 暖调近黑 */
+        paper: 'rgb(var(--c-paper) / <alpha-value>)',
+        /** 浮起面：极浅底纹，用于边注等弱分区 */
+        raised: 'rgb(var(--c-raised) / <alpha-value>)',
+        /** 主墨色 */
+        ink: 'rgb(var(--c-ink) / <alpha-value>)',
+        /** 次级墨色：灰褐 */
+        inksoft: 'rgb(var(--c-inksoft) / <alpha-value>)',
+        /** 边界线：极浅灰褐发丝线 */
+        hairline: 'rgb(var(--c-hairline) / <alpha-value>)',
+        /** 朱砂红：全站唯一强调色 */
+        vermilion: 'rgb(var(--c-vermilion) / <alpha-value>)',
+      },
       /** 字体族配置：定义项目中使用的字体堆栈 */
       fontFamily: {
         /** 无衬线字体：优先使用自定义 CSS 变量，回退到系统字体 */
@@ -45,6 +63,8 @@ export default {
           'Roboto', // Android 系统字体
           'sans-serif', // 通用无衬线字体
         ],
+        /** 展示衬线：西文 EB Garamond，中文思源宋体，逐字符自然回退 */
+        display: ['var(--font-family-display)'],
       },
     },
   },

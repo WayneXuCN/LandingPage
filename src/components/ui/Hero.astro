@@ -30,7 +30,7 @@ const { subtitle, title, description } = Astro.props;
   {/* 副标题：条件渲染 */}
   {
     subtitle && (
-      <h1 class='text-red-600 dark:text-red-400 text-sm font-extrabold mb-4 sm:mb-6 tracking-[0.2em] uppercase'>
+      <h1 class='eyebrow text-vermilion text-sm mb-4 sm:mb-6'>
         {subtitle}
       </h1>
     )
@@ -40,7 +40,7 @@ const { subtitle, title, description } = Astro.props;
   {
     title && (
       <h2
-        class='text-[length:clamp(2.5rem,8vw,5rem)] font-bold mb-8 sm:mb-10 leading-tight display-font tracking-tight rich-text'
+        class='text-[length:clamp(2.75rem,8vw,5.25rem)] font-normal mb-8 sm:mb-10 leading-[1.15] display-font tracking-[0.01em] rich-text'
         set:html={title}
       />
     )
@@ -50,7 +50,7 @@ const { subtitle, title, description } = Astro.props;
   {
     description && (
       <p
-        class='text-xl sm:text-2xl mb-6 sm:mb-8 text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed rich-text'
+        class='text-xl sm:text-2xl mb-6 sm:mb-8 text-inksoft max-w-3xl leading-[1.85] tracking-[0.02em] rich-text'
         set:html={description}
       />
     )

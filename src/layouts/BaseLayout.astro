@@ -9,6 +9,12 @@
  * @component
  */
 import '../styles/global.css';
+/* 展示衬线字体：@fontsource 自托管；中文思源宋按 unicode-range 分包，浏览器仅拉取用到的字块 */
+import '@fontsource/eb-garamond/400.css';
+import '@fontsource/eb-garamond/500.css';
+import '@fontsource/eb-garamond/400-italic.css';
+import '@fontsource/eb-garamond/500-italic.css';
+import '@fontsource/noto-serif-sc/chinese-simplified-400.css';
 import { SEO } from 'astro-seo';
 import { getImage } from 'astro:assets';
 import { getLocalImage } from '@lib/localImages';
@@ -189,7 +195,9 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <!-- Web应用清单 -->
     <link rel='manifest' href='/site.webmanifest' />
 
-    <!-- 字体：使用系统字体栈（避免渲染阻塞和第三方字体CSS） -->
+    <!-- 字体：@fontsource 自托管衬线（EB Garamond / Noto Serif SC），经构建期打包与预加载优化，正文仍走系统栈 -->
+
+    <!-- 图标：使用内联SVG，无需外部图标字体CSS -->
 
     <!-- 图标：使用内联SVG，无需外部图标字体CSS -->
 
@@ -242,9 +250,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
   </head>
 
   <!-- 页面主体 -->
-  <body
-    class='min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300'
-  >
+  <body class='min-h-screen bg-paper text-ink transition-colors duration-300'>
     <!-- 主内容区域：使用fade过渡动画 -->
     <main
       class='container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-16 max-w-8xl'

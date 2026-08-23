@@ -49,45 +49,52 @@ const currentPath = Astro.url.pathname;
   {/* Hero 区块 */}
   <Hero subtitle={hero.subtitle} title={hero.title} description={hero.description} />
 
-  {/* Timeline 区块 */}
+  {/* Timeline 区块：折页目录式排版 */}
   <section class='mb-12 sm:mb-16 md:mb-20'>
-    <div class='flex items-center justify-between mb-8'>
+    <div class='flex items-end justify-between mb-8 sm:mb-10'>
       <div>
-        <p class='text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400'>
+        <p class='eyebrow text-vermilion text-sm mb-2'>
           {timeline.subtitle}
         </p>
-        <h3 class='text-3xl font-semibold display-font'>{timeline.title}</h3>
+        <h3 class='text-3xl font-normal display-font'>{timeline.title}</h3>
       </div>
-      <span class='text-gray-600 dark:text-gray-400 text-sm'>{timeline.period}</span>
+      <span class='hidden sm:inline-block font-display italic text-sm tracking-[0.15em] text-inksoft'>
+        {timeline.period}
+      </span>
     </div>
-    <div class='space-y-6'>
+    <div>
       {
         timeline.items.map((item: { period: string; title: string; description: string }) => (
-          <article class='p-6 rounded-2xl border border-gray-200 dark:border-gray-700 card-hover'>
-            <p class='text-xs text-gray-600 dark:text-gray-400 uppercase tracking-[0.35em] mb-2'>
-              {item.period}
+          /* 每条研究上方仅一根发丝线，序号左置、内容右展，无卡片框 */
+          <article class='grid grid-cols-[4rem_1fr] sm:grid-cols-[6.5rem_1fr] gap-x-5 sm:gap-x-10 border-t border-hairline pt-6 sm:pt-8 pb-2'>
+            <p class='font-display italic text-vermilion text-sm sm:text-base pt-1 whitespace-nowrap'>
+              No. {item.period}
             </p>
-            <h4 class='text-2xl font-semibold mb-3'>{item.title}</h4>
-            <p class='text-gray-600 dark:text-gray-300'>{item.description}</p>
+            <div>
+              <h4 class='text-xl sm:text-2xl font-normal display-font mb-3'>{item.title}</h4>
+              <p class='text-inksoft leading-[1.85] tracking-[0.02em] max-w-3xl'>
+                {item.description}
+              </p>
+            </div>
           </article>
         ))
       }
     </div>
   </section>
 
-  {/* Values 区块 */}
+  {/* Values 区块：双栏不对称排版（左栏纵向文学列表 + 右栏边注） */}
   <section class='mb-12 sm:mb-16 md:mb-20'>
-    <div class='grid md:grid-cols-2 gap-10'>
+    <div class='grid md:grid-cols-[3fr_2fr] gap-10 lg:gap-16'>
       <div class='text-center md:text-left'>
-        <p class='text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-3'>
+        <p class='eyebrow text-vermilion text-sm mb-3'>
           {values.subtitle}
         </p>
-        <h3 class='text-3xl font-semibold display-font mb-6'>{values.title}</h3>
-        <ul class='space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed'>
+        <h3 class='text-3xl font-normal display-font mb-6 sm:mb-8'>{values.title}</h3>
+        <ul class='space-y-6 text-inksoft leading-[1.85] tracking-[0.02em]'>
           {
             values.items.map((item: { label: string; text: string }) => (
               <li class='flex flex-col items-center md:block'>
-                <span class='font-semibold text-gray-900 dark:text-gray-100 md:mr-2 mb-1 md:mb-0'>
+                <span class='display-font text-xl text-ink md:mr-2 mb-1 md:mb-0 inline-block'>
                   {item.label}：
                 </span>
                 <span>{item.text}</span>
@@ -96,63 +103,46 @@ const currentPath = Astro.url.pathname;
           }
         </ul>
       </div>
-      <div
-        class='bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-8 card-hover'
-      >
-        <p class='text-sm text-pink-500 dark:text-pink-400 font-semibold tracking-[0.35em] mb-4'>
+      {/* 右栏 Marginalia：单侧发丝竖线包裹的边注专栏 */}
+      <aside class='border-l border-hairline pl-8 sm:pl-10 py-2'>
+        <p class='eyebrow text-vermilion text-xs mb-4'>
           {values.product.subtitle}
         </p>
-        <h4 class='text-2xl font-semibold mb-3'>{values.product.title}</h4>
-        <p class='text-gray-600 dark:text-gray-300'>{values.product.description}</p>
+        <h4 class='text-xl sm:text-2xl font-normal display-font mb-3'>{values.product.title}</h4>
+        <p class='text-inksoft leading-[1.85] tracking-[0.02em]'>{values.product.description}</p>
         <a
           href={resolveContentHref(values.product.linkUrl, lang)}
-          class='inline-flex items-center text-pink-500 dark:text-pink-400 font-medium underline mt-4'
+          class='link-underline group/link inline-flex items-baseline gap-2 mt-6 text-ink hover:text-vermilion transition-colors'
         >
-          {values.product.linkText}
-          <svg
-            class='ml-2 w-4 h-4'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            aria-hidden='true'
-          >
-            <path d='M5 12h14'></path>
-            <path d='M13 5l7 7-7 7'></path>
-          </svg>
+          <span class='text-inksoft' aria-hidden='true'>[</span>
+          <span>{values.product.linkText}</span>
+          <span aria-hidden='true'>&rarr;</span>
+          <span class='text-inksoft' aria-hidden='true'>]</span>
         </a>
-      </div>
+      </aside>
     </div>
   </section>
 
-  {/* Philosophy 区块 */}
+  {/* Philosophy 区块：书籍扉页题词（Epigraph） */}
   <section class='mb-12 sm:mb-16 md:mb-20'>
-    <div class='bg-black dark:bg-gray-800 text-white rounded-3xl p-10 md:p-14 card-hover'>
-      <p class='uppercase text-sm tracking-[0.4em] text-gray-300 dark:text-gray-400 mb-4'>
+    <div class='border-y border-hairline py-20 sm:py-28 px-6 text-center'>
+      <p class='eyebrow text-inksoft text-sm mb-8 sm:mb-10'>
         {philosophy.subtitle}
       </p>
-      <h3 class='display-font text-4xl font-semibold mb-6'>{philosophy.title}</h3>
-      <p class='text-lg text-gray-200 dark:text-gray-300 mb-8'>{philosophy.description}</p>
+      <h3 class='display-font text-3xl sm:text-5xl font-normal tracking-[0.05em] mb-8 sm:mb-10'>
+        {philosophy.title}
+      </h3>
+      <p class='text-base sm:text-lg text-inksoft leading-[1.85] tracking-[0.02em] max-w-2xl mx-auto mb-10 sm:mb-12'>
+        {philosophy.description}
+      </p>
       <a
         href={resolveContentHref(philosophy.ctaUrl, lang)}
-        class='inline-flex items-center text-black bg-white dark:text-white dark:bg-gray-700 px-5 py-3 rounded-full font-semibold'
+        class='link-underline inline-flex items-baseline gap-2 text-lg text-ink hover:text-vermilion transition-colors'
       >
-        {philosophy.ctaText}
-        <svg
-          class='ml-3 w-4 h-4'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          stroke-width='2'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          aria-hidden='true'
-        >
-          <path d='M5 12h14'></path>
-          <path d='M13 5l7 7-7 7'></path>
-        </svg>
+        <span class='text-inksoft' aria-hidden='true'>[</span>
+        <span>{philosophy.ctaText}</span>
+        <span aria-hidden='true'>&nearr;</span>
+        <span class='text-inksoft' aria-hidden='true'>]</span>
       </a>
     </div>
   </section>

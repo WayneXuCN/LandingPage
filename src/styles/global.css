@@ -22,17 +22,18 @@
   /**
    * 字体系统变量
    *
-   * 字体策略（性能优先）：
-   * - 不下载 Web Font（减少阻塞、减少未使用字节、避免第三方请求）
-   * - 优先使用各平台常见的中文无衬线字体，观感与 Noto Sans SC 接近
+   * 字体策略：
+   * - 展示衬线走 @fontsource 自托管 Web Font（EB Garamond + Noto Serif SC），
+   *   中文按 unicode-range 分包，浏览器仅拉取页面实际用到的字块
+   * - 正文保持系统无衬线栈（PingFang SC / Microsoft YaHei / Noto Sans CJK SC 等），控制首屏体积
    */
   --font-family-base:
     system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, /* macOS */ "PingFang SC",
     "Hiragino Sans GB", /* Windows */ "Microsoft YaHei", "Microsoft YaHei UI", /* Linux/Android */ "Noto Sans CJK SC",
     "WenQuanYi Micro Hei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
-  /* 展示字体，用于标题等需要突出显示的文本 */
-  --font-family-display: "Noe Display", Georgia, Times, serif;
+  /* 展示衬线字体：西文走 EB Garamond，中文逐字符回退到思源宋体（@fontsource 自托管、按 unicode-range 分包） */
+  --font-family-display: "EB Garamond", "Noto Serif SC", Georgia, "Times New Roman", serif;
 
   /* Noto Sans 字体栈，用于需要特定字体的场景 */
   --font-noto-sans:
@@ -48,18 +49,29 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   /**
-   * 颜色系统变量
+   * 「纸张与油墨」色板（RGB 三元组，供 Tailwind 以 rgb(var() / alpha) 消费）
+   * 暗色模式在下方 .dark 中整体翻转，组件无需逐个写 dark: 变体
    */
-  --text-primary: #111; /* 主要文本颜色 */
-  --text-secondary: #444; /* 次要文本颜色 */
-  --accent-color: #10b981; /* 强调色，用于链接、按钮等交互元素 */
-  --background-color: #fff; /* 背景色 */
-  --border-color: #e5e7eb; /* 边框颜色 */
+  --c-paper: 250 248 245; /* 暖调纸白底 */
+  --c-raised: 243 242 238; /* 浮起面：极浅底纹 */
+  --c-ink: 34 33 32; /* 主墨色（炭黑） */
+  --c-inksoft: 107 101 94; /* 次级墨：灰褐 */
+  --c-hairline: 231 227 220; /* 发丝边界线：极浅灰褐 */
+  --c-vermilion: 158 58 43; /* 朱砂红：全站唯一强调色 */
+
+  /**
+   * 颜色系统变量（旧消费点兼容，值同步到纸墨色板）
+   */
+  --text-primary: #222120; /* 主要文本颜色 */
+  --text-secondary: #6b655e; /* 次要文本颜色 */
+  --accent-color: #9e3a2b; /* 强调色（朱砂红），用于链接、下划线等交互元素 */
+  --background-color: #faf8f5; /* 背景色 */
+  --border-color: #e7e3dc; /* 边框颜色 */
 
   /**
    * 特殊效果变量
    */
-  --underline-base-color: #e5e7eb; /* 下划线基础颜色 */
+  --underline-base-color: #e7e3dc; /* 下划线基础颜色 */
 
   /**
    * 下划线悬停颜色（UnderlineEffects.jsx 会在 hover 时动态写入）
@@ -69,13 +81,34 @@
 }
 
 /**
+ * @section 暗色模式：暖调墨纸
+ * @description 深色同样遵循「纸与墨」逻辑——暖调近黑纸面 + 米白墨字，强调色微提亮保证对比度
+ */
+.dark {
+  --c-paper: 25 23 21; /* 暖调近黑底 */
+  --c-raised: 35 33 30; /* 浮起面：极浅米纹 */
+  --c-ink: 236 231 222; /* 主墨色（米白） */
+  --c-inksoft: 166 159 150; /* 次级墨：浅褐灰 */
+  --c-hairline: 59 56 53; /* 发丝边界线：暗褐灰 */
+  --c-vermilion: 196 87 63; /* 朱砂红提亮 */
+
+  /* 旧变量同步翻转 */
+  --text-primary: #ece7de;
+  --text-secondary: #a69f96;
+  --accent-color: #c4573f;
+  --background-color: #191715;
+  --border-color: #3b3835;
+  --underline-base-color: #3b3835;
+}
+
+/**
  * @section 全局基础样式
  */
 body {
   font-family: var(--font-family-base);
   -webkit-font-smoothing: antialiased; /* 改善字体渲染效果 */
   -moz-osx-font-smoothing: grayscale; /* 改善字体渲染效果 */
-  @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
+  @apply bg-paper text-ink transition-colors duration-300;
 }
 
 /**
@@ -86,20 +119,51 @@ body {
 }
 
 /**
+ * @section 出版物小节标（眉题）
+ * @description 西文古典衬线斜体 + 大字距，用于 RESEARCH FOCUS / MOTTO 等元数据标签
+ */
+.eyebrow {
+  font-family: var(--font-family-display);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/**
+ * @section 从左至右展开的下划线
+ * @description 全站统一的低调悬停动效：1px 朱砂细线，直接悬停或随父级 group 悬停时展开
+ */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 0;
+  background-color: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after,
+.group:hover .link-underline::after {
+  width: 100%;
+}
+
+/**
  * @section 卡片悬停效果
+ * @description 「纸与墨」规范：不做弹跳位移与阴影扩张，仅保留表面颜色的低调过渡
  */
 .card-hover {
   transition:
-    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    /* 弹性变换效果 */ box-shadow 0.4s ease,
-    /* 阴影过渡效果 */ border-color 0.3s ease; /* 边框颜色过渡效果 */
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
   cursor: pointer;
-}
-
-.card-hover:hover {
-  transform: translateY(-6px); /* 向上移动 */
-  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1); /* 增强阴影 */
-  border-color: rgba(0, 0, 0, 0.1); /* 添加边框颜色 */
 }
 
 /**
@@ -131,7 +195,16 @@ body {
 }
 
 .card-hover:hover .card-overlay {
-  background-color: rgba(0, 0, 0, 0.8); /* 悬停时显示半透明黑色遮罩 */
+  background-color: rgba(0, 0, 0, 0.72); /* 悬停时轻微加深遮罩，保证文字可读 */
+}
+
+/**
+ * @section 富文本内嵌元素
+ * @description i18n 文案中内嵌的 <strong>（如联系页响应时长）统一继承墨色，避免残留旧灰阶
+ */
+.rich-text strong {
+  color: inherit;
+  font-weight: 600;
 }
 
 /**
@@ -196,27 +269,16 @@ body {
  * @description 与原Website样式保持一致
  */
 .website-item {
-  transition:
-    transform 0.3s ease,
-    /* 变换过渡 */ box-shadow 0.3s ease; /* 阴影过渡 */
   min-height: 240px;
 }
 
-.website-item:hover {
-  transform: translateY(-5px); /* 向上移动效果 */
-  box-shadow:                                              /* 多层阴影增强立体感 */
-    0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
 .website-item:hover .card-overlay {
-  background-color: rgba(0, 0, 0, 0.7); /* 悬停时显示半透明黑色遮罩 */
+  background-color: rgba(0, 0, 0, 0.72); /* 悬停时显示半透明黑色遮罩 */
 }
 
-/* 悬停时显示描述信息 */
+/* 悬停时淡入描述信息（仅透明度，不做位移） */
 .website-item:hover .website-description-text {
   opacity: 1;
-  transform: translateY(0); /* 从下方移动到原位 */
   transition-delay: 0.1s; /* 延迟显示，提升交互体验 */
 }
 
@@ -225,21 +287,11 @@ body {
  * @description 与网站卡片保持一致
  */
 .featured-post-item {
-  transition:
-    transform 0.3s ease,
-    /* 变换过渡 */ box-shadow 0.3s ease; /* 阴影过渡 */
   min-height: 240px;
 }
 
-.featured-post-item:hover {
-  transform: translateY(-5px); /* 向上移动效果 */
-  box-shadow:                                              /* 多层阴影增强立体感 */
-    0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
 .featured-post-item:hover .card-overlay {
-  background-color: rgba(0, 0, 0, 0.7); /* 悬停时显示半透明黑色遮罩 */
+  background-color: rgba(0, 0, 0, 0.72); /* 悬停时显示半透明黑色遮罩 */
 }
 
 /**
@@ -277,7 +329,7 @@ body {
  * @section 备案链接样式
  */
 .icp-link {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 0.75rem;
   transition: color 0.2s ease;
   text-decoration: none;
@@ -287,18 +339,7 @@ body {
 }
 
 .icp-link:hover {
-  color: #374151; /* 悬停时加深颜色 */
-}
-
-/**
- * @section 暗色模式下的备案链接样式
- */
-.dark .icp-link {
-  color: #9ca3af;
-}
-
-.dark .icp-link:hover {
-  color: #d1d5db; /* 暗色模式下悬停时变亮 */
+  color: var(--text-primary); /* 悬停时加深为墨色 */
 }
 
 /**

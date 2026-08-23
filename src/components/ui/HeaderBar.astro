@@ -144,7 +144,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
   <div class='flex items-center'>
     {
       localAvatar ? (
-        /* 优化后的本地头像图片 */
+        /* 优化后的本地头像图片：正方形画框（细边框留白，如小型画作） */
         <Image
           src={localAvatar}
           alt={name}
@@ -152,7 +152,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
           height={56}
           widths={[56, 112]}
           sizes='56px'
-          class='w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4 shadow-sm object-cover'
+          class='w-12 h-12 sm:w-14 sm:h-14 mr-3 sm:mr-4 object-cover border border-hairline p-[3px] bg-raised'
           loading='eager'
           decoding='sync'
           fetchpriority='high'
@@ -160,13 +160,13 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
           quality={80}
         />
       ) : (
-        /* 备用头像图片 */
+        /* 备用头像图片：同样保持方形画框 */
         <img
           src={avatarRef}
           alt={name}
           width={56}
           height={56}
-          class='w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4 shadow-sm object-cover'
+          class='w-12 h-12 sm:w-14 sm:h-14 mr-3 sm:mr-4 object-cover border border-hairline p-[3px] bg-raised'
           loading='eager'
           decoding='sync'
           fetchpriority='high'
@@ -174,7 +174,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
       )
     }
     {/* 用户名称 */}
-    <span class='font-medium text-gray-900 dark:text-white text-lg tracking-tight'>
+    <span class='font-medium text-ink text-lg tracking-tight'>
       {name}
     </span>
   </div>
@@ -183,7 +183,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
   <div class='flex flex-wrap justify-center items-center gap-y-4 gap-x-4 sm:gap-8'>
     {/* 导航菜单 */}
     <nav
-      class='flex flex-wrap items-center gap-3 sm:gap-8 text-base font-medium text-gray-600 dark:text-gray-300'
+      class='flex flex-wrap items-center gap-3 sm:gap-8 text-base font-medium text-inksoft'
     >
       {
         navLinks.map((link, index) => {
@@ -195,7 +195,7 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
             <>
               {/* 导航项分隔符：除第一项外显示 */}
               {index > 0 && (
-                <span class='text-gray-300 dark:text-gray-600 select-none text-sm sm:text-base'>
+                <span class='text-inksoft/50 select-none text-sm sm:text-base'>
                   /
                 </span>
               )}
@@ -206,16 +206,14 @@ const navLinks = Array.isArray(nav) ? nav.filter(item => item?.href && !item.hid
                 data-astro-prefetch={!isExternal ? 'hover' : undefined}
                 class:list={[
                   'relative group transition-colors py-1',
-                  active
-                    ? 'text-black dark:text-white font-bold'
-                    : 'hover:text-black dark:hover:text-white',
+                  active ? 'text-ink font-semibold' : 'hover:text-ink',
                 ]}
               >
                 {link.label}
-                {/* 活动状态指示器：底部下划线 */}
+                {/* 活动状态指示器：底部朱砂发丝线 */}
                 <span
                   class:list={[
-                    'absolute bottom-0 left-0 h-[2px] bg-black dark:bg-white transition-all duration-300 ease-out',
+                    'absolute bottom-0 left-0 h-px bg-vermilion transition-all duration-300 ease-out',
                     active ? 'w-full' : 'w-0 group-hover:w-full',
                   ]}
                 />

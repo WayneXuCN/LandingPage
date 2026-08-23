@@ -62,7 +62,7 @@ const LanguageSwitcher = ({ currentLang = 'en_US' }) => {
   return (
     <button
       onClick={handleSwitch}
-      className='ml-4 px-3 py-1 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-full transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900 focus:ring-gray-500'
+      className='relative link-underline ml-2 px-0.5 py-1 font-display italic text-sm tracking-[0.15em] text-inksoft hover:text-ink transition-colors focus:outline-none'
       aria-label={`当前语言: ${currentLabel}, 切换到: ${nextLabel}`}
       title={`切换到 ${nextLabel}`}
     >

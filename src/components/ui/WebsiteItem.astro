@@ -55,17 +55,17 @@ const isValidHref = typeof href === 'string' && href.trim() !== '' && href !== '
 const localImage = getWebsiteImage(item.image);
 ---
 
-{/* 网站卡片容器 */}
+{/* 网站卡片容器：平贴纸面，不做胶囊底色 */}
 <a
   href={isValidHref ? href : undefined}
   target={isExternal ? '_blank' : undefined}
   rel={isExternal ? 'noopener noreferrer' : undefined}
   aria-label={`访问 ${item.title}: ${item.description}`}
-  class='group flex flex-row sm:flex-col gap-4 sm:gap-3 p-3 -mx-3 sm:mx-0 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-300 items-center sm:items-stretch'
+  class='group flex flex-row sm:flex-col gap-4 sm:gap-3 p-3 -mx-3 sm:mx-0 items-center sm:items-stretch'
 >
-  {/* 图片容器 */}
+  {/* 图片容器：方形图版框（发丝线细框） */}
   <div
-    class='relative w-24 sm:w-full shrink-0 aspect-[16/9] overflow-hidden rounded-lg sm:rounded-xl bg-gray-100 dark:bg-gray-800 shadow-sm group-hover:shadow-md transition-all duration-300'
+    class='relative w-24 sm:w-full shrink-0 aspect-[16/9] overflow-hidden bg-raised ring-1 ring-hairline'
   >
     {
       localImage ? (
@@ -83,7 +83,7 @@ const localImage = getWebsiteImage(item.image);
           format='webp'
           quality={80}
           priority={priority}
-          class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+          class='w-full h-full object-cover'
         />
       ) : (
         /* 备用图片 */
@@ -96,15 +96,10 @@ const localImage = getWebsiteImage(item.image);
           decoding='async'
           fetchpriority={priority ? 'high' : 'auto'}
           sizes='(max-width: 640px) 100vw, 384px'
-          class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+          class='w-full h-full object-cover'
         />
       )
     }
-    {/* 极轻微的内阴影，增加层次感 */}
-    <div
-      class='absolute inset-0 ring-1 ring-inset ring-black/5 dark:ring-white/10 rounded-lg sm:rounded-xl'
-    >
-    </div>
   </div>
 
   {/* 内容区域：标题和描述 */}
@@ -112,13 +107,13 @@ const localImage = getWebsiteImage(item.image);
     {/* 标题行：包含标题和箭头图标 */}
     <div class='flex items-center justify-between'>
       <h3
-        class='text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate pr-2'
+        class='link-underline self-start text-base font-semibold text-ink transition-colors pr-2'
       >
         {item.title}
       </h3>
-      {/* 外部链接指示箭头：悬停时显示 */}
+      {/* 外部链接指示箭头：悬停时淡入，不做位移 */}
       <svg
-        class='w-3.5 h-3.5 text-gray-500 group-hover:text-blue-500 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 duration-300 hidden sm:block'
+        class='w-3.5 h-3.5 text-vermilion opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block shrink-0'
         fill='none'
         viewBox='0 0 24 24'
         stroke='currentColor'
@@ -126,13 +121,13 @@ const localImage = getWebsiteImage(item.image);
         <path
           stroke-linecap='round'
           stroke-linejoin='round'
-          stroke-width='2'
+          stroke-width='1.5'
           d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'></path>
       </svg>
     </div>
 
     {/* 描述文本 */}
-    <p class='mt-0.5 sm:mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed'>
+    <p class='mt-0.5 sm:mt-1 text-sm text-inksoft line-clamp-2 leading-relaxed'>
       {item.description}
     </p>
   </div>

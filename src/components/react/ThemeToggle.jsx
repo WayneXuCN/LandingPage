@@ -38,7 +38,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className='p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
+      className='p-2 text-inksoft hover:text-vermilion transition-colors focus:outline-none'
       aria-label={themeLabel}
       title={themeLabel}
     >
@@ -48,7 +48,7 @@ const ThemeToggle = () => {
       ) : theme === 'light' ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='h-5 w-5 text-gray-600 dark:text-gray-300'
+          className='h-5 w-5'
           fill='none'
           viewBox='0 0 24 24'
           stroke='currentColor'
@@ -63,7 +63,7 @@ const ThemeToggle = () => {
       ) : (
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='h-5 w-5 text-yellow-400'
+          className='h-5 w-5'
           fill='none'
           viewBox='0 0 24 24'
           stroke='currentColor'
