@@ -17,7 +17,7 @@
         {
             "label": "About",
             "href": "/about",
-            "hidden": false
+            "hidden": true
         },
         {
             "label": "Contact",
